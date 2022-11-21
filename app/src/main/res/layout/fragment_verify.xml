@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="phone"
+            type="String"/>
+        <variable
+            name="code"
+            type="String"/>
+        <variable
+            name="viewModel"
+            type="org.myf.app.ui.verify.VerifyViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/verify_content_tv"
+            android:layout_width="0dp"
+            android:layout_margin="16dp"
+            app:layout_constraintVertical_bias="0"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/verify_content_message"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countries_il"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/select_country_title"
+            app:errorEnabled="true"
+            android:enabled="@{!viewModel.uiState.codeSent}"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verify_content_tv">
+
+            <AutoCompleteTextView
+                android:id="@+id/countries_ac"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:maxLength="32"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/selected_country_flag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="@{viewModel.selectedCountry.flag}"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_il"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAlignment="viewStart"
+            app:layout_constraintTop_toTopOf="@+id/phone_il"
+            tools:text="EGY" />
+
+        <TextView
+            android:id="@+id/selected_country_code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textAlignment="viewStart"
+            android:text="@{viewModel.selectedCountry.code}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/selected_country_flag_tv"
+            app:layout_constraintStart_toEndOf="@+id/selected_country_flag_tv"
+            app:layout_constraintTop_toTopOf="@+id/selected_country_flag_tv"
+            tools:text="(+20)" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phone_il"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:enabled="@{!viewModel.uiState.codeSent}"
+            android:hint="@string/phone_title"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/selected_country_code_tv"
+            app:layout_constraintTop_toBottomOf="@+id/countries_il">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:text="@{viewModel.uiState.phone}"
+                android:textAlignment="viewStart" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/verify_code_il"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/verify_code_title"
+            app:errorEnabled="true"
+            android:enabled="@{!viewModel.uiState.verifying}"
+            android:visibility="@{viewModel.uiState.codeSent ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone_il">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/verify_code_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{(!viewModel.uiState.codeSent &amp; viewModel.uiState.codeRequested)  ? View.VISIBLE :  View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/phone_il" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verify_phone_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_title"
+            android:textAllCaps="false"
+            android:enabled="@{!viewModel.uiState.verifying}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()-> viewModel.verify(code)}"
+            android:visibility="@{viewModel.uiState.codeSent ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/verify_code_il" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_code_title"
+            android:onClick="@{()-> viewModel.requestCode(phone)}"
+            android:textAllCaps="false"
+            android:visibility="@{viewModel.uiState.codeRequested ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verify_code_il" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

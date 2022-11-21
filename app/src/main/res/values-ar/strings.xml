@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">مجدي يعقوب</string>
+    <string name="verify_content_message">تحقق من شخصيتك</string>
+    <string name="phone_title">رقم الهاتف</string>
+    <string name="verify_title">تأكيد</string>
+    <string name="verify_code_title">رمز التأكيد</string>
+    <string name="send_code_title">إرسال الرمز</string>
+    <string name="select_country_title">إختر بلد</string>
 </resources>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MYF App</string>
+    <string name="verify_content_message">Verify it\'s you</string>
+    <string name="phone_title">Phone Number</string>
+    <string name="verify_title">Verify</string>
+    <string name="verify_code_title">Verify Code</string>
+    <string name="send_code_title">Send Code</string>
+    <string name="select_country_title">Select Country</string>
 </resources>
