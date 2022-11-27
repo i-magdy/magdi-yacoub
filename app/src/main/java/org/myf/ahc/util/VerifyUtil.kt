@@ -1,8 +1,8 @@
-package org.myf.app.util
+package org.myf.ahc.util
 
 import dagger.hilt.android.scopes.ViewModelScoped
-import org.myf.app.models.CountryCodeModel
-import org.myf.app.models.CountryModel
+import org.myf.ahc.models.CountryCodeModel
+import org.myf.ahc.models.CountryModel
 import javax.inject.Inject
 
 @ViewModelScoped

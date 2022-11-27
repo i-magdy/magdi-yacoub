@@ -1,4 +1,4 @@
-package org.myf.app.ui.verify
+package org.myf.ahc.ui.verify
 
 data class VerifyUiState(
     var phone: String = "",

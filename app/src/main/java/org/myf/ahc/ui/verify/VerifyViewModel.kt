@@ -1,13 +1,12 @@
-package org.myf.app.ui.verify
+package org.myf.ahc.ui.verify
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.myf.app.models.CountryCodeModel
+import org.myf.ahc.models.CountryCodeModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +37,11 @@ class VerifyViewModel @Inject constructor(
     fun setPhone(
         phone: String
     ) = viewModelScope.launch {
-        _uiState.emit(_uiState.value.copy(phone = phone))
-        filterPhone()
+        val mPhone = _uiState.value.phone
+        if (phone.isNotBlank() && mPhone != phone) {
+            _uiState.emit(_uiState.value.copy(phone = phone))
+            filterPhone()
+        }
     }
 
     fun filterPhone() = viewModelScope.launch {
@@ -47,13 +49,10 @@ class VerifyViewModel @Inject constructor(
         _uiState.emit(_uiState.value.copy(phone = phone))
     }
 
-    fun requestCode(
-        phone: String?
-    ) = viewModelScope.launch {
-        if (phone != null) {
-            if (phone.isNotBlank()) {
+    fun requestCode() = viewModelScope.launch {
+        val phone = _uiState.value.phone
+        if (phone.isNotBlank()) {
                 _phoneToVerify.emit(selectedCountry.value.code + phone)
-            }
         }
     }
 

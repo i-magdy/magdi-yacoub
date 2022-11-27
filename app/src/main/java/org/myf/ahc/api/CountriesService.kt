@@ -1,6 +1,6 @@
-package org.myf.app.api
+package org.myf.ahc.api
 
-import org.myf.app.models.CountryModel
+import org.myf.ahc.models.CountryModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

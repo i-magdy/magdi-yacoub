@@ -1,4 +1,4 @@
-package org.myf.app
+package org.myf.ahc
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package org.myf.app
+package org.myf.ahc
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package org.myf.app.models
+package org.myf.ahc.models
 
 data class CountryID(
     val root: String,

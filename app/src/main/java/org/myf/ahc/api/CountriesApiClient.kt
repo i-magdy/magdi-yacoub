@@ -1,6 +1,6 @@
-package org.myf.app.api
+package org.myf.ahc.api
 
-import org.myf.app.util.EndPoints.REST_COUNTRIES_URL
+import org.myf.ahc.util.EndPoints.REST_COUNTRIES_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

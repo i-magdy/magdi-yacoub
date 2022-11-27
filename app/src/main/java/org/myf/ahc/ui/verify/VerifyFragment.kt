@@ -1,4 +1,4 @@
-package org.myf.app.ui.verify
+package org.myf.ahc.ui.verify
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -27,7 +27,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.myf.app.databinding.FragmentVerifyBinding
+import org.myf.ahc.databinding.FragmentVerifyBinding
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -74,7 +74,7 @@ class VerifyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.phoneEt.doAfterTextChanged { binding.phone = it?.toString() ?: "" }
+        binding.phoneEt.doAfterTextChanged { viewModel.setPhone(it?.toString() ?: "") }
         binding.verifyCodeEt.doAfterTextChanged { binding.code = it?.toString() ?: "" }
         binding.countriesAc.doAfterTextChanged {
             val name: String = it?.toString() ?: ""

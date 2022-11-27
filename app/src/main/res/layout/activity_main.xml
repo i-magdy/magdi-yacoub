@@ -10,6 +10,6 @@
         android:id="@+id/frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="org.myf.app.ui.verify.VerifyFragment"/>
+        android:name="org.myf.ahc.ui.verify.VerifyFragment"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

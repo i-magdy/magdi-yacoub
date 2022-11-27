@@ -1,11 +1,8 @@
-package org.myf.app
+package org.myf.ahc
 
-import android.content.Context
 import android.os.Bundle
-import android.telephony.TelephonyManager
-import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
-import org.myf.app.ui.BaseActivity
+import org.myf.ahc.ui.BaseActivity
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {

@@ -1,4 +1,4 @@
-package org.myf.app.ui.verify
+package org.myf.ahc.ui.verify
 
 
 import android.util.Log
@@ -6,10 +6,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.myf.app.api.CountriesService
-import org.myf.app.models.CountryCodeModel
-import org.myf.app.models.CountryModel
-import org.myf.app.util.VerifyUtil
+import org.myf.ahc.api.CountriesService
+import org.myf.ahc.models.CountryCodeModel
+import org.myf.ahc.models.CountryModel
+import org.myf.ahc.util.VerifyUtil
 import retrofit2.Response
 import javax.inject.Inject
 

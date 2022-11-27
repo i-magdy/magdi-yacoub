@@ -1,4 +1,4 @@
-package org.myf.app
+package org.myf.ahc
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

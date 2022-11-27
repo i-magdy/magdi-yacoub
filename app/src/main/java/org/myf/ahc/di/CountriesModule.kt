@@ -1,12 +1,12 @@
-package org.myf.app.di
+package org.myf.ahc.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import org.myf.app.api.CountriesApiClient
-import org.myf.app.api.CountriesService
+import org.myf.ahc.api.CountriesApiClient
+import org.myf.ahc.api.CountriesService
 
 @Module
 @InstallIn(ViewModelComponent::class)
