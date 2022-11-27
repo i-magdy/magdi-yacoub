@@ -13,11 +13,13 @@ import org.myf.ahc.data.DatastoreImpl
 import java.util.*
 import javax.inject.Inject
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity {
+
+    constructor(): super()
+    constructor(contentLayoutId: Int): super(contentLayoutId)
 
     @Inject
     lateinit var datastoreImpl: DatastoreImpl
-    var counter = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this::datastoreImpl.isInitialized) {
@@ -28,7 +30,6 @@ open class BaseActivity : AppCompatActivity() {
                     }else{
                         resources.configuration.locale.language
                     }
-                    Log.e("lang_$counter _before", lang + ".."+it)
                     if (lang != it){
                         changeAppLanguage(it)
                     }
@@ -44,8 +45,6 @@ open class BaseActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             getSystemService(LocaleManager::class.java).applicationLocales = LocaleList(Locale.forLanguageTag(lang))
         }
-        Log.e("lang_$counter", lang)
-        counter++
         recreate()
     }
 }

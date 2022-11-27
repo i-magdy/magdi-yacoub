@@ -1,4 +1,4 @@
-package org.myf.ahc.ui.verify
+package org.myf.ahc.ui.registration.verify
 
 import android.app.Activity
 import android.content.ContentValues.TAG

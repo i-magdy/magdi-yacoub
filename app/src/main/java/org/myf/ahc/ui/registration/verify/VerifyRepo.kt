@@ -1,4 +1,4 @@
-package org.myf.ahc.ui.verify
+package org.myf.ahc.ui.registration.verify
 
 
 import android.util.Log

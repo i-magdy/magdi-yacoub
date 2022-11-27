@@ -1,4 +1,4 @@
-package org.myf.ahc.ui.verify
+package org.myf.ahc.ui.registration.verify
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
