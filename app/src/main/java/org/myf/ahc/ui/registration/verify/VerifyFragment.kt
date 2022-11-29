@@ -45,7 +45,7 @@ class VerifyFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val phone = requireActivity().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        viewModel.getCountryCode(phone.simCountryIso)
+        viewModel.getCountryCode(phone.networkCountryIso)
         lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             resources.configuration.locales[0].language
         }else{
