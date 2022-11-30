@@ -7,4 +7,8 @@
     <string name="send_code_title">Send Code</string>
     <string name="select_country_title">Select Country</string>
     <string name="offline_message">You\'r Offline</string>
+    <string name="wrong_phone_message">Wrong phone format</string>
+    <string name="wrong_code_message">Wrong Code</string>
+    <string name="select_country_message">Please select Country</string>
+    <string name="enter_phone_message">Enter patient phone number</string>
 </resources>

@@ -27,24 +27,22 @@ class VerifyRepo @Inject constructor(
         }
     }
 
-    suspend fun getCountryByCode(code: String){
-        var response: Response<List<CountryModel>>? = countryService.getCountryByCode(code)
-        if (response != null) {
-            if (response.isSuccessful &&
-                response.body() != null &&
-                response.body()!!.isNotEmpty()
-            ) {
+    suspend fun getCountryByCode(code: String) {
+        val response: Response<List<CountryModel>> = countryService.getCountryByCode(code)
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body != null) {
                 setSelectedCountry(
                     country = CountryCodeModel(
-                        ar_name = response.body()!![0].translations["ara"]?.common ?: "",
-                        en_name = response.body()!![0].name.common,
-                        code = if (null == response.body()!![0].idd) "" else response.body()!![0].idd!!.root+
-                                if (response.body().isNullOrEmpty()) "" else response.body()!![0].idd!!.suffixes!![0],
-                        flag = response.body()!![0].flag
+                        ar_name = body[0].translations["ara"]?.common ?: "",
+                        en_name = body[0].name.common,
+                        code = if (null == body[0].idd) "" else body[0].idd?.root +
+                                if (body.isEmpty()) "" else
+                                    body[0].idd?.suffixes?.get(0) ?: "",
+                        flag = body[0].flag
                     )
                 )
                 selectedCountry.emit(util.selectedCountry!!)
-                response = null
             }
         }
     }
@@ -52,22 +50,24 @@ class VerifyRepo @Inject constructor(
     fun setSelectedCountryByName(
         name: String
     ) = coroutine.launch {
-        if (util.appLang == "ar"){
-            if (util.selectedCountry!!.ar_name == name){
-                return@launch
-            }
-        }else{
-            if (util.selectedCountry!!.en_name == name){
-                return@launch
+        if(util.selectedCountry != null) {
+            if (util.appLang == "ar") {
+                if (util.selectedCountry!!.ar_name == name) {
+                    return@launch
+                }
+            } else {
+                if (util.selectedCountry!!.en_name == name) {
+                    return@launch
+                }
             }
         }
         util.getCountries().forEach {
-            if (util.appLang == "ar"){
-                if (it.ar_name == name){
+            if (util.appLang == "ar") {
+                if (it.ar_name == name) {
                     setSelectedCountry(it)
                 }
-            }else{
-                if (it.en_name == name){
+            } else {
+                if (it.en_name == name) {
                     setSelectedCountry(it)
                 }
             }
@@ -75,23 +75,23 @@ class VerifyRepo @Inject constructor(
         selectedCountry.emit(util.selectedCountry!!)
     }
 
-    private suspend fun getCountries(){
-        var response: Response<List<CountryModel>>? = countryService.getAllCountriesData()
-        if (response != null){
-            if (response.isSuccessful &&
-                response.body() != null &&
-                response.body()!!.isNotEmpty()){
-                util.setCountries(response.body()!!)
+    private suspend fun getCountries() {
+        val response: Response<List<CountryModel>> = countryService.getAllCountriesData()
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body != null) {
+                util.setCountries(body)
                 val list = ArrayList<String>()
-                util.getCountries().forEach {
-                    if (util.appLang == "ar"){
-                        list.add(it.ar_name)
-                    }else{
-                        list.add(it.en_name)
+                util.getCountries().forEach { country ->
+                    if (util.appLang == "ar") {
+                        list.add(country.ar_name)
+                        list.sortBy { s -> s}
+                    } else {
+                        list.add(country.en_name)
+                        list.sortBy { s -> s}
                     }
                 }
                 countriesName.emit(list)
-                response = null
             }
         }
     }
@@ -102,7 +102,7 @@ class VerifyRepo @Inject constructor(
         countryModel = country
     )
 
-    fun setAppLang(lang: String){
+    fun setAppLang(lang: String) {
         util.appLang = lang
     }
 }

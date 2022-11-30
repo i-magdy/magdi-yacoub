@@ -32,6 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.myf.ahc.databinding.FragmentVerifyBinding
 import org.myf.ahc.util.NetworkUtil
+import org.myf.ahc.util.PhoneAuthErrorMessage
+import org.myf.ahc.util.VerifyUiError
 import java.util.concurrent.TimeUnit
 import org.myf.ahc.R as resource
 
@@ -85,16 +87,24 @@ class VerifyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.phoneEt.doAfterTextChanged { viewModel.setPhone(it?.toString() ?: "") }
+        binding.phoneEt.doAfterTextChanged {
+            viewModel.setPhone(it?.toString() ?: "")
+            binding.phoneIl.error = null
+            binding.phoneIl.helperText = null
+        }
         binding.verifyCodeEt.doAfterTextChanged { binding.code = it?.toString() ?: "" }
         binding.countriesAc.doAfterTextChanged {
             val name: String = it?.toString() ?: ""
             if (name.isNotBlank()) {
                 viewModel.setCountry(name)
             }
+            binding.countriesIl.error = null
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.uiState.collect{ showUiError(it.error) }
+                }
                 launch {
                     viewModel.selectedCountry.collect {
                         viewModel.filterPhone()
@@ -107,8 +117,8 @@ class VerifyFragment : Fragment() {
                 }
                 launch {
                     viewModel.countriesName.collect {
-                        val adapter =
-                            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
+                        val adapter = ArrayAdapter(requireContext(),
+                            android.R.layout.simple_list_item_1, it)
                         binding.countriesAc.setAdapter(adapter)
                     }
                 }
@@ -160,13 +170,31 @@ class VerifyFragment : Fragment() {
                 } catch (e: Exception) {
                     println("Phone Number Hint failed")
                     e.printStackTrace()
+                    binding.phoneIl.helperText = getString(resource.string.enter_phone_message)
                 }
             }else{
                 Log.e("phone","cancelled")
+                binding.phoneIl.helperText = getString(resource.string.enter_phone_message)
             }
         }
     }
 
+    private fun showUiError(error: VerifyUiError) = when(error){
+        VerifyUiError.INVALID_PHONE -> {
+            binding.phoneIl.error = getString(resource.string.wrong_phone_message)
+        }
+        VerifyUiError.INVALID_CODE -> {
+            binding.verifyCodeIl.error = getString(resource.string.wrong_code_message)
+        }
+        VerifyUiError.SELECT_COUNTRY -> {
+            binding.countriesIl.error = getString(resource.string.select_country_message)
+        }
+        VerifyUiError.NONE -> {
+            binding.verifyCodeIl.error = null
+            binding.phoneIl.error = null
+            binding.countriesIl.error = null
+        }
+    }
     private fun requestPhoneNumberHint(){
         val request: GetPhoneNumberHintIntentRequest =
             GetPhoneNumberHintIntentRequest.builder().build()
@@ -198,6 +226,7 @@ class VerifyFragment : Fragment() {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
+                        viewModel.wrongCode()
                     }
                     // Update UI
                 }
@@ -220,8 +249,8 @@ class VerifyFragment : Fragment() {
         override fun onVerificationFailed(e: FirebaseException) {
             // This callback is invoked in an invalid request for verification is made,
             // for instance if the the phone number format is not valid.
-            Log.w(TAG, "onVerificationFailed", e)
-            viewModel.codeSent(false)
+            Log.w("onVerificationFailed", "*${e.localizedMessage}*")
+            if (e.localizedMessage == PhoneAuthErrorMessage.invalid_phone){ viewModel.wrongPhone() }
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
             } else if (e is FirebaseTooManyRequestsException) {
