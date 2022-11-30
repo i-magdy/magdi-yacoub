@@ -1,7 +1,6 @@
 package org.myf.ahc.ui.registration.verify
 
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,7 +61,6 @@ class VerifyRepo @Inject constructor(
                 return@launch
             }
         }
-        Log.e("name",name)
         util.getCountries().forEach {
             if (util.appLang == "ar"){
                 if (it.ar_name == name){

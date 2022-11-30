@@ -6,4 +6,5 @@
     <string name="verify_code_title">Verify Code</string>
     <string name="send_code_title">Send Code</string>
     <string name="select_country_title">Select Country</string>
+    <string name="offline_message">You\'r Offline</string>
 </resources>

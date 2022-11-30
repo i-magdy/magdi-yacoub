@@ -11,13 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.FirebaseException
@@ -28,7 +31,9 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.myf.ahc.databinding.FragmentVerifyBinding
+import org.myf.ahc.util.NetworkUtil
 import java.util.concurrent.TimeUnit
+import org.myf.ahc.R as resource
 
 @AndroidEntryPoint
 class VerifyFragment : Fragment() {
@@ -45,7 +50,13 @@ class VerifyFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val phone = requireActivity().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        viewModel.getCountryCode(phone.networkCountryIso)
+        if (NetworkUtil.isMobileConnectedToInternet(requireContext())){
+            var code: String? = phone.simCountryIso
+            code = code ?: phone.networkCountryIso
+            viewModel.getCountryCode(code ?: "eg")
+        }else{
+            Toast.makeText(context,getString(resource.string.offline_message),Toast.LENGTH_LONG).show()
+        }
         lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             resources.configuration.locales[0].language
         }else{
@@ -78,43 +89,48 @@ class VerifyFragment : Fragment() {
         binding.verifyCodeEt.doAfterTextChanged { binding.code = it?.toString() ?: "" }
         binding.countriesAc.doAfterTextChanged {
             val name: String = it?.toString() ?: ""
-            if (name.isNotBlank()){
+            if (name.isNotBlank()) {
                 viewModel.setCountry(name)
             }
         }
-
-        lifecycleScope.launchWhenCreated {
-            launch {
-                viewModel.selectedCountry.collect{
-                    viewModel.filterPhone()
-                    if (lang == "ar"){
-                        binding.countriesAc.setText(it.ar_name)
-                    }else{
-                        binding.countriesAc.setText(it.en_name)
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.selectedCountry.collect {
+                        viewModel.filterPhone()
+                        if (lang == "ar") {
+                            binding.countriesAc.setText(it.ar_name)
+                        } else {
+                            binding.countriesAc.setText(it.en_name)
+                        }
                     }
                 }
-            }
-            launch {
-                viewModel.countriesName.collect{
-                    val adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,it)
-                    binding.countriesAc.setAdapter(adapter)
+                launch {
+                    viewModel.countriesName.collect {
+                        val adapter =
+                            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
+                        binding.countriesAc.setAdapter(adapter)
+                    }
                 }
-            }
 
-            launch { viewModel.phoneToVerify.collect{
-                if (it.isNotBlank()){
-                    requestCode(phone = it)
+                launch {
+                    viewModel.phoneToVerify.collect {
+                        if (it.isNotBlank()) {
+                            requestCode(phone = it)
+                        }
+                    }
                 }
-            } }
 
-            launch {
-                viewModel.verifyCode.collect{
-                    if (it.isNotBlank()){
-                        signInWithPhoneAuthCredential(getCredential(it))
+                launch {
+                    viewModel.verifyCode.collect {
+                        if (it.isNotBlank()) {
+                            signInWithPhoneAuthCredential(getCredential(it))
+                        }
                     }
                 }
             }
         }
+
     }
 
     private fun requestCode(phone: String){
