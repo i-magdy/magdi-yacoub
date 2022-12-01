@@ -22,6 +22,14 @@
         android:label="verify_screen"
         tools:layout="@layout/fragment_verify"
         android:name="org.myf.ahc.ui.registration.verify.VerifyFragment">
-
+        <action
+            android:id="@+id/action_navigate_to_upload_reports"
+            app:destination="@id/upload_reports_screen"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/upload_reports_screen"
+        tools:layout="@layout/screen_upload_reports"
+        android:label="upload_reports"
+        android:name="org.myf.ahc.ui.registration.reports.UploadReportsScreen"/>
 </navigation>
