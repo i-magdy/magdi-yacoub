@@ -77,6 +77,7 @@ class VerifyViewModel @Inject constructor(
 
     fun codeSent(b: Boolean) = viewModelScope.launch {
         _uiState.emit(_uiState.value.copy(isCodeSent = b))
+        _phoneToVerify.emit("")
     }
 
     fun setAppLang(lang: String) = repo.setAppLang(lang)
@@ -88,6 +89,7 @@ class VerifyViewModel @Inject constructor(
                 error = VerifyUiError.INVALID_PHONE
             )
         )
+        _phoneToVerify.emit("")
     }
 
     fun wrongCode() = viewModelScope.launch {
@@ -97,5 +99,19 @@ class VerifyViewModel @Inject constructor(
                 error = VerifyUiError.INVALID_CODE
             )
         )
+        _phoneToVerify.emit("")
+    }
+
+    fun clearError() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(error = VerifyUiError.NONE)
+        )
+    }
+
+    fun succeed() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(isSuccess = true, isCodeSent = true, isCodeRequested = true)
+        )
+        _phoneToVerify.emit("")
     }
 }

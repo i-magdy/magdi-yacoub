@@ -11,4 +11,10 @@
     <string name="wrong_code_message">Wrong Code</string>
     <string name="select_country_message">Please select Country</string>
     <string name="enter_phone_message">Enter patient phone number</string>
+    <string name="succeed_verify_message">Success\nYour Phone Number is Verified</string>
+    <string name="other_phone_title">Other Phone</string>
+    <string name="phone_content_label">Phone Number label</string>
+    <string name="other_phone_message">Please Enter another phone number</string>
+    <string name="success_label">Success label</string>
+    <string name="next_title">Next</string>
 </resources>

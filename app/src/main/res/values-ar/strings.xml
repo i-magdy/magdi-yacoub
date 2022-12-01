@@ -12,4 +12,10 @@
     <string name="wrong_code_message">رمز التأكيد خطأ</string>
     <string name="select_country_message">فضلا إختر بلد</string>
     <string name="enter_phone_message">إدخل رقم هاتف المريض</string>
+    <string name="succeed_verify_message">تم بنجاح\nتأكيد رقم الهاتف</string>
+    <string name="other_phone_title">هاتف اخر</string>
+    <string name="phone_content_label">علامة رقم الهاتف</string>
+    <string name="other_phone_message">فضلا إدخل رقم هاتف اخر</string>
+    <string name="success_label">علامة النجاح</string>
+    <string name="next_title">التالي</string>
 </resources>

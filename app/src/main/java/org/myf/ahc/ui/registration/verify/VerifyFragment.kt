@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -48,6 +49,7 @@ class VerifyFragment : Fragment() {
     private lateinit var phoneNumberHintIntentResultLauncher: ActivityResultLauncher<IntentSenderRequest>
     private val viewModel by viewModels<VerifyViewModel>()
     private lateinit var lang: String
+    private val dialog = VerifySuccessBottomSheet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +72,6 @@ class VerifyFragment : Fragment() {
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
         phoneNumberHintIntentResultLauncher = preparePhoneHintLauncher()
-        requestPhoneNumberHint()
     }
 
 
@@ -82,6 +83,8 @@ class VerifyFragment : Fragment() {
         _binding = FragmentVerifyBinding.inflate(layoutInflater,container,false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val behavior = BottomSheetBehavior.from(binding.relativePhoneBottomSheet)
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
         return binding.root
     }
 
@@ -89,21 +92,27 @@ class VerifyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.phoneEt.doAfterTextChanged {
             viewModel.setPhone(it?.toString() ?: "")
-            binding.phoneIl.error = null
             binding.phoneIl.helperText = null
+            viewModel.clearError()
         }
-        binding.verifyCodeEt.doAfterTextChanged { binding.code = it?.toString() ?: "" }
+        binding.verifyCodeEt.doAfterTextChanged {
+            binding.code = it?.toString() ?: ""
+            viewModel.clearError()
+        }
         binding.countriesAc.doAfterTextChanged {
             val name: String = it?.toString() ?: ""
             if (name.isNotBlank()) {
                 viewModel.setCountry(name)
             }
-            binding.countriesIl.error = null
+            viewModel.clearError()
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.uiState.collect{ showUiError(it.error) }
+                    viewModel.uiState.collect{
+                        showUiError(it.error)
+                        if (it.isSuccess){ showBottomSheet() }
+                    }
                 }
                 launch {
                     viewModel.selectedCountry.collect {
@@ -143,6 +152,10 @@ class VerifyFragment : Fragment() {
 
     }
 
+    private fun showBottomSheet(){
+        if (dialog.isAdded) return
+        dialog.show(parentFragmentManager,"success_dialog")
+    }
     private fun requestCode(phone: String){
         options.setPhoneNumber(phone)
         options.setCallbacks(callbacks)
@@ -151,6 +164,18 @@ class VerifyFragment : Fragment() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser != null){
+            viewModel.setPhone(auth.currentUser?.phoneNumber ?: "")
+            viewModel.succeed()
+        }else {
+            val p: String? = binding.phone
+            if (p == null || p.isBlank()) {
+                requestPhoneNumberHint()
+            }
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -214,13 +239,14 @@ class VerifyFragment : Fragment() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        if (auth.currentUser != null) return
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = task.result?.user
-
+                    viewModel.succeed()
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
