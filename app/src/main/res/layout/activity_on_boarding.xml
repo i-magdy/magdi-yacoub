@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:defaultNavHost="true"
-    android:id="@+id/registration_nav_host_fragment"
-    app:navGraph="@navigation/navigation_registration"
-    android:background="?attr/colorOnBackground"
+    android:id="@+id/on_boarding_nav_host_fragment"
+    app:navGraph="@navigation/navigation_on_boarding"
     android:name="androidx.navigation.fragment.NavHostFragment"
-    tools:context=".ui.registration.RegistrationActivity"/>
+    tools:context=".ui.onBoarding.OnBoardingActivity"/>

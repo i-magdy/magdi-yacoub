@@ -19,7 +19,7 @@
         android:theme="@style/Theme.MYFApp"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".ui.registration.RegistrationActivity"
+            android:name=".ui.onBoarding.OnBoardingActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,6 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.registration.RegistrationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
