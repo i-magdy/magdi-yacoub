@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.models.CountryCodeModel
+import org.myf.ahc.util.VerifyUiError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,13 +69,49 @@ class VerifyViewModel @Inject constructor(
     }
 
     fun codeRequested() = viewModelScope.launch {
-        _uiState.emit(_uiState.value.copy(isCodeRequested = true))
+        _uiState.emit(_uiState.value.copy(
+            isCodeRequested = true,
+            error = VerifyUiError.NONE
+        ))
     }
 
     fun codeSent(b: Boolean) = viewModelScope.launch {
         _uiState.emit(_uiState.value.copy(isCodeSent = b))
+        _phoneToVerify.emit("")
     }
 
     fun setAppLang(lang: String) = repo.setAppLang(lang)
 
+    fun wrongPhone() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                isCodeRequested = false,
+                error = VerifyUiError.INVALID_PHONE
+            )
+        )
+        _phoneToVerify.emit("")
+    }
+
+    fun wrongCode() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                isVerifying = false,
+                error = VerifyUiError.INVALID_CODE
+            )
+        )
+        _phoneToVerify.emit("")
+    }
+
+    fun clearError() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(error = VerifyUiError.NONE)
+        )
+    }
+
+    fun succeed() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(isSuccess = true, isCodeSent = true, isCodeRequested = true)
+        )
+        _phoneToVerify.emit("")
+    }
 }
