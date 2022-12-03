@@ -25,4 +25,11 @@
     <string name="english_title">English</string>
     <string name="welcome_title">مرحبا في تطبيق مجدي يعقوب</string>
     <string name="welcome_message">تطبيق لجعل التواصل بين المرضى و المستشفى اسهل.</string>
+    <string name="send_reports_title">إرسل نسخه من التقارير الطبيه</string>
+    <string name="send_reports_message">تشمل نسخة من الموجات فوق الصوتيه
+و تقرير القسطره إذا وجد
+تحاليل سيوله إذا وجد</string>
+    <string name="submit_title">إرسل</string>
+    <string name="upload_file_title">رفع ملفات</string>
+
 </resources>
