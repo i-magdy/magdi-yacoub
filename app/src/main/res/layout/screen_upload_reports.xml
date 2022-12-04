@@ -54,6 +54,14 @@
         app:layout_constraintTop_toBottomOf="@+id/reports_message_tv" />
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/upload_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reports_size_progress" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reports_rv"
         android:layout_width="match_parent"
@@ -78,6 +86,7 @@
         android:text="@string/upload_file_title"
         android:textAllCaps="false"
         app:strokeWidth="2dp"
+        app:rippleColor="@color/purple_100"
         android:textColor="?attr/colorOnSurface"
         app:strokeColor="@color/purple_200"
         app:cornerRadius="8dp"
