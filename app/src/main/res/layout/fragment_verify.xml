@@ -169,7 +169,6 @@
                 android:onClick="@{()-> viewModel.verify(code)}"
                 android:text="@string/verify_title"
                 android:textAllCaps="false"
-                android:textColor="?android:textColor"
                 app:backgroundTint="?attr/colorSecondary"
                 android:visibility="@{viewModel.uiState.codeSent &amp; !viewModel.uiState.success? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -184,7 +183,6 @@
                 android:elevation="4dp"
                 android:enabled="@{!viewModel.uiState.phone.blank}"
                 android:minHeight="56dp"
-                android:textColor="?android:textColor"
                 app:backgroundTint="?attr/colorSecondary"
                 android:onClick="@{()-> viewModel.requestCode()}"
                 android:text="@string/send_code_title"
@@ -204,6 +202,7 @@
             app:behavior_hideable="true"
             app:behavior_fitToContents="true"
             app:behavior_draggable="false"
+            android:background="@drawable/bottom_dialog_view"
             style="@style/Widget.MaterialComponents.BottomSheet.Modal"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

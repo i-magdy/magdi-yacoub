@@ -30,6 +30,7 @@
 و تقرير القسطره إذا وجد
 تحاليل سيوله إذا وجد</string>
     <string name="submit_title">إرسل</string>
-    <string name="upload_file_title">رفع ملفات</string>
-
+    <string name="upload_files_title">رفع ملفات</string>
+    <string name="upload_image_title">حمل صوره</string>
+    <string name="upload_file_title">حمل ملف</string>
 </resources>

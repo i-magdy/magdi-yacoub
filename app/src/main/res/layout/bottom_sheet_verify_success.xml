@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardElevation="8dp"
     app:cardBackgroundColor="?attr/colorSurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +24,9 @@
             android:id="@+id/success_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/succeed_verify_message"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceHeadline6"
@@ -81,13 +82,17 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="48dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="32dp"
             android:elevation="4dp"
             android:minHeight="56dp"
             app:layout_constraintVertical_bias="0"
             android:text="@string/next_title"
             android:textAllCaps="false"
             app:cornerRadius="8dp"
+            android:id="@+id/next_to_upload_button"
             style="@style/Widget.MaterialComponents.Button"
             android:backgroundTint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"

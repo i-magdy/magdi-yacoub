@@ -27,5 +27,7 @@
     <string name="send_reports_title">Send a copy of Medical reports</string>
     <string name="send_reports_message">Include a copy of the ultrasound and a catheterization report, if any. Fluidity analysis, if any</string>
     <string name="submit_title">Submit</string>
-    <string name="upload_file_title">Upload Files</string>
+    <string name="upload_files_title">Upload Files</string>
+    <string name="upload_image_title">Upload Image</string>
+    <string name="upload_file_title">Upload File</string>
 </resources>
