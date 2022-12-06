@@ -2,6 +2,9 @@ package org.myf.ahc.ui.registration.reports
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
@@ -23,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.myf.ahc.R
 import org.myf.ahc.util.FileTypesUtil
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
 @AndroidEntryPoint
@@ -54,8 +58,9 @@ class UploadReportsScreen : Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val behavior =
-            BottomSheetBehavior.from(view.findViewById(R.id.pick_up_chooser_bottom_sheet))
+        val behavior = BottomSheetBehavior.from(
+            view.findViewById(R.id.pick_up_chooser_bottom_sheet)
+        )
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
         view.findViewById<MaterialButton>(R.id.upload_button)
             .setOnClickListener {
@@ -90,40 +95,12 @@ class UploadReportsScreen : Fragment(
                 val data = result.data
                 if (data != null) {
                     val uri = data.data
-                    var type: String? = ""
-                    var name = ""
-                    coroutine.launch {
-                        try {
-                            val inputStream = uri?.let {
-                                type = requireActivity().contentResolver.getType(it)
-                                requireActivity().contentResolver.query(it, null, null, null, null)
-                                    ?.use { cursor ->
-                                        val nameIndex = cursor.getColumnIndex(
-                                           OpenableColumns.DISPLAY_NAME
-                                        )
-                                        if (cursor.moveToFirst()) {
-                                            name = cursor.getString(nameIndex)
-                                        }
-                                    }
-                                requireActivity().contentResolver.openInputStream(it)
-                            }
-                            withContext(Dispatchers.IO) {
-                                Log.d(
-                                    "IMAGE_$name",
-                                    "$type , size: ${
-                                        inputStream?.available().toString()
-                                    } Bytes"
-                                )
-                                inputStream?.readBytes()?.let {
-                                    viewModel.upload(
-                                        data = it,
-                                        name = name
-                                    )
-                                }
-                            }
-                        } catch (e: FileNotFoundException) {
-                            e.printStackTrace()
+                    try {
+                        uri?.let {
+                            openImage(it)
                         }
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
                     }
                 }
             }
@@ -138,56 +115,118 @@ class UploadReportsScreen : Fragment(
                 val data = result.data
                 if (data != null) {
                     val uri = data.data
-                    var name = ""
-                    coroutine.launch {
-                        try {
-                            var type: String? = ""
-                            val inputStream = uri?.let {
-                                type = requireActivity().contentResolver.getType(it)
-                                requireActivity().contentResolver.query(it, null, null, null, null)
-                                    ?.use { cursor ->
-                                        val nameIndex =
-                                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                                        if (cursor.moveToFirst()) {
-                                            name = cursor.getString(nameIndex)
-                                        }
-                                    }
-                                requireActivity().contentResolver.openInputStream(it)
-                            }
-                            withContext(Dispatchers.IO) {
-                                if (type == FileTypesUtil.PDF) {
-                                    Log.d(
-                                        "PDF_FILE",
-                                        "name: $name\n"+
-                                        "Size: ${inputStream?.available()} Bytes"
-                                    )
-                                    inputStream?.readBytes()?.let {
-                                        viewModel.upload(
-                                            data = it,
-                                            name = name
-                                        )
-                                    }
-                                }
-                                if (type == FileTypesUtil.MICROSOFT_WORD) {
-                                    Log.d(
-                                        "WORD_FILE",
-                                        "name: $name\n"+
-                                        "Size: ${inputStream?.available()} Bytes"
-                                    )
-                                    inputStream?.readBytes()?.let {
-                                        viewModel.upload(
-                                            data = it,
-                                            name = name
-                                        )
-                                    }
-                                }
-                            }
-                        } catch (e: FileNotFoundException) {
-                            e.printStackTrace()
+                    try {
+                        uri?.let {
+                            openDocument(it)
                         }
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
                     }
                 }
             }
+        }
+    }
+
+
+    @Throws(FileNotFoundException::class)
+    fun openDocument(uri: Uri) = coroutine.launch {
+        var type: String? = ""
+        var name = ""
+        type = requireActivity().contentResolver.getType(uri)
+        requireActivity().contentResolver.query(
+            uri,
+            null,
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            val nameIndex =
+                cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (cursor.moveToFirst()) {
+                name = cursor.getString(nameIndex)
+            }
+        }
+        val inputStream = requireActivity().contentResolver.openInputStream(uri) ?: return@launch
+        withContext(Dispatchers.IO) {
+            if (type == FileTypesUtil.PDF) {
+                Log.d(
+                    "PDF_FILE",
+                    "name: $name\n" +
+                            "Size: ${inputStream.available()} Bytes"
+                )
+                inputStream.readBytes().let {
+                    viewModel.uploadFile(
+                        data = it,
+                        name = name
+                    )
+                }
+            }
+            if (type == FileTypesUtil.MICROSOFT_WORD) {
+                Log.d(
+                    "WORD_FILE",
+                    "name: $name\n" +
+                            "Size: ${inputStream.available()} Bytes"
+                )
+                inputStream.readBytes().let {
+                    viewModel.uploadFile(
+                        data = it,
+                        name = name
+                    )
+                }
+            }
+            inputStream.close()
+        }
+    }
+
+    @Throws(FileNotFoundException::class)
+    fun openImage(uri: Uri) = coroutine.launch {
+        var type: String? = ""
+        var name = ""
+        type = requireActivity().contentResolver.getType(uri)
+        requireActivity().contentResolver.query(
+            uri,
+            null,
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(
+                OpenableColumns.DISPLAY_NAME
+            )
+            if (cursor.moveToFirst()) {
+                name = cursor.getString(nameIndex)
+            }
+
+        }
+        val inputStream = requireActivity().contentResolver.openInputStream(uri) ?: return@launch
+        withContext(Dispatchers.IO) {
+            val size = inputStream.available()
+            Log.d(
+                "IMAGE_$name",
+                "$type , size: $size Bytes"
+            )
+            if (type == FileTypesUtil.JPG || type == FileTypesUtil.PNG) {
+                if (size > 3_000_000) {
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    val byteStream = ByteArrayOutputStream()
+                    bitmap.compress(
+                        if (type == FileTypesUtil.JPG) Bitmap.CompressFormat.JPEG
+                        else Bitmap.CompressFormat.PNG, 60, byteStream
+                    )
+                    viewModel.uploadFile(
+                        data = byteStream.toByteArray(),
+                        name = name
+                    )
+                } else {
+                    inputStream.readBytes().let {
+                        viewModel.uploadFile(
+                            data = it,
+                            name = name
+                        )
+                    }
+                }
+            }
+            inputStream.close()
         }
     }
 
@@ -195,6 +234,9 @@ class UploadReportsScreen : Fragment(
         super.onDestroy()
         if (this::pickImageIntentLauncher.isInitialized) {
             pickImageIntentLauncher.unregister()
+        }
+        if (this::pickFileIntentLauncher.isInitialized) {
+            pickFileIntentLauncher.unregister()
         }
     }
 

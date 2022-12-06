@@ -12,28 +12,26 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.repos.StorageUploadRepo
 import javax.inject.Inject
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
-
+    private val uploadRepo: StorageUploadRepo
 ): ViewModel(){
 
     private val _uiState = MutableStateFlow(ReportsUiState())
     val uiState: StateFlow<ReportsUiState>  = _uiState
-    private val storage = Firebase.storage
-    private val storageRef = storage.reference
-    private val user = Firebase.auth.currentUser
 
-    fun upload(
+
+    fun uploadFile(
         data: ByteArray,
         name: String
     ) = viewModelScope.launch {
-        val ref = storageRef.child("Patient_reports/${user?.uid ?: "2000"}/$name")
-        val task = ref.putBytes(data)
-        task.addOnCompleteListener { snapshot ->
-            Log.e("upload","${snapshot.isSuccessful}")
-        }.addOnFailureListener { Log.e("upload",it.message.toString()) }
+       uploadRepo.uploadFile(
+           data = data,
+           name = name
+       )
     }
 
     fun openFiles() = viewModelScope.launch {
