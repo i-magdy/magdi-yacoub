@@ -30,4 +30,6 @@
     <string name="upload_files_title">Upload Files</string>
     <string name="upload_image_title">Upload Image</string>
     <string name="upload_file_title">Upload File</string>
+    <string name="reports_view_message">Your reports appears here</string>
+    <string name="file_size_message">file bigger than 20 MB</string>
 </resources>

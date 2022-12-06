@@ -33,4 +33,6 @@
     <string name="upload_files_title">رفع ملفات</string>
     <string name="upload_image_title">حمل صوره</string>
     <string name="upload_file_title">حمل ملف</string>
+    <string name="reports_view_message">التقارير الخاصه بك تظهر هنا</string>
+
 </resources>

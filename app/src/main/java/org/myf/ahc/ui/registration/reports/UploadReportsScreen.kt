@@ -9,6 +9,9 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,15 +20,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.myf.ahc.R
+import org.myf.ahc.adapters.ReportsAdapter
 import org.myf.ahc.util.FileTypesUtil
+import org.myf.ahc.util.FilesSizeUtil.calculateSizePercentage
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
@@ -40,6 +48,14 @@ class UploadReportsScreen : Fragment(
     private lateinit var pickFileIntent: Intent
     private val viewModel by activityViewModels<ReportsViewModel>()
     private val coroutine = CoroutineScope(Dispatchers.Default)
+    private lateinit var sizeProgress: LinearProgressIndicator
+    private lateinit var reportsMessageTv: TextView
+    private lateinit var loading: ProgressBar
+    private lateinit var percentageTv: TextView
+    private lateinit var progress: LinearProgressIndicator
+    private lateinit var fileTv: TextView
+    private lateinit var uploadButton: MaterialButton
+    private val adapter = ReportsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +70,7 @@ class UploadReportsScreen : Fragment(
             }
         pickImageLauncher()
         pickFileLauncher()
+        viewModel.getReportsList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,12 +79,22 @@ class UploadReportsScreen : Fragment(
             view.findViewById(R.id.pick_up_chooser_bottom_sheet)
         )
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
-        view.findViewById<MaterialButton>(R.id.upload_button)
-            .setOnClickListener {
-                val chooserDialog = PickupChooserDialog()
-                chooserDialog.show(parentFragmentManager, "chooser_dialog")
+        sizeProgress = view.findViewById(R.id.reports_size_progress)
+        loading = view.findViewById(R.id.reports_loading_progress)
+        reportsMessageTv = view.findViewById(R.id.reports_list_message_tv)
+        percentageTv = view.findViewById(R.id.reports_size_percentage_tv)
+        progress = view.findViewById(R.id.reports_progress)
+        fileTv = view.findViewById(R.id.reports_file_in_progress_tv)
+        view.findViewById<RecyclerView>(R.id.reports_rv)
+            .apply {
+                adapter = this@UploadReportsScreen.adapter
+                layoutManager = LinearLayoutManager(context)
             }
-
+        uploadButton = view.findViewById<MaterialButton>(R.id.upload_button)
+        uploadButton.setOnClickListener {
+            val chooserDialog = PickupChooserDialog()
+            chooserDialog.show(parentFragmentManager, "chooser_dialog")
+        }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
@@ -84,6 +111,21 @@ class UploadReportsScreen : Fragment(
         }
         if (ui.pickImage) {
             pickImageIntentLauncher.launch(pickImageIntent)
+        }
+        uploadButton.isEnabled = ui.size < 20000000
+        sizeProgress.progress = ui.size.toInt()
+        loading.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
+        reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
+        adapter.setDocuments(ui.list.sortedBy { it.name })
+        percentageTv.text = calculateSizePercentage(ui.size.toDouble())
+        if (ui.progress == 0){
+            progress.visibility = View.GONE
+            fileTv.visibility = View.GONE
+        }else{
+            progress.visibility = View.VISIBLE
+            fileTv.visibility = View.VISIBLE
+            fileTv.text = ui.fileName
+            progress.progress = ui.progress
         }
     }
 
@@ -148,30 +190,46 @@ class UploadReportsScreen : Fragment(
         }
         val inputStream = requireActivity().contentResolver.openInputStream(uri) ?: return@launch
         withContext(Dispatchers.IO) {
+            val size = inputStream.available()
+            Log.d(
+                "File_$type",
+                "name: $name\n" +
+                        "Size: $size Bytes"
+            )
             if (type == FileTypesUtil.PDF) {
-                Log.d(
-                    "PDF_FILE",
-                    "name: $name\n" +
-                            "Size: ${inputStream.available()} Bytes"
-                )
-                inputStream.readBytes().let {
-                    viewModel.uploadFile(
-                        data = it,
-                        name = name
-                    )
+                if (size < 20000000) {
+                    inputStream.readBytes().let {
+                        viewModel.uploadFile(
+                            data = it,
+                            name = name
+                        )
+                    }
+                }else{
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.file_size_message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
             if (type == FileTypesUtil.MICROSOFT_WORD) {
-                Log.d(
-                    "WORD_FILE",
-                    "name: $name\n" +
-                            "Size: ${inputStream.available()} Bytes"
-                )
-                inputStream.readBytes().let {
-                    viewModel.uploadFile(
-                        data = it,
-                        name = name
-                    )
+                if (size < 20000000) {
+                    inputStream.readBytes().let {
+                        viewModel.uploadFile(
+                            data = it,
+                            name = name
+                        )
+                    }
+                }else{
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.file_size_message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
             inputStream.close()

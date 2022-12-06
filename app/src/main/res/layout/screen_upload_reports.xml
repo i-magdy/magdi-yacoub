@@ -39,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="10/20 MB"
+        android:id="@+id/reports_size_percentage_tv"
         android:textAppearance="?attr/textAppearanceOverline"
         app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
         app:layout_constraintEnd_toEndOf="@+id/reports_size_progress" />
@@ -51,8 +52,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:progress="50"
-        android:max="100"
+        android:max="20000000"
         app:indicatorColor="?attr/colorSecondary"
         android:id="@+id/reports_size_progress"
         app:layout_constraintTop_toBottomOf="@+id/reports_message_tv" />
@@ -65,12 +65,57 @@
         app:layout_constraintBottom_toTopOf="@+id/upload_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         tools:itemCount="6"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/reports_size_progress"
         tools:listitem="@layout/report_list_item" />
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/reports_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:max="100"
+            app:indicatorColor="?attr/colorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/reports_rv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintStart_toStartOf="@+id/reports_progress"
+            app:layout_constraintTop_toBottomOf="@+id/reports_progress"
+            android:id="@+id/reports_file_in_progress_tv"
+            android:visibility="gone"
+            tools:text="File Name" />
+
+        <ProgressBar
+            android:id="@+id/reports_loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/upload_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/reports_size_progress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0"
+            android:id="@+id/reports_list_message_tv"
+            android:text="@string/reports_view_message"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toTopOf="@+id/upload_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/reports_loading_progress" />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/upload_button"
         android:layout_width="0dp"
