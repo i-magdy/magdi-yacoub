@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.util.EndPoints
 import javax.inject.Inject
 
 class StorageUploadRepo @Inject constructor(
@@ -23,11 +24,12 @@ class StorageUploadRepo @Inject constructor(
     val progress = MutableStateFlow(0)
 
     fun uploadFile(
+        path: String,
         data: ByteArray,
         name: String
     ){
         if (user == null) return
-        val ref = storageRef.child("Patient_reports/${user.uid}/$name")
+        val ref = storageRef.child("$path/${user.uid}/$name")
         val task = ref.putBytes(data)
         task.addOnCompleteListener { snapshot ->
             coroutine.launch {

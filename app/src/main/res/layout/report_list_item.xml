@@ -33,13 +33,16 @@
             app:layout_constraintTop_toTopOf="@+id/report_item_type_iv" />
 
         <TextView
+            android:id="@+id/report_item_size_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/report_item_size_tv"
             android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/report_item_name_tv"
             app:layout_constraintTop_toBottomOf="@+id/report_item_name_tv"
-            tools:text="500 KB" />
+            tools:text="500 KB"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_bias="0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

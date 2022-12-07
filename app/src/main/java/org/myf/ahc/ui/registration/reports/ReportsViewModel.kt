@@ -1,6 +1,5 @@
 package org.myf.ahc.ui.registration.reports
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.repos.StorageListRepo
 import org.myf.ahc.repos.StorageUploadRepo
+import org.myf.ahc.util.EndPoints
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,11 +28,10 @@ class ReportsViewModel @Inject constructor(
                 _uiState.emit(
                     _uiState.value.copy(
                         list = it,
-                        isLoading = it.isEmpty(),
+                        isLoading = false,
                         isEmpty = it.isEmpty()
                     )
                 )
-
             } }
             launch { storageListRepo.size.collect{
                 _uiState.emit(_uiState.value.copy(size = it))
@@ -63,6 +62,7 @@ class ReportsViewModel @Inject constructor(
         name: String
     ) = viewModelScope.launch {
        uploadRepo.uploadFile(
+           path = EndPoints.REPORTS_PATH,
            data = data,
            name = name
        )

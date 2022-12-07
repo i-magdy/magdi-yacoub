@@ -85,13 +85,16 @@
             app:layout_constraintTop_toBottomOf="@+id/reports_rv" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/reports_file_in_progress_tv"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceCaption"
+            android:textSize="11sp"
+            android:ellipsize="end"
+            android:visibility="visible"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="@+id/reports_progress"
             app:layout_constraintStart_toStartOf="@+id/reports_progress"
             app:layout_constraintTop_toBottomOf="@+id/reports_progress"
-            android:id="@+id/reports_file_in_progress_tv"
-            android:visibility="gone"
             tools:text="File Name" />
 
         <ProgressBar

@@ -8,6 +8,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.models.DocumentModel
+import org.myf.ahc.util.EndPoints
 import org.myf.ahc.util.FileTypesUtil
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class StorageListRepo @Inject constructor(){
     fun getPatientReportsList(
         patientId: String
     ){
-        val listRef = storage.reference.child("Patient_reports/$patientId")
+        val listRef = storage.reference.child("${EndPoints.REPORTS_PATH}/$patientId")
         val list = ArrayList<DocumentModel>()
         listRef.listAll().addOnSuccessListener {  result ->
             coroutine.launch {

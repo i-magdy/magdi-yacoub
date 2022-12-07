@@ -26,13 +26,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.myf.ahc.R
 import org.myf.ahc.adapters.ReportsAdapter
 import org.myf.ahc.util.FileTypesUtil
+import org.myf.ahc.util.FilesSizeUtil.REPORTS_SIZE
 import org.myf.ahc.util.FilesSizeUtil.calculateSizePercentage
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -55,6 +53,7 @@ class UploadReportsScreen : Fragment(
     private lateinit var progress: LinearProgressIndicator
     private lateinit var fileTv: TextView
     private lateinit var uploadButton: MaterialButton
+    private var size = 0L
     private val adapter = ReportsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,16 +111,17 @@ class UploadReportsScreen : Fragment(
         if (ui.pickImage) {
             pickImageIntentLauncher.launch(pickImageIntent)
         }
-        uploadButton.isEnabled = ui.size < 20000000
+        size = ui.size
+        uploadButton.isEnabled = size < REPORTS_SIZE
         sizeProgress.progress = ui.size.toInt()
         loading.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
         reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
         adapter.setDocuments(ui.list.sortedBy { it.name })
         percentageTv.text = calculateSizePercentage(ui.size.toDouble())
-        if (ui.progress == 0){
+        if (ui.progress == 0) {
             progress.visibility = View.GONE
             fileTv.visibility = View.GONE
-        }else{
+        } else {
             progress.visibility = View.VISIBLE
             fileTv.visibility = View.VISIBLE
             fileTv.text = ui.fileName
@@ -190,21 +190,21 @@ class UploadReportsScreen : Fragment(
         }
         val inputStream = requireActivity().contentResolver.openInputStream(uri) ?: return@launch
         withContext(Dispatchers.IO) {
-            val size = inputStream.available()
+            val fileSize = inputStream.available()
             Log.d(
                 "File_$type",
                 "name: $name\n" +
-                        "Size: $size Bytes"
+                        "Size: $fileSize Bytes"
             )
             if (type == FileTypesUtil.PDF) {
-                if (size < 20000000) {
+                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
                     inputStream.readBytes().let {
                         viewModel.uploadFile(
                             data = it,
                             name = name
                         )
                     }
-                }else{
+                } else {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
@@ -215,14 +215,14 @@ class UploadReportsScreen : Fragment(
                 }
             }
             if (type == FileTypesUtil.MICROSOFT_WORD) {
-                if (size < 20000000) {
+                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
                     inputStream.readBytes().let {
                         viewModel.uploadFile(
                             data = it,
                             name = name
                         )
                     }
-                }else{
+                } else {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
@@ -258,29 +258,39 @@ class UploadReportsScreen : Fragment(
         }
         val inputStream = requireActivity().contentResolver.openInputStream(uri) ?: return@launch
         withContext(Dispatchers.IO) {
-            val size = inputStream.available()
+            val fileSize = inputStream.available()
             Log.d(
                 "IMAGE_$name",
-                "$type , size: $size Bytes"
+                "$type , size: $fileSize Bytes"
             )
             if (type == FileTypesUtil.JPG || type == FileTypesUtil.PNG) {
-                if (size > 3_000_000) {
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    val byteStream = ByteArrayOutputStream()
-                    bitmap.compress(
-                        if (type == FileTypesUtil.JPG) Bitmap.CompressFormat.JPEG
-                        else Bitmap.CompressFormat.PNG, 60, byteStream
-                    )
-                    viewModel.uploadFile(
-                        data = byteStream.toByteArray(),
-                        name = name
-                    )
-                } else {
-                    inputStream.readBytes().let {
+                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
+                    if (fileSize > 3_000_000) {
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        val byteStream = ByteArrayOutputStream()
+                        bitmap.compress(
+                            if (type == FileTypesUtil.JPG) Bitmap.CompressFormat.JPEG
+                            else Bitmap.CompressFormat.PNG, 60, byteStream
+                        )
                         viewModel.uploadFile(
-                            data = it,
+                            data = byteStream.toByteArray(),
                             name = name
                         )
+                    } else {
+                        inputStream.readBytes().let {
+                            viewModel.uploadFile(
+                                data = it,
+                                name = name
+                            )
+                        }
+                    }
+                }else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.file_size_message),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
@@ -296,6 +306,7 @@ class UploadReportsScreen : Fragment(
         if (this::pickFileIntentLauncher.isInitialized) {
             pickFileIntentLauncher.unregister()
         }
+        coroutine.cancel()
     }
 
 }
