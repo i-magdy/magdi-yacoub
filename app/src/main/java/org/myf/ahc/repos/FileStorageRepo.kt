@@ -9,10 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.myf.ahc.util.EndPoints
 import javax.inject.Inject
 
-class StorageUploadRepo @Inject constructor(
+class FileStorageRepo @Inject constructor(
 
 ) {
 
@@ -22,6 +21,7 @@ class StorageUploadRepo @Inject constructor(
     private val coroutine = CoroutineScope(Dispatchers.Default)
     val isSucceed = MutableStateFlow(false)
     val progress = MutableStateFlow(0)
+    val isDeleted = MutableStateFlow(false)
 
     fun uploadFile(
         path: String,
@@ -35,7 +35,7 @@ class StorageUploadRepo @Inject constructor(
             coroutine.launch {
                 isSucceed.emit(snapshot.isSuccessful)
             }
-        }.addOnFailureListener { Log.e("upload",it.message.toString()) }
+        }
         task.addOnProgressListener { result ->
             val p:Double = (100.0 * result.bytesTransferred) / result.totalByteCount
             coroutine.launch {
@@ -47,8 +47,18 @@ class StorageUploadRepo @Inject constructor(
         }
     }
 
+    fun deleteFile(
+        path: String
+    ) = coroutine.launch {
+        val ref = storageRef.child(path)
+        ref.delete().addOnCompleteListener {
+            coroutine.launch {  isDeleted.emit(it.isSuccessful) }
+        }.addOnFailureListener { Log.e("delete",it.message.toString()) }
+    }
+
     fun reset() = coroutine.launch {
         isSucceed.emit(false)
+        isDeleted.emit(false)
     }
 
     fun cancelJob() = coroutine.cancel()

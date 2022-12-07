@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import org.myf.ahc.R
@@ -38,7 +39,7 @@ import java.io.FileNotFoundException
 @AndroidEntryPoint
 class UploadReportsScreen : Fragment(
     R.layout.screen_upload_reports
-) {
+), ReportsAdapter.ReportAdapterListener {
 
     private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickImageIntent: Intent
@@ -54,7 +55,8 @@ class UploadReportsScreen : Fragment(
     private lateinit var fileTv: TextView
     private lateinit var uploadButton: MaterialButton
     private var size = 0L
-    private val adapter = ReportsAdapter()
+    private val adapter = ReportsAdapter(this)
+    private val deleteDialog = DeleteReportDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +128,12 @@ class UploadReportsScreen : Fragment(
             fileTv.visibility = View.VISIBLE
             fileTv.text = ui.fileName
             progress.progress = ui.progress
+        }
+        if (ui.deleteFile != null && !deleteDialog.isAdded){
+            deleteDialog.show(parentFragmentManager,"tag_name")
+        }
+        if (ui.deleteFile == null && deleteDialog.isAdded){
+            deleteDialog.dismiss()
         }
     }
 
@@ -307,6 +315,10 @@ class UploadReportsScreen : Fragment(
             pickFileIntentLauncher.unregister()
         }
         coroutine.cancel()
+    }
+
+    override fun onDeleteFile(path: String) {
+        viewModel.onAttemptToDeleteFile(path)
     }
 
 }

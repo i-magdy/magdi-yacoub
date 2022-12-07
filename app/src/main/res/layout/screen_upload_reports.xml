@@ -35,14 +35,25 @@
         app:layout_constraintStart_toStartOf="@+id/reports_title_tv"
         app:layout_constraintTop_toBottomOf="@+id/reports_title_tv" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="10/20 MB"
-        android:id="@+id/reports_size_percentage_tv"
-        android:textAppearance="?attr/textAppearanceOverline"
-        app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
-        app:layout_constraintEnd_toEndOf="@+id/reports_size_progress" />
+        <TextView
+            android:id="@+id/reports_size_percentage_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:textAppearance="?attr/textAppearanceOverline"
+            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toStartOf="@+id/reports_total_size_title"
+            tools:text="50%" />
+
+        <TextView
+            android:id="@+id/reports_total_size_title"
+            android:layout_width="wrap_content"
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:layout_height="wrap_content"
+            android:text="@string/total_size_value"
+            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="0dp"
@@ -92,6 +103,7 @@
             android:ellipsize="end"
             android:visibility="visible"
             android:textAlignment="viewStart"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="@+id/reports_progress"
             app:layout_constraintStart_toStartOf="@+id/reports_progress"
             app:layout_constraintTop_toBottomOf="@+id/reports_progress"

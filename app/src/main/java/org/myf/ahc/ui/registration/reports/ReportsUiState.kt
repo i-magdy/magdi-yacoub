@@ -10,5 +10,6 @@ data class ReportsUiState(
     val isLoading: Boolean = true,
     val isEmpty: Boolean = false,
     val fileName: String = "",
-    val progress: Int = 0
+    val progress: Int = 0,
+    val deleteFile: DocumentModel? = null
 )

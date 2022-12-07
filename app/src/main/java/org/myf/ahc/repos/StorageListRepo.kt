@@ -24,9 +24,9 @@ class StorageListRepo @Inject constructor(){
     ){
         val listRef = storage.reference.child("${EndPoints.REPORTS_PATH}/$patientId")
         val list = ArrayList<DocumentModel>()
-        listRef.listAll().addOnSuccessListener {  result ->
-            coroutine.launch {
-                size.emit(0L)
+        var s = 0L
+        coroutine.launch {
+            listRef.listAll().addOnSuccessListener {  result ->
                 result.items.forEach { storageReference ->
                     storageReference.metadata.addOnSuccessListener { meta ->
                         list.add(
@@ -40,11 +40,14 @@ class StorageListRepo @Inject constructor(){
                                 size = meta.sizeBytes
                             )
                         )
-                        coroutine.launch {
-                            size.emit(
-                                value = size.value + meta.sizeBytes
-                            )
-                            files.emit(list)
+                        s += meta.sizeBytes
+                        if (result.items.size == list.size){
+                            coroutine.launch {
+                                size.emit(
+                                    value = s
+                                )
+                                files.emit(list)
+                            }
                         }
                     }
                 }
@@ -56,7 +59,6 @@ class StorageListRepo @Inject constructor(){
         name: String,
         type: String
     ): String{
-        if (name.isEmpty()) return ""
         return when(type){
             FileTypesUtil.MICROSOFT_WORD -> name.replace(FileTypesUtil.WORD_EX,"")
             FileTypesUtil.JPG -> name.replace(FileTypesUtil.JPG_EX,"")
@@ -65,5 +67,6 @@ class StorageListRepo @Inject constructor(){
             else -> ""
         }
     }
+
     fun cancelJob() = coroutine.cancel()
 }

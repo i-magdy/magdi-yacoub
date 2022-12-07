@@ -12,16 +12,23 @@ import org.myf.ahc.models.DocumentModel
 import org.myf.ahc.util.FileTypesUtil
 import org.myf.ahc.util.FilesSizeUtil
 
-class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
+class ReportsAdapter(
+    private val listener: ReportAdapterListener
+): RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
 
     private var list: List<DocumentModel> = emptyList()
     inner class ReportsViewHolder(
         val view: View
-    ): RecyclerView.ViewHolder(view){
+    ): RecyclerView.ViewHolder(view), View.OnClickListener{
 
         private val name = view.findViewById<TextView>(R.id.report_item_name_tv)
         private val img = view.findViewById<ImageView>(R.id.report_item_type_iv)
         private val size = itemView.findViewById<TextView>(R.id.report_item_size_tv)
+        private val deleteIv = itemView.findViewById<ImageView>(R.id.report_item_remove_iv)
+
+        init {
+            deleteIv.setOnClickListener(this)
+        }
 
         fun onBind(document: DocumentModel){
             name.text = document.name
@@ -31,6 +38,10 @@ class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
                 FileTypesUtil.PDF -> img.setImageResource(R.drawable.pdf)
                 else -> img.setImageResource(R.drawable.ic_photo)
             }
+        }
+
+        override fun onClick(v: View?) {
+            listener.onDeleteFile(path = list[adapterPosition].path)
         }
     }
 
@@ -49,4 +60,8 @@ class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
 
 
     override fun getItemCount(): Int = list.size
+
+    interface ReportAdapterListener{
+        fun onDeleteFile(path: String)
+    }
 }
