@@ -21,12 +21,6 @@ class VerifyRepo @Inject constructor(
     val selectedCountry = MutableStateFlow(CountryCodeModel())
     val countriesName = MutableStateFlow<List<String>>(emptyList())
 
-    init {
-        coroutine.launch {
-            launch { getCountries() }
-        }
-    }
-
     suspend fun getCountryByCode(code: String) {
         val response: Response<List<CountryModel>> = countryService.getCountryByCode(code)
         if (response.isSuccessful) {
@@ -75,7 +69,7 @@ class VerifyRepo @Inject constructor(
         selectedCountry.emit(util.selectedCountry!!)
     }
 
-    private suspend fun getCountries() {
+    suspend fun getCountries() {
         val response: Response<List<CountryModel>> = countryService.getAllCountriesData()
         if (response.isSuccessful) {
             val body = response.body()

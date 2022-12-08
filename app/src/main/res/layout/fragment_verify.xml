@@ -27,7 +27,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/verify_constraint_layout">
 
             <TextView
                 android:id="@+id/verify_content_tv"
@@ -45,6 +46,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0" />
 
+            <TextView
+                android:id="@+id/verify_log_in_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/verify_log_in_message"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:visibility="@{viewModel.uiState.shouldLogin ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="@+id/verify_content_tv"
+                app:layout_constraintStart_toStartOf="@+id/verify_content_tv"
+                app:layout_constraintTop_toBottomOf="@+id/verify_content_tv"
+                app:layout_constraintVertical_bias="0"
+                tools:visibility="gone" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/countries_il"
@@ -56,6 +72,7 @@
                 android:layout_marginEnd="16dp"
                 android:enabled="@{!viewModel.uiState.codeSent &amp; !viewModel.countriesName.empty &amp; !viewModel.uiState.codeRequested}"
                 android:hint="@string/select_country_title"
+                android:visibility="@{viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"
                 app:hintTextColor="?attr/colorSecondary"
                 app:errorEnabled="true"
                 app:boxStrokeColor="?attr/colorSecondary"
@@ -80,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
+                android:visibility="@{viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"
                 android:text="@{viewModel.selectedCountry.flag}"
                 android:textAlignment="viewStart"
                 android:textAppearance="?attr/textAppearanceBody1"
@@ -95,6 +113,7 @@
                 android:layout_marginStart="4dp"
                 android:text="@{viewModel.selectedCountry.code}"
                 android:textAlignment="viewStart"
+                android:visibility="@{viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"
                 android:textAppearance="?attr/textAppearanceBody1"
                 app:layout_constraintBottom_toBottomOf="@+id/selected_country_flag_tv"
                 app:layout_constraintStart_toEndOf="@+id/selected_country_flag_tv"
@@ -108,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 app:boxStrokeColor="?attr/colorSecondary"
+                android:visibility="@{viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"
                 android:enabled="@{!viewModel.uiState.codeSent &amp; !viewModel.uiState.codeRequested}"
                 android:hint="@string/phone_title"
                 app:errorEnabled="true"
@@ -121,6 +141,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="20"
                     android:text="@{viewModel.uiState.phone}"
                     android:textAlignment="viewStart" />
 
@@ -132,15 +154,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:boxStrokeColor="?attr/colorSecondary"
-                app:hintTextColor="?attr/colorSecondary"
                 android:enabled="@{!viewModel.uiState.verifying}"
                 android:hint="@string/verify_code_title"
                 android:visibility="@{viewModel.uiState.codeSent &amp; !viewModel.uiState.success ? View.VISIBLE : View.GONE}"
+                app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
+                app:hintTextColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phone_il">
+                app:layout_constraintTop_toBottomOf="@+id/phone_il"
+                app:layout_constraintVertical_bias="0">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/verify_code_et"
@@ -150,6 +174,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
+                android:id="@+id/verify_loading_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{(!viewModel.uiState.codeSent &amp; viewModel.uiState.codeRequested)  ? View.VISIBLE :  View.GONE}"
@@ -183,11 +208,13 @@
                 android:elevation="4dp"
                 android:enabled="@{!viewModel.uiState.phone.blank}"
                 android:minHeight="56dp"
+                android:id="@+id/verify_send_code_button"
                 app:backgroundTint="?attr/colorSecondary"
                 android:onClick="@{()-> viewModel.requestCode()}"
                 android:text="@string/send_code_title"
                 android:textAllCaps="false"
-                android:visibility="@{viewModel.uiState.codeRequested ? View.GONE : View.VISIBLE}"
+                android:textColor="@color/black_light"
+                android:visibility="@{viewModel.uiState.codeRequested || viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

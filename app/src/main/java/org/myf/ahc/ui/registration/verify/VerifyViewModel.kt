@@ -25,6 +25,18 @@ class VerifyViewModel @Inject constructor(
     val verifyCode: StateFlow<String> = _verifyCode
 
 
+    fun shouldUpdateUiForLogIn() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                shouldLogin = true
+            )
+        )
+    }
+
+    fun getCountries() = viewModelScope.launch {
+        repo.getCountries()
+    }
+
     fun getCountryCode(
         country: String
     ) = viewModelScope.launch {

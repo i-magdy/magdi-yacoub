@@ -1,8 +1,10 @@
 package org.myf.ahc.ui.registration.verify
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.telephony.TelephonyManager
@@ -15,12 +17,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -32,6 +36,7 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.myf.ahc.databinding.FragmentVerifyBinding
+import org.myf.ahc.ui.onBoarding.OnBoardingActivity
 import org.myf.ahc.util.NetworkUtil
 import org.myf.ahc.util.PhoneAuthErrorMessage
 import org.myf.ahc.util.VerifyUiError
@@ -50,14 +55,21 @@ class VerifyFragment : Fragment() {
     private val viewModel by viewModels<VerifyViewModel>()
     private lateinit var lang: String
     private val dialog = VerifySuccessBottomSheet()
+    private val args by navArgs<VerifyFragmentArgs>()
+    private var shouldLogin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shouldLogin = args.isShouldLogin && args.phone.isNotBlank()
+        if (shouldLogin){ viewModel.shouldUpdateUiForLogIn() }
         val phone = requireActivity().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (NetworkUtil.isMobileConnectedToInternet(requireContext())){
             var code: String? = phone.simCountryIso
             code = code ?: phone.networkCountryIso
-            viewModel.getCountryCode(code ?: "eg")
+            if (!shouldLogin) {
+                viewModel.getCountries()
+                viewModel.getCountryCode(code ?: "eg")
+            }
         }else{
             Toast.makeText(context,getString(resource.string.offline_message),Toast.LENGTH_LONG).show()
         }
@@ -71,6 +83,9 @@ class VerifyFragment : Fragment() {
         options = PhoneAuthOptions.newBuilder(auth)
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
+        if (shouldLogin){
+            requestCode(args.phone)
+        }
         phoneNumberHintIntentResultLauncher = preparePhoneHintLauncher()
     }
 
@@ -90,6 +105,7 @@ class VerifyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateUi()
         binding.phoneEt.doAfterTextChanged {
             viewModel.setPhone(it?.toString() ?: "")
             binding.phoneIl.helperText = null
@@ -109,9 +125,11 @@ class VerifyFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.uiState.collect{
+                    viewModel.uiState.collect {
                         showUiError(it.error)
-                        if (it.isSuccess){ showBottomSheet() }
+                        if (it.isSuccess) {
+                            showBottomSheet()
+                        }
                     }
                 }
                 launch {
@@ -126,8 +144,10 @@ class VerifyFragment : Fragment() {
                 }
                 launch {
                     viewModel.countriesName.collect {
-                        val adapter = ArrayAdapter(requireContext(),
-                            android.R.layout.simple_list_item_1, it)
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_list_item_1, it
+                        )
                         binding.countriesAc.setAdapter(adapter)
                     }
                 }
@@ -152,9 +172,41 @@ class VerifyFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun updateUi(){
+        if (shouldLogin){
+            val n = args.phone.subSequence(args.phone.length-2,args.phone.length)
+            binding.verifyLogInMessage.text = "${getString(resource.string.verify_log_in_message)}: ****$n"
+            val constrain = ConstraintSet()
+            constrain.clone(binding.verifyConstraintLayout)
+            constrain.connect(binding.verifyCodeIl.id,
+                ConstraintSet.TOP,
+                binding.verifyLogInMessage.id,
+                ConstraintSet.BOTTOM,32
+            )
+            constrain.connect(binding.verifyCodeIl.id,
+                ConstraintSet.START,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.START,16
+            )
+            constrain.connect(binding.verifyCodeIl.id,
+                ConstraintSet.END,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.END,16
+            )
+            constrain.applyTo(binding.verifyConstraintLayout)
+        }
+    }
+
     private fun showBottomSheet(){
         if (dialog.isAdded) return
-        dialog.show(parentFragmentManager,"success_dialog")
+        if (shouldLogin){
+            val toLaunchIntent = Intent(requireActivity(),OnBoardingActivity::class.java)
+            startActivity(toLaunchIntent)
+            requireActivity().finish()
+        }else {
+            dialog.show(parentFragmentManager, "success_dialog")
+        }
     }
     private fun requestCode(phone: String){
         options.setPhoneNumber(phone)
@@ -172,7 +224,9 @@ class VerifyFragment : Fragment() {
         }else {
             val p: String? = binding.phone
             if (p == null || p.isBlank()) {
-                requestPhoneNumberHint()
+                if (!shouldLogin) {
+                    requestPhoneNumberHint()
+                }
             }
         }
     }
