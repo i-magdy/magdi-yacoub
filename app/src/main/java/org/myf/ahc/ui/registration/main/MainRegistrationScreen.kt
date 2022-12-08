@@ -33,7 +33,7 @@ class MainRegistrationScreen : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_navigate_to_registration)
         }
         binding.logInButton.setOnClickListener {
-
+            Navigation.findNavController(view).navigate(R.id.action_navigate_to_log_in)
         }
     }
     override fun onDestroy() {

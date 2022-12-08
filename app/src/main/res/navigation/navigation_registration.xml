@@ -23,7 +23,12 @@
         tools:layout="@layout/screen_log_in">
         <action
             android:id="@+id/action_navigate_from_log_in_to_verify_screen"
-            app:destination="@id/verify_screen"/>
+            app:destination="@id/verify_screen">
+            <argument
+                android:name="isShouldLogin"
+                android:defaultValue="false"
+                app:argType="boolean"/>
+        </action>
     </fragment>
 
     <fragment
@@ -33,7 +38,12 @@
         tools:layout="@layout/screen_create_patient">
         <action
             android:id="@+id/action_navigate_to_verify"
-            app:destination="@id/verify_screen"/>
+            app:destination="@id/verify_screen">
+            <argument
+                android:name="isShouldLogin"
+                android:defaultValue="false"
+                app:argType="boolean"/>
+        </action>
     </fragment>
 
 
@@ -42,6 +52,10 @@
         android:label="verify_screen"
         tools:layout="@layout/fragment_verify"
         android:name="org.myf.ahc.ui.registration.verify.VerifyFragment">
+        <argument
+            android:name="isShouldLogin"
+            android:defaultValue="false"
+            app:argType="boolean"/>
         <action
             android:id="@+id/action_navigate_to_upload_reports"
             app:destination="@id/upload_reports_screen"/>
