@@ -4,7 +4,6 @@ import android.app.LocaleManager
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -20,6 +19,7 @@ open class BaseActivity : AppCompatActivity {
 
     @Inject
     lateinit var datastoreImpl: DatastoreImpl
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this::datastoreImpl.isInitialized) {
@@ -36,7 +36,6 @@ open class BaseActivity : AppCompatActivity {
                 }
             }
         }
-
     }
 
     private fun changeAppLanguage(lang: String){

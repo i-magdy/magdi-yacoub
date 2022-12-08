@@ -15,6 +15,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getDatastoreImpl(@ApplicationContext context: Context) = DatastoreImpl(context)
+    fun provideDatastoreImpl(@ApplicationContext context: Context) = DatastoreImpl(context)
 
 }

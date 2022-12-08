@@ -23,7 +23,7 @@ class VerifyUtil @Inject constructor() {
         _countries = countries
     }
 
-    suspend fun getCountries(): List<CountryCodeModel>{
+    fun getCountries(): List<CountryCodeModel>{
         return if (_countries.isEmpty()){
             emptyList()
         }else{
