@@ -4,7 +4,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import org.myf.ahc.repos.StorageListRepo
 import org.myf.ahc.repos.FileStorageRepo
 import org.myf.ahc.util.EndPoints
@@ -33,6 +32,7 @@ class SubmitReportsRepo @Inject constructor(
                     )
                 }
             }
+            delay(700)
             launch {
                 storageListRepo.size.collect {
                     uiState.emit(uiState.value.copy(size = it))
@@ -44,6 +44,11 @@ class SubmitReportsRepo @Inject constructor(
                         getReportsList()
                         storageRepo.reset()
                     }
+                    uiState.emit(
+                        value = uiState.value.copy(
+                            isUploading = false
+                        )
+                    )
                 }
             }
             launch {
@@ -71,7 +76,7 @@ class SubmitReportsRepo @Inject constructor(
             data = data,
             name = name
         )
-        uiState.emit(uiState.value.copy(fileName = name))
+        uiState.emit(uiState.value.copy(fileName = name, isUploading = true))
     }
 
     fun getReportsList() = coroutine.launch {
@@ -138,5 +143,6 @@ class SubmitReportsRepo @Inject constructor(
         coroutine.cancel()
         storageRepo.cancelJob()
         storageListRepo.cancelJob()
+        listenerCoroutine.cancel()
     }
 }

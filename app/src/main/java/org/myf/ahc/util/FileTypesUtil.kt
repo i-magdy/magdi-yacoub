@@ -9,4 +9,12 @@ object FileTypesUtil {
     const val WORD_EX = ".docx"
     const val PDF_EX = ".pdf"
     const val PNG_EX = ".png"
+
+    fun getFileTypeExtension(type: String): String = when(type){
+        MICROSOFT_WORD -> WORD_EX
+        PDF -> PDF_EX
+        JPG -> JPG_EX
+        PNG -> PNG_EX
+        else -> ""
+    }
 }

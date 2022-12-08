@@ -114,7 +114,7 @@ class UploadReportsScreen : Fragment(
             pickImageIntentLauncher.launch(pickImageIntent)
         }
         size = ui.size
-        uploadButton.isEnabled = size < REPORTS_SIZE
+        uploadButton.isEnabled = size < REPORTS_SIZE  && !ui.isUploading
         sizeProgress.progress = ui.size.toInt()
         loading.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
         reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
@@ -129,10 +129,10 @@ class UploadReportsScreen : Fragment(
             fileTv.text = ui.fileName
             progress.progress = ui.progress
         }
-        if (ui.deleteFile != null && !deleteDialog.isAdded){
-            deleteDialog.show(parentFragmentManager,"tag_name")
+        if (ui.deleteFile != null && !deleteDialog.isAdded) {
+            deleteDialog.show(parentFragmentManager, "tag_name")
         }
-        if (ui.deleteFile == null && deleteDialog.isAdded){
+        if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
         }
     }
@@ -205,38 +205,58 @@ class UploadReportsScreen : Fragment(
                         "Size: $fileSize Bytes"
             )
             if (type == FileTypesUtil.PDF) {
-                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
-                    inputStream.readBytes().let {
-                        viewModel.uploadFile(
-                            data = it,
-                            name = name
-                        )
-                    }
-                } else {
+                if (viewModel.isFileExist(name)) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_size_message),
+                            getString(R.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
+                    }
+                } else {
+                    if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
+                        inputStream.readBytes().let {
+                            viewModel.uploadFile(
+                                data = it,
+                                name = name
+                            )
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.file_size_message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }
             if (type == FileTypesUtil.MICROSOFT_WORD) {
-                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
-                    inputStream.readBytes().let {
-                        viewModel.uploadFile(
-                            data = it,
-                            name = name
-                        )
-                    }
-                } else {
+                if (viewModel.isFileExist(name)) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_size_message),
+                            getString(R.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
+                    }
+                } else {
+                    if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
+                        inputStream.readBytes().let {
+                            viewModel.uploadFile(
+                                data = it,
+                                name = name
+                            )
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.file_size_message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }
@@ -272,33 +292,43 @@ class UploadReportsScreen : Fragment(
                 "$type , size: $fileSize Bytes"
             )
             if (type == FileTypesUtil.JPG || type == FileTypesUtil.PNG) {
-                if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
-                    if (fileSize > 3_000_000) {
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        val byteStream = ByteArrayOutputStream()
-                        bitmap.compress(
-                            if (type == FileTypesUtil.JPG) Bitmap.CompressFormat.JPEG
-                            else Bitmap.CompressFormat.PNG, 60, byteStream
-                        )
-                        viewModel.uploadFile(
-                            data = byteStream.toByteArray(),
-                            name = name
-                        )
-                    } else {
-                        inputStream.readBytes().let {
-                            viewModel.uploadFile(
-                                data = it,
-                                name = name
-                            )
-                        }
-                    }
-                }else {
+                if (viewModel.isFileExist(name)) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_size_message),
+                            getString(R.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
+                    }
+                } else {
+                    if (fileSize < REPORTS_SIZE && (fileSize + size) < REPORTS_SIZE) {
+                        if (fileSize > 3_000_000) {
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
+                            val byteStream = ByteArrayOutputStream()
+                            bitmap.compress(
+                                if (type == FileTypesUtil.JPG) Bitmap.CompressFormat.JPEG
+                                else Bitmap.CompressFormat.PNG, 60, byteStream
+                            )
+                            viewModel.uploadFile(
+                                data = byteStream.toByteArray(),
+                                name = name
+                            )
+                        } else {
+                            inputStream.readBytes().let {
+                                viewModel.uploadFile(
+                                    data = it,
+                                    name = name
+                                )
+                            }
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.file_size_message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }

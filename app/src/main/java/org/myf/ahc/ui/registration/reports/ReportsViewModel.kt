@@ -2,7 +2,10 @@ package org.myf.ahc.ui.registration.reports
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.withContext
+import org.myf.ahc.util.FileTypesUtil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +31,18 @@ class ReportsViewModel @Inject constructor(
     ) = repo.attemptToDeleteFile(
         path = path
     )
+
+    suspend fun isFileExist(
+        name: String
+    ): Boolean = withContext(Dispatchers.Default){
+        uiState.value.list.forEach {
+            val file = it.name+FileTypesUtil.getFileTypeExtension(it.type)
+            if (name == file){
+                return@withContext true
+            }
+        }
+        false
+    }
 
     fun clearDeleteFile() = repo.clearDeleteFile()
 
