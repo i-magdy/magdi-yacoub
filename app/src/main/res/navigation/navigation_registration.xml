@@ -12,6 +12,18 @@
         android:name="org.myf.ahc.ui.registration.main.MainRegistrationScreen">
         <action android:id="@+id/action_navigate_to_registration"
             app:destination="@id/create_patient_screen"/>
+        <action android:id="@+id/action_navigate_to_log_in"
+            app:destination="@id/log_in_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_in_screen"
+        android:label="log_in_screen"
+        android:name="org.myf.ahc.ui.registration.login.LogInScreen"
+        tools:layout="@layout/screen_log_in">
+        <action
+            android:id="@+id/action_navigate_from_log_in_to_verify_screen"
+            app:destination="@id/verify_screen"/>
     </fragment>
 
     <fragment
