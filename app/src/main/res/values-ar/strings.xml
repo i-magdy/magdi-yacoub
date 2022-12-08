@@ -42,5 +42,6 @@
     <string name="delete_report_message">هل تريد حذف هذا الملف؟</string>
     <string name="file_exist_message">تم تحميل الملف بالفعل</string>
     <string name="used_storage">المساحه المستخدمه</string>
-
+    <string name="register_title">تسجيل</string>
+    <string name="log_in_title">دخول</string>
 </resources>
