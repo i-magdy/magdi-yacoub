@@ -1,8 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorOnBackground"
     tools:context=".ui.registration.reports.UploadReportsScreen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/reports_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/send_reports_title"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/reports_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/send_reports_message"
+            android:textColor="?attr/colorControlNormal"
+            app:layout_constraintEnd_toEndOf="@+id/reports_title_tv"
+            app:layout_constraintStart_toStartOf="@+id/reports_title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/reports_title_tv" />
+
+        <TextView
+            android:id="@+id/reports_size_percentage_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:textAppearance="?attr/textAppearanceOverline"
+            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toStartOf="@+id/reports_total_size_title"
+            tools:text="50%" />
+
+        <TextView
+            android:id="@+id/reports_total_size_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_size_value"
+            android:textAppearance="?attr/textAppearanceOverline"
+            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/used_storage"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintStart_toStartOf="@+id/reports_size_progress" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/reports_size_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:max="20000000"
+            app:indicatorColor="?attr/colorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reports_message_tv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reports_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/upload_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reports_size_progress"
+            tools:itemCount="6"
+            tools:listitem="@layout/report_list_item" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/reports_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:max="100"
+            app:indicatorColor="?attr/colorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/reports_rv" />
+
+        <TextView
+            android:id="@+id/reports_file_in_progress_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textSize="11sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/reports_progress"
+            app:layout_constraintStart_toStartOf="@+id/reports_progress"
+            app:layout_constraintTop_toBottomOf="@+id/reports_progress"
+            tools:text="File Name" />
+
+        <ProgressBar
+            android:id="@+id/reports_loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/upload_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reports_size_progress" />
+
+        <TextView
+            android:id="@+id/reports_list_message_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reports_view_message"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/upload_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reports_loading_progress"
+            app:layout_constraintVertical_bias="0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/upload_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:minHeight="56dp"
+            android:text="@string/upload_files_title"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnSurface"
+            app:backgroundTint="?attr/colorSurface"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/submit_button"
+            app:layout_constraintEnd_toEndOf="@+id/submit_button"
+            app:layout_constraintStart_toStartOf="@+id/submit_button"
+            app:rippleColor="@color/purple_100"
+            app:strokeColor="@color/purple_200"
+            app:strokeWidth="2dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="24dp"
+            android:minHeight="56dp"
+            android:text="@string/submit_title"
+            android:textAllCaps="false"
+            app:backgroundTint="?attr/colorSecondary"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/pick_up_chooser_bottom_sheet"
+        style="@style/Widget.MaterialComponents.BottomSheet.Modal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_dialog_view"
+        app:behavior_draggable="false"
+        app:behavior_fitToContents="true"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
