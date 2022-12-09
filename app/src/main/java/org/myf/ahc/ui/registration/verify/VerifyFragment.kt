@@ -83,9 +83,12 @@ class VerifyFragment : Fragment() {
         options = PhoneAuthOptions.newBuilder(auth)
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
-        if (shouldLogin){
+        if (shouldLogin && auth.currentUser == null){
             requestCode(args.phone)
-        }
+        }else{ viewModel.succeed(
+            isSucceed = auth.currentUser != null,
+            forLogin = shouldLogin
+        ) }
         phoneNumberHintIntentResultLauncher = preparePhoneHintLauncher()
     }
 
@@ -220,7 +223,10 @@ class VerifyFragment : Fragment() {
         super.onStart()
         if (auth.currentUser != null){
             viewModel.setPhone(auth.currentUser?.phoneNumber ?: "")
-            viewModel.succeed()
+            viewModel.succeed(
+                isSucceed = true,
+                forLogin = shouldLogin
+            )
         }else {
             val p: String? = binding.phone
             if (p == null || p.isBlank()) {
@@ -300,7 +306,10 @@ class VerifyFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = task.result?.user
-                    viewModel.succeed()
+                    viewModel.succeed(
+                        isSucceed = user != null,
+                        forLogin = shouldLogin
+                    )
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)

@@ -3,9 +3,11 @@ package org.myf.ahc.ui.registration.verify
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.api.CountriesService
+import org.myf.ahc.data.DatastoreImpl
 import org.myf.ahc.models.CountryCodeModel
 import org.myf.ahc.models.CountryModel
 import org.myf.ahc.util.VerifyUtil
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class VerifyRepo @Inject constructor(
     private val countryService: CountriesService,
-    private val util: VerifyUtil
+    private val util: VerifyUtil,
+    private val datastore: DatastoreImpl
 ) {
 
     private val coroutine = CoroutineScope(Dispatchers.Default)
@@ -99,4 +102,11 @@ class VerifyRepo @Inject constructor(
     fun setAppLang(lang: String) {
         util.appLang = lang
     }
+
+
+    fun updateStateForLogin() = coroutine.launch {
+        datastore.updateState(2)
+    }
+
+    fun cancelJobs() = coroutine.cancel()
 }
