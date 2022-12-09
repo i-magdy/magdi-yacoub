@@ -179,7 +179,7 @@ class UploadReportsScreen : Fragment(
 
     @Throws(FileNotFoundException::class)
     fun openDocument(uri: Uri) = coroutine.launch {
-        var type: String? = ""
+        var type: String? = null
         var name = ""
         type = requireActivity().contentResolver.getType(uri)
         requireActivity().contentResolver.query(
@@ -265,7 +265,7 @@ class UploadReportsScreen : Fragment(
 
     @Throws(FileNotFoundException::class)
     fun openImage(uri: Uri) = coroutine.launch {
-        var type: String? = ""
+        var type: String? = null
         var name = ""
         type = requireActivity().contentResolver.getType(uri)
         requireActivity().contentResolver.query(

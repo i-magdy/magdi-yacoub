@@ -36,7 +36,7 @@ class DeleteReportDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.dialogActionClose.setOnClickListener { dismiss() }
         binding.actionDialogButton.setOnClickListener { viewModel.deleteFile() }
-        binding.actionDialogCheckbox.setOnCheckedChangeListener { compoundButton, b ->
+        binding.actionDialogCheckbox.setOnCheckedChangeListener { _, b ->
                 binding.actionDialogButton.isEnabled = b
         }
         lifecycleScope.launch {
