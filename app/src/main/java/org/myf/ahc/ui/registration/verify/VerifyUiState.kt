@@ -9,5 +9,6 @@ data class VerifyUiState(
     val isCodeSent: Boolean = false,
     val isVerifying: Boolean = false,
     val isSuccess: Boolean = false,
-    val error: VerifyUiError = VerifyUiError.NONE
+    val error: VerifyUiError = VerifyUiError.NONE,
+    val shouldLogin: Boolean = false
 )

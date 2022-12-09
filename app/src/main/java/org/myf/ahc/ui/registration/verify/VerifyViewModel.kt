@@ -3,6 +3,7 @@ package org.myf.ahc.ui.registration.verify
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,6 +25,18 @@ class VerifyViewModel @Inject constructor(
     val phoneToVerify: StateFlow<String> = _phoneToVerify
     val verifyCode: StateFlow<String> = _verifyCode
 
+
+    fun shouldUpdateUiForLogIn() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                shouldLogin = true
+            )
+        )
+    }
+
+    fun getCountries() = viewModelScope.launch {
+        repo.getCountries()
+    }
 
     fun getCountryCode(
         country: String
@@ -108,10 +121,22 @@ class VerifyViewModel @Inject constructor(
         )
     }
 
-    fun succeed() = viewModelScope.launch {
+    fun succeed(
+        isSucceed: Boolean,
+        forLogin: Boolean
+    ) = viewModelScope.launch {
+        if (isSucceed && forLogin){
+            repo.updateStateForLogin()
+        }
+        delay(200)
         _uiState.emit(
-            value = _uiState.value.copy(isSuccess = true, isCodeSent = true, isCodeRequested = true)
+            value = _uiState.value.copy(isSuccess = isSucceed, isCodeSent = true, isCodeRequested = true)
         )
         _phoneToVerify.emit("")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repo.cancelJobs()
     }
 }

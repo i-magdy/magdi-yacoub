@@ -12,6 +12,27 @@
         android:name="org.myf.ahc.ui.registration.main.MainRegistrationScreen">
         <action android:id="@+id/action_navigate_to_registration"
             app:destination="@id/create_patient_screen"/>
+        <action android:id="@+id/action_navigate_to_log_in"
+            app:destination="@id/log_in_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_in_screen"
+        android:label="log_in_screen"
+        android:name="org.myf.ahc.ui.registration.login.LogInScreen"
+        tools:layout="@layout/screen_log_in">
+        <action
+            android:id="@+id/action_navigate_from_log_in_to_verify_screen"
+            app:destination="@id/verify_screen">
+            <argument
+                android:name="isShouldLogin"
+                android:defaultValue="false"
+                app:argType="boolean"/>
+            <argument
+                android:name="phone"
+                android:defaultValue=""
+                app:argType="string"/>
+        </action>
     </fragment>
 
     <fragment
@@ -21,7 +42,12 @@
         tools:layout="@layout/screen_create_patient">
         <action
             android:id="@+id/action_navigate_to_verify"
-            app:destination="@id/verify_screen"/>
+            app:destination="@id/verify_screen">
+            <argument
+                android:name="isShouldLogin"
+                android:defaultValue="false"
+                app:argType="boolean"/>
+        </action>
     </fragment>
 
 
@@ -30,6 +56,14 @@
         android:label="verify_screen"
         tools:layout="@layout/fragment_verify"
         android:name="org.myf.ahc.ui.registration.verify.VerifyFragment">
+        <argument
+            android:name="isShouldLogin"
+            android:defaultValue="false"
+            app:argType="boolean"/>
+        <argument
+            android:name="phone"
+            android:defaultValue=""
+            app:argType="string"/>
         <action
             android:id="@+id/action_navigate_to_upload_reports"
             app:destination="@id/upload_reports_screen"/>

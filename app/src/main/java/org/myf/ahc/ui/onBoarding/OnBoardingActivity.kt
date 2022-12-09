@@ -35,7 +35,7 @@ class OnBoardingActivity : BaseActivity(
                             nav.navigate(R.id.action_navigate_to_welcome_screen)
                         }
                     }
-                    else -> {
+                    1 -> {
                         val toRegistration = Intent(this@OnBoardingActivity,RegistrationActivity::class.java)
                         startActivity(toRegistration)
                         finish()
