@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginBottom="28dp"
         android:hint="Id Number"
         app:boxStrokeColor="?attr/colorSecondary"
         app:errorEnabled="true"
@@ -25,8 +24,8 @@
             android:id="@+id/log_in_id_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLines="1"
-            android:maxLength="14"
+            android:maxLines="@integer/single_line"
+            android:maxLength="@integer/id_max_length"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,9 +36,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="32dp"
-        app:cornerRadius="8dp"
+        app:cornerRadius="@dimen/button_normal_rad"
         android:elevation="4dp"
-        android:minHeight="56dp"
+        android:minHeight="@dimen/button_min_height"
         app:backgroundTint="?attr/colorSecondary"
         android:textColor="@color/black_light"
         android:textAllCaps="false"

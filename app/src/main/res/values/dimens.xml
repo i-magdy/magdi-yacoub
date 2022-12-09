@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_normal_elevation">4dp</dimen>
+    <dimen name="button_normal_rad">8dp</dimen>
+    <dimen name="button_min_height">56dp</dimen>
+    <integer name="max_progress_storage_size">20000000</integer>
+    <integer name="storage_progress">10000000</integer>
+    <integer name="country_max_length">32</integer>
+    <integer name="phone_max_length">20</integer>
+    <integer name="verification_code_length">6</integer>
+    <integer name="single_line">1</integer>
+    <integer name="id_max_length">14</integer>
+</resources>

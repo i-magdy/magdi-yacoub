@@ -2,8 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.registration.verify.VerifyFragment"
-    android:background="?attr/colorOnBackground">
+    tools:context=".ui.registration.verify.VerifyFragment">
 
     <data>
         <import type="android.view.View" />
@@ -23,7 +22,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -85,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"
-                    android:maxLength="32"
-                    android:maxLines="1"
+                    android:maxLength="@integer/country_max_length"
+                    android:maxLines="@integer/single_line"
                     android:textAlignment="viewStart"
                     tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -141,10 +141,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="20"
+                    android:maxLength="@integer/phone_max_length"
+                    android:maxLines="@integer/single_line"
                     android:text="@{viewModel.uiState.phone}"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="viewStart"
+                    tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,7 +171,10 @@
                     android:id="@+id/verify_code_et"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="@integer/verification_code_length"
+                    android:maxLines="@integer/single_line"
+                    tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
@@ -180,6 +184,7 @@
                 android:visibility="@{(!viewModel.uiState.codeSent &amp; viewModel.uiState.codeRequested)  ? View.VISIBLE :  View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phone_il" />
 
@@ -188,12 +193,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="48dp"
-                android:elevation="4dp"
+                android:elevation="@dimen/button_normal_elevation"
                 android:enabled="@{!viewModel.uiState.verifying}"
-                android:minHeight="56dp"
+                android:minHeight="@dimen/button_min_height"
                 android:onClick="@{()-> viewModel.verify(code)}"
                 android:text="@string/verify_title"
+                app:elevation="@dimen/button_normal_elevation"
+                app:cornerRadius="@dimen/button_normal_rad"
                 android:textAllCaps="false"
+                tools:visibility="gone"
                 app:backgroundTint="?attr/colorSecondary"
                 android:visibility="@{viewModel.uiState.codeSent &amp; !viewModel.uiState.success? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -205,13 +213,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="48dp"
-                android:elevation="4dp"
+                android:elevation="@dimen/button_normal_elevation"
                 android:enabled="@{!viewModel.uiState.phone.blank}"
-                android:minHeight="56dp"
+                android:minHeight="@dimen/button_min_height"
                 android:id="@+id/verify_send_code_button"
                 app:backgroundTint="?attr/colorSecondary"
                 android:onClick="@{()-> viewModel.requestCode()}"
                 android:text="@string/send_code_title"
+                app:cornerRadius="@dimen/button_normal_rad"
                 android:textAllCaps="false"
                 android:textColor="@color/black_light"
                 android:visibility="@{viewModel.uiState.codeRequested || viewModel.uiState.shouldLogin ? View.GONE : View.VISIBLE}"

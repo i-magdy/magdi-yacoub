@@ -39,10 +39,8 @@
             android:id="@+id/reports_size_percentage_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
             android:textAppearance="?attr/textAppearanceOverline"
             app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
-            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress"
             app:layout_constraintEnd_toStartOf="@+id/reports_total_size_title"
             tools:text="50%" />
 
@@ -70,7 +68,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:max="20000000"
+            android:max="@integer/max_progress_storage_size"
+            tools:progress="@integer/storage_progress"
             app:indicatorColor="?attr/colorSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reports_size_progress"
-            tools:itemCount="6"
+            tools:itemCount="7"
             tools:listitem="@layout/report_list_item" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -96,11 +95,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            tools:visibility="gone"
             android:max="100"
             app:indicatorColor="?attr/colorSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toBottomOf="@+id/reports_rv" />
 
         <TextView
@@ -109,6 +108,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            tools:visibility="gone"
             android:textAlignment="viewStart"
             android:textSize="11sp"
             android:visibility="visible"
@@ -122,6 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="4dp"
+            tools:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/upload_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,18 +147,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:minHeight="56dp"
+            android:elevation="@dimen/button_normal_elevation"
+            android:minHeight="@dimen/button_min_height"
             android:text="@string/upload_files_title"
             android:textAllCaps="false"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/colorSecondaryVariant"
             app:backgroundTint="?attr/colorSurface"
-            app:cornerRadius="8dp"
+            app:cornerRadius="@dimen/button_normal_rad"
             app:layout_constraintBottom_toTopOf="@+id/submit_button"
             app:layout_constraintEnd_toEndOf="@+id/submit_button"
             app:layout_constraintStart_toStartOf="@+id/submit_button"
             app:rippleColor="@color/purple_100"
             app:strokeColor="@color/purple_200"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="2dp"
+            tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submit_button"
@@ -166,11 +169,13 @@
             android:layout_marginStart="48dp"
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="24dp"
-            android:minHeight="56dp"
+            android:minHeight="@dimen/button_min_height"
             android:text="@string/submit_title"
+            android:elevation="@dimen/button_normal_elevation"
             android:textAllCaps="false"
+            android:textColor="@color/black_light"
             app:backgroundTint="?attr/colorSecondary"
-            app:cornerRadius="8dp"
+            app:cornerRadius="@dimen/button_normal_rad"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
