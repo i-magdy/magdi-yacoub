@@ -30,11 +30,28 @@
 و تقرير القسطره إذا وجد
 تحاليل سيوله إذا وجد</string>
     <string name="submit_title">إرسل</string>
-    <string name="upload_file_title">رفع ملفات</string>
+
     <string name="register_patient_details">تسجيل بيانات الحالة</string>
     <string name="patient_name">اسم الحالة</string>
     <string name="national_id">الرقم القومي</string>
     <string name="upload_national_id_title">ارفع صورة الرقم القومي</string>
     <string name="invalid_patient_name">اسم المريض غير صالح</string>
     <string name="invalid_national_id">الرقم القومي خطأ</string>
+    <string name="upload_files_title">رفع ملفات</string>
+    <string name="upload_image_title">حمل صوره</string>
+    <string name="upload_file_title">حمل ملف</string>
+    <string name="reports_view_message">التقارير الخاصه بك تظهر هنا</string>
+    <string name="total_size_value">من 20م.ب</string>
+    <string name="file_size_message">ملف اكبر من 20 م.ب</string>
+    <string name="report_content_label">علامة التقرير</string>
+    <string name="cancel_title">إلغاء</string>
+    <string name="delete_title">حذف</string>
+    <string name="delete_report_message">هل تريد حذف هذا الملف؟</string>
+    <string name="file_exist_message">تم تحميل الملف بالفعل</string>
+    <string name="used_storage">المساحه المستخدمه</string>
+    <string name="register_title">تسجيل</string>
+    <string name="log_in_title">دخول</string>
+    <string name="review_request_title">راجع طلبك</string>
+    <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
+
 </resources>

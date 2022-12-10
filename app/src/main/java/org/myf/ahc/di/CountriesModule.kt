@@ -14,6 +14,6 @@ class CountriesModule {
 
     @Provides
     @ViewModelScoped
-    fun getCountriesApiService(): CountriesService = CountriesApiClient.create()
+    fun provideCountriesApiService(): CountriesService = CountriesApiClient.create()
 
 }

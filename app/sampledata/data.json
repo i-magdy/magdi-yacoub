@@ -1,0 +1,29 @@
+{
+  "reports": [
+    {
+      "name": "Heart Report",
+      "size": "2MB",
+      "img": "@drawable/pdf"
+    },
+    {
+      "name": "Records",
+      "size": "1.5MB",
+      "img": "@drawable/word"
+    },
+    {
+      "name": "All Files",
+      "size": "5MB",
+      "img": "@drawable/word"
+    },
+    {
+      "name": "INR",
+      "size": "3MB",
+      "img": "@drawable/ic_photo"
+    },
+    {
+      "name": "New INR",
+      "size": "3.5MB",
+      "img": "@drawable/ic_photo"
+    }
+  ]
+}

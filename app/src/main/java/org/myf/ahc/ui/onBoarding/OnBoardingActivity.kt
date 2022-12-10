@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.ui.BaseActivity
@@ -34,12 +35,13 @@ class OnBoardingActivity : BaseActivity(
                             nav.navigate(R.id.action_navigate_to_welcome_screen)
                         }
                     }
-                    else -> {
+                    1 -> {
                         val toRegistration = Intent(this@OnBoardingActivity,RegistrationActivity::class.java)
                         startActivity(toRegistration)
                         finish()
                     }
                 }
+                viewModel.state.cancellable()
             }
         }
     }
