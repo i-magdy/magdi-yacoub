@@ -24,4 +24,10 @@
     <string name="english_title">English</string>
     <string name="welcome_title">Welcome to MYF App</string>
     <string name="welcome_message">An application to make the communication with patients easier.</string>
+    <string name="register_patient_details">Register patient details</string>
+    <string name="patient_name">Patient name</string>
+    <string name="national_id">National id</string>
+    <string name="upload_national_id_title">Upload national id image</string>
+    <string name="invalid_patient_name">Invalid Patient Name</string>
+    <string name="invalid_national_id">Invalid National Id</string>
 </resources>
