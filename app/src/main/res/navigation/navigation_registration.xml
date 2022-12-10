@@ -88,7 +88,7 @@
         android:label="submit_screen">
         <action android:id="@+id/action_navigate_from_submit_to_create"
             app:destination="@id/create_patient_screen"/>
-        <action android:id="@+id/action_navigate_from_submit_to_verify"
-            app:destination="@id/verify_screen"/>
+        <action android:id="@+id/action_navigate_from_submit_to_reports"
+            app:destination="@id/upload_reports_screen"/>
     </fragment>
 </navigation>
