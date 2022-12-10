@@ -44,5 +44,6 @@
     <string name="used_storage">المساحه المستخدمه</string>
     <string name="register_title">تسجيل</string>
     <string name="log_in_title">دخول</string>
+    <string name="review_request_title">راجع طلبك</string>
     <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
 </resources>

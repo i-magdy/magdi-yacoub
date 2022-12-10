@@ -41,5 +41,6 @@
     <string name="used_storage">used storage</string>
     <string name="register_title">Register</string>
     <string name="log_in_title">Log in</string>
+    <string name="review_request_title">Review your request</string>
     <string name="verify_log_in_message">We have sent you a verification code to your registered number.\n\n Your last two digits is</string>
 </resources>

@@ -14,6 +14,8 @@
             app:destination="@id/create_patient_screen"/>
         <action android:id="@+id/action_navigate_to_log_in"
             app:destination="@id/log_in_screen"/>
+        <action android:id="@+id/action_navigate_from_main_to_submit"
+            app:destination="@id/submit_screen"/>
     </fragment>
 
     <fragment
@@ -73,5 +75,20 @@
         android:id="@+id/upload_reports_screen"
         tools:layout="@layout/screen_upload_reports"
         android:label="upload_reports"
-        android:name="org.myf.ahc.ui.registration.reports.UploadReportsScreen"/>
+        android:name="org.myf.ahc.ui.registration.reports.UploadReportsScreen">
+        <action
+            android:id="@+id/action_navigate_from_upload_to_submit"
+            app:destination="@id/submit_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/submit_screen"
+        tools:layout="@layout/screen_submit"
+        android:name="org.myf.ahc.ui.registration.submit.SubmitScreen"
+        android:label="submit_screen">
+        <action android:id="@+id/action_navigate_from_submit_to_create"
+            app:destination="@id/create_patient_screen"/>
+        <action android:id="@+id/action_navigate_from_submit_to_verify"
+            app:destination="@id/verify_screen"/>
+    </fragment>
 </navigation>
