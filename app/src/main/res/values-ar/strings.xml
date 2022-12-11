@@ -46,4 +46,7 @@
     <string name="log_in_title">دخول</string>
     <string name="review_request_title">راجع طلبك</string>
     <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
+    <string name="verified_title">تم التحقق</string>
+    <string name="files_uploaded_message">لقد رفعت</string>
+    <string name="files_title">ملفات</string>
 </resources>

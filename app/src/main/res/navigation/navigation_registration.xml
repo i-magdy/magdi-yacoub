@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_registration"
     app:startDestination="@id/submit_screen">
-
     <fragment
         android:id="@+id/main_screen"
         android:label="main_screen"

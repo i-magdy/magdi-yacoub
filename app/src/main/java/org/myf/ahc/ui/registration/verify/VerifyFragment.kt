@@ -83,12 +83,16 @@ class VerifyFragment : Fragment() {
         options = PhoneAuthOptions.newBuilder(auth)
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
-        if (shouldLogin && auth.currentUser == null){
-            requestCode(args.phone)
-        }else{ viewModel.succeed(
-            isSucceed = auth.currentUser != null,
-            forLogin = shouldLogin
-        ) }
+        if (shouldLogin){
+            if (auth.currentUser == null) {
+                requestCode(args.phone)
+            }else{
+                viewModel.succeed(
+                    isSucceed = auth.currentUser != null,
+                    forLogin = shouldLogin
+                )
+            }
+        }
         phoneNumberHintIntentResultLauncher = preparePhoneHintLauncher()
     }
 

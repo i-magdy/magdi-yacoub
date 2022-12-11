@@ -15,4 +15,7 @@
     <color name="white_dark">#CCCCCC</color>
     <color name="error_dark">#B00020</color>
     <color name="error_light">#CF6679</color>
+
+    <color name="color_verified">#45dc7c</color>
+
 </resources>
