@@ -3,7 +3,6 @@ package org.myf.ahc.ui.registration.createPatient
 import org.myf.ahc.util.CreatePatientUiError
 
 data class CreatePatientUiState (
-
     val patientName: String = "",
     val nationalId: String = "",
     val nationalIdImage: String = "",

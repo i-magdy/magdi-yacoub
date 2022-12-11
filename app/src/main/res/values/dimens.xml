@@ -10,4 +10,5 @@
     <integer name="verification_code_length">6</integer>
     <integer name="single_line">1</integer>
     <integer name="id_max_length">14</integer>
+    <integer name="patient_name_max_length">64</integer>
 </resources>

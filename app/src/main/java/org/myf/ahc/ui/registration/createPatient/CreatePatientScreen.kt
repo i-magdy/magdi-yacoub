@@ -28,13 +28,12 @@ import java.io.FileNotFoundException
 
 @AndroidEntryPoint
 class CreatePatientScreen :Fragment(){
+
     private var _binding: ScreenCreatePatientBinding? = null
     private val binding get() = _binding!!
     private lateinit var  pickImageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickImageIntent: Intent
-    private lateinit var imageView: ImageView
     private val viewModel by viewModels<CreatePatientViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +52,6 @@ class CreatePatientScreen :Fragment(){
         _binding = ScreenCreatePatientBinding.inflate(layoutInflater,container,false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.patientName
         return binding.root
     }
 
@@ -71,14 +69,12 @@ class CreatePatientScreen :Fragment(){
         }
         val nextButton = view.findViewById<MaterialButton>(R.id.next_button)
         nextButton.setOnClickListener {
-            viewModel.validateInput();
+            viewModel.validateInput()
             Navigation.findNavController(view).navigate(R.id.action_navigate_to_verify)
         }
-        view.findViewById<ImageView>(R.id.national_id_image)
-            .setOnClickListener {
-                pickImageIntentLauncher.launch(pickImageIntent)
-            }
-        imageView = view.findViewById(R.id.national_id_image)
+        binding.splitCv.setOnClickListener {
+            pickImageIntentLauncher.launch(pickImageIntent)
+        }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -116,11 +112,12 @@ class CreatePatientScreen :Fragment(){
                     val uri = data.data
                     try {
                         val inputStream = uri?.let {
+                            //TODO save image uri
                             requireActivity().contentResolver.openInputStream(it)
                         }
                         val bitmap = BitmapFactory.decodeStream(inputStream)
-                        //TODO update ui here e.g. { binding.imageView.setImageBitmap(bitmap) }
-                        imageView.setImageBitmap(bitmap)
+                        binding.nationalIdImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                        binding.nationalIdImage.setImageBitmap(bitmap)
                     } catch (e: FileNotFoundException) {
                         e.printStackTrace()
                     }
@@ -132,6 +129,7 @@ class CreatePatientScreen :Fragment(){
 
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
         if (this::pickImageIntentLauncher.isInitialized){
             pickImageIntentLauncher.unregister()
         }
