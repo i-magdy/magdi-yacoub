@@ -2,7 +2,7 @@ package org.myf.ahc.data
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.google.protobuf.InvalidProtocolBufferException
+import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import org.myf.ahc.PatientData
 import java.io.InputStream
 import java.io.OutputStream

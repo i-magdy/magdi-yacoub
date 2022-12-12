@@ -24,6 +24,14 @@
     <string name="english_title">English</string>
     <string name="welcome_title">Welcome to MYF App</string>
     <string name="welcome_message">An application to make the communication with patients easier.</string>
+
+    <string name="register_patient_details">Register patient details</string>
+    <string name="patient_name">Patient name</string>
+    <string name="national_id">National id</string>
+    <string name="upload_national_id_title">Upload national id image</string>
+    <string name="invalid_patient_name">Invalid Patient Name</string>
+    <string name="invalid_national_id">Invalid National Id</string>
+
     <string name="send_reports_title">Send a copy of Medical reports</string>
     <string name="send_reports_message">Include a copy of the ultrasound and a catheterization report, if any. Fluidity analysis, if any</string>
     <string name="submit_title">Submit</string>
@@ -43,6 +51,8 @@
     <string name="log_in_title">Log in</string>
     <string name="review_request_title">Review your request</string>
     <string name="verify_log_in_message">We have sent you a verification code to your registered number.\n\n Your last two digits is</string>
+    <string name="upload_id_photo_title">Upload your ID photo</string>
+
     <string name="verified_title">Verified</string>
     <string name="files_uploaded_message">you have uploaded</string>
     <string name="files_title">files</string>

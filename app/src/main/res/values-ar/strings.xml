@@ -30,6 +30,13 @@
 و تقرير القسطره إذا وجد
 تحاليل سيوله إذا وجد</string>
     <string name="submit_title">إرسل</string>
+
+    <string name="register_patient_details">تسجيل بيانات الحالة</string>
+    <string name="patient_name">اسم الحالة</string>
+    <string name="national_id">الرقم القومي</string>
+    <string name="upload_national_id_title">ارفع صورة الرقم القومي</string>
+    <string name="invalid_patient_name">اسم المريض غير صالح</string>
+    <string name="invalid_national_id">الرقم القومي خطأ</string>
     <string name="upload_files_title">رفع ملفات</string>
     <string name="upload_image_title">حمل صوره</string>
     <string name="upload_file_title">حمل ملف</string>
@@ -46,6 +53,8 @@
     <string name="log_in_title">دخول</string>
     <string name="review_request_title">راجع طلبك</string>
     <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
+    <string name="upload_id_photo_title">إرفع صوره من البطاقه او شهادة الميلاد</string>
+
     <string name="verified_title">تم التحقق</string>
     <string name="files_uploaded_message">لقد رفعت</string>
     <string name="files_title">ملفات</string>
