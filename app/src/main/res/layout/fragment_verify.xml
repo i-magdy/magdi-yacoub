@@ -201,7 +201,7 @@
                 app:elevation="@dimen/button_normal_elevation"
                 app:cornerRadius="@dimen/button_normal_rad"
                 android:textAllCaps="false"
-                tools:visibility="gone"
+                android:textColor="@color/black_light"
                 app:backgroundTint="?attr/colorSecondary"
                 android:visibility="@{viewModel.uiState.codeSent &amp; !viewModel.uiState.success? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
