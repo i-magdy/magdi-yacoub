@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_registration"
-    app:startDestination="@id/submit_screen">
+    app:startDestination="@id/main_screen">
     <fragment
         android:id="@+id/main_screen"
         android:label="main_screen"
@@ -15,6 +15,10 @@
             app:destination="@id/log_in_screen"/>
         <action android:id="@+id/action_navigate_from_main_to_submit"
             app:destination="@id/submit_screen"/>
+        <action android:id="@+id/action_navigate_from_main_to_verify_screen"
+            app:destination="@id/verify_screen"/>
+        <action android:id="@+id/action_navigate_from_main_to_report_screen"
+            app:destination="@id/upload_reports_screen"/>
     </fragment>
 
     <fragment

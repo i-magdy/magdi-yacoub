@@ -11,4 +11,6 @@
     <integer name="single_line">1</integer>
     <integer name="id_max_length">14</integer>
     <integer name="patient_name_max_length">64</integer>
+    <integer name="note_lines">4</integer>
+    <integer name="note_max_length">512</integer>
 </resources>

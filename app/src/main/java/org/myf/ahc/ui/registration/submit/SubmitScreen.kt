@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import org.myf.ahc.R
 import org.myf.ahc.databinding.ScreenSubmitBinding
 
 @AndroidEntryPoint
@@ -31,6 +33,12 @@ class SubmitScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.syncPatientData()
+        binding.editNameIv.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_create)
+        }
+        binding.editReportIv.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_reports)
+        }
     }
 
     override fun onDestroy() {

@@ -1,192 +1,342 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="org.myf.ahc.ui.registration.submit.SubmitViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorOnBackground">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/submit_request_title"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/name_id_info_title" />
+
                 <ImageView
-                    android:id="@+id/submit_patient_id_iv"
-                    android:layout_width="160dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_photo"
-                    android:contentDescription="@string/upload_image_title"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/submit_patient_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:id="@+id/edit_name_iv"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="end|center"
                     android:layout_marginEnd="16dp"
-                    android:text="@{viewModel.patient.name}"
-                    android:textAlignment="viewStart"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="الاسم ثلاثي - فلان الفلاني"
-                    app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
-                    app:layout_constraintTop_toTopOf="@+id/submit_patient_id_iv" />
+                    android:background="@drawable/item_ripple"
+                    android:clickable="true"
+                    android:contentDescription="@string/edit_name_label"
+                    android:focusable="true"
+                    android:src="@drawable/ic_edit"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </FrameLayout>
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="@dimen/button_normal_rad">
 
-                <TextView
-                    android:id="@+id/submit_id_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="@{viewModel.patient.id}"
-                    app:layout_constraintVertical_bias="0"
-                    android:textAlignment="viewStart"
-                    tools:text="125469758132647"
-                    app:layout_constraintBottom_toBottomOf="@+id/submit_patient_id_iv"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
-                    app:layout_constraintTop_toBottomOf="@+id/submit_patient_name" />
-
-                <LinearLayout
-                    android:id="@+id/primary_phone_linearlayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="@string/phone_content_label"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/submit_patient_id_iv"
-                    app:layout_constraintTop_toBottomOf="@+id/submit_patient_id_iv">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/submit_primary_phone_label"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/phone_content_label"
-                        android:src="@drawable/ic_phone" />
+                        android:id="@+id/submit_patient_id_iv"
+                        android:layout_width="160dp"
+                        android:layout_height="110dp"
+                        android:layout_margin="16dp"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="@string/upload_image_title"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_photo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        app:layout_constraintBottom_toBottomOf="@+id/submit_primary_phone_label"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/submit_primary_phone_label"
-                        app:layout_constraintTop_toTopOf="@+id/submit_primary_phone_label"
-                        tools:text="+201234567890" />
-
-                    <Space
+                        android:id="@+id/submit_patient_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@{viewModel.patient.name}"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
+                        app:layout_constraintTop_toTopOf="@+id/submit_patient_id_iv"
+                        tools:text="الاسم ثلاثي - فلان الفلاني" />
+
 
                     <TextView
-                        android:id="@+id/submit_phone_verified_tv"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/submit_id_tv"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/verified_title"
-                        android:visibility="@{viewModel.patient.verified ? View.VISIBLE : View.GONE}"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="@color/color_verified"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:layout_margin="16dp"
+                        android:text="@{viewModel.patient.id}"
+                        android:textAlignment="viewStart"
+                        app:layout_constraintBottom_toBottomOf="@+id/submit_patient_id_iv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
+                        app:layout_constraintTop_toBottomOf="@+id/submit_patient_name"
+                        app:layout_constraintVertical_bias="0"
+                        tools:text="125469758132647" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:id="@+id/submit_secondary_phone_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_phone"
-                    android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
-                    android:contentDescription="@string/phone_content_label"
-                    app:layout_constraintStart_toStartOf="@+id/primary_phone_linearlayout"
-                    app:layout_constraintTop_toBottomOf="@+id/primary_phone_linearlayout" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/contact_info_title"
+                android:textAppearance="?attr/textAppearanceBody1" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="@dimen/button_normal_rad">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/primary_phone_linearlayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/phone_content_label"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0">
+
+                        <ImageView
+                            android:id="@+id/submit_primary_phone_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@string/phone_content_label"
+                            android:src="@drawable/ic_phone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            app:layout_constraintBottom_toBottomOf="@+id/submit_primary_phone_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/submit_primary_phone_label"
+                            app:layout_constraintTop_toTopOf="@+id/submit_primary_phone_label"
+                            tools:text="+201234567890" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/submit_phone_verified_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/verified_title"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="@color/color_verified"
+                            android:textStyle="bold"
+                            android:visibility="@{viewModel.patient.verified ? View.VISIBLE : View.GONE}"
+                            tools:ignore="TextContrastCheck" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/submit_secondary_phone_label"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/phone_content_label"
+                        android:src="@drawable/ic_phone"
+                        android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="@+id/primary_phone_linearlayout"
+                        app:layout_constraintTop_toBottomOf="@+id/primary_phone_linearlayout" />
+
+                    <TextView
+                        android:id="@+id/submit_secondary_phone_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintBottom_toBottomOf="@+id/submit_secondary_phone_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/submit_secondary_phone_label"
+                        app:layout_constraintTop_toTopOf="@+id/submit_secondary_phone_label"
+                        tools:text="+201234567891" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/submit_secondary_phone_tv"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textAlignment="viewStart"
-                    android:layout_margin="16dp"
-                    android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="@+id/submit_secondary_phone_label"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/submit_secondary_phone_label"
-                    app:layout_constraintTop_toTopOf="@+id/submit_secondary_phone_label"
-                    tools:text="+201234567891" />
+                    android:layout_gravity="start|center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/reports_diagnosis_info_title" />
 
                 <ImageView
-                    android:id="@+id/uploaded_files_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="16dp"
-                    android:contentDescription="@string/files_uploaded_message"
-                    android:src="@drawable/ic_uploaded_file"
-                    app:layout_constraintStart_toStartOf="@+id/submit_secondary_phone_label"
-                    app:layout_constraintTop_toBottomOf="@+id/submit_secondary_phone_label" />
+                    android:id="@+id/edit_report_iv"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/item_ripple"
+                    android:clickable="true"
+                    android:contentDescription="@string/edit_reports_label"
+                    android:focusable="true"
+                    android:src="@drawable/ic_edit"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </FrameLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="16dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/uploaded_files_label"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/uploaded_files_label"
-                    app:layout_constraintTop_toTopOf="@+id/uploaded_files_label">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="@dimen/button_normal_rad">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/uploaded_files_label"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/files_uploaded_message"
+                        android:src="@drawable/ic_uploaded_file"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/uploaded_files_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/uploaded_files_label"
+                        app:layout_constraintTop_toTopOf="@+id/uploaded_files_label">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/files_uploaded_message" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@{String.valueOf(viewModel.patient.filesCount)}"
+                            tools:text="3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/files_title" />
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/submit_report_separate_view"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="16dp"
+                        app:dividerColor="?attr/colorControlNormal"
+                        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                        app:layout_constraintStart_toStartOf="@+id/uploaded_files_label"
+                        app:layout_constraintTop_toBottomOf="@+id/uploaded_files_label" />
 
                     <TextView
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/files_uploaded_message" />
+                        android:layout_marginTop="16dp"
+                        android:text="@string/diagnosis_title"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        app:layout_constraintStart_toStartOf="@+id/submit_report_separate_view"
+                        app:layout_constraintTop_toBottomOf="@+id/submit_report_separate_view" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/submit_diagnosis_et"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="@{String.valueOf(viewModel.patient.filesCount)}"
-                        tools:text="3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/files_title" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:hint="@string/diagnosis_description_title"
+                        android:importantForAutofill="no"
+                        android:inputType="textMultiLine"
+                        android:lines="@integer/note_lines"
+                        android:maxLength="@integer/note_max_length"
+                        android:maxLines="@integer/note_lines"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                        app:layout_constraintStart_toStartOf="@+id/uploaded_files_label"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        tools:ignore="TextContrastCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="48dp"
-            android:minHeight="@dimen/button_min_height"
-            app:cornerRadius="@dimen/button_normal_rad"
-            android:elevation="@dimen/button_normal_elevation"
-            app:backgroundTint="?attr/colorSecondary"
-            android:text="@string/submit_title"
-            android:textColor="@color/black_light"
-            android:textAllCaps="false"
-            android:layout_gravity="center|bottom"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_margin="48dp"
+                android:elevation="@dimen/button_normal_elevation"
+                android:minHeight="@dimen/button_min_height"
+                android:text="@string/submit_title"
+                android:textAllCaps="false"
+                android:textColor="@color/black_light"
+                app:backgroundTint="?attr/colorSecondary"
+                app:cornerRadius="@dimen/button_normal_rad" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </layout>

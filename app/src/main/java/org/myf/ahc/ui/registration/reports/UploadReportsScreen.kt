@@ -20,6 +20,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -102,6 +103,8 @@ class UploadReportsScreen : Fragment(
                 }
             }
         }
+        view.findViewById<MaterialButton>(R.id.review_button)
+            .setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_navigate_from_upload_to_submit) }
     }
 
 

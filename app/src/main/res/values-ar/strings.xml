@@ -58,4 +58,12 @@
     <string name="verified_title">تم التحقق</string>
     <string name="files_uploaded_message">لقد رفعت</string>
     <string name="files_title">ملفات</string>
+    <string name="submit_request_title">إرسل الطلب</string>
+    <string name="name_id_info_title">الاسم و الرقم القومي</string>
+    <string name="contact_info_title">بيانات التواصل</string>
+    <string name="reports_diagnosis_info_title">التقارير و التشخيص</string>
+    <string name="diagnosis_description_title">شرح التشخيص</string>
+    <string name="edit_name_label">علامة تعديل الاسم</string>
+    <string name="edit_reports_label">علامة تعديل التقارير</string>
+    <string name="diagnosis_title">إكتب التشخيص</string>
 </resources>

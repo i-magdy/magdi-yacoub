@@ -56,4 +56,12 @@
     <string name="verified_title">Verified</string>
     <string name="files_uploaded_message">you have uploaded</string>
     <string name="files_title">files</string>
+    <string name="submit_request_title">Submit Request</string>
+    <string name="name_id_info_title">Name &amp; Id</string>
+    <string name="contact_info_title">Contact Info</string>
+    <string name="reports_diagnosis_info_title">Reports &amp; Diagnosis</string>
+    <string name="diagnosis_description_title">Diagnosis description</string>
+    <string name="edit_name_label">Edit name label</string>
+    <string name="edit_reports_label">Edit reports label</string>
+    <string name="diagnosis_title">Write a Diagnosis</string>
 </resources>
