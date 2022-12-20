@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.models.DocumentModel
 import org.myf.ahc.util.EndPoints
-import org.myf.ahc.util.FileTypesUtil
 import org.myf.ahc.util.FileTypesUtil.subStringFileName
 import javax.inject.Inject
 

@@ -10,15 +10,35 @@
         tools:layout="@layout/screen_main_registration"
         android:name="org.myf.ahc.ui.registration.main.MainRegistrationScreen">
         <action android:id="@+id/action_navigate_to_registration"
-            app:destination="@id/create_patient_screen"/>
+            app:destination="@id/create_patient_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <action android:id="@+id/action_navigate_to_log_in"
-            app:destination="@id/log_in_screen"/>
+            app:destination="@id/log_in_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <action android:id="@+id/action_navigate_from_main_to_submit"
-            app:destination="@id/submit_screen"/>
+            app:destination="@id/submit_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <action android:id="@+id/action_navigate_from_main_to_verify_screen"
-            app:destination="@id/verify_screen"/>
+            app:destination="@id/verify_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <action android:id="@+id/action_navigate_from_main_to_report_screen"
-            app:destination="@id/upload_reports_screen"/>
+            app:destination="@id/upload_reports_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -28,7 +48,11 @@
         tools:layout="@layout/screen_log_in">
         <action
             android:id="@+id/action_navigate_from_log_in_to_verify_screen"
-            app:destination="@id/verify_screen">
+            app:destination="@id/verify_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
             <argument
                 android:name="isShouldLogin"
                 android:defaultValue="false"
@@ -47,7 +71,11 @@
         tools:layout="@layout/screen_create_patient">
         <action
             android:id="@+id/action_navigate_to_verify"
-            app:destination="@id/verify_screen">
+            app:destination="@id/verify_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
             <argument
                 android:name="isShouldLogin"
                 android:defaultValue="false"
@@ -71,7 +99,11 @@
             app:argType="string"/>
         <action
             android:id="@+id/action_navigate_to_upload_reports"
-            app:destination="@id/upload_reports_screen"/>
+            app:destination="@id/upload_reports_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -81,7 +113,11 @@
         android:name="org.myf.ahc.ui.registration.reports.UploadReportsScreen">
         <action
             android:id="@+id/action_navigate_from_upload_to_submit"
-            app:destination="@id/submit_screen"/>
+            app:destination="@id/submit_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -90,8 +126,16 @@
         android:name="org.myf.ahc.ui.registration.submit.SubmitScreen"
         android:label="submit_screen">
         <action android:id="@+id/action_navigate_from_submit_to_create"
-            app:destination="@id/create_patient_screen"/>
+            app:destination="@id/create_patient_screen"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
         <action android:id="@+id/action_navigate_from_submit_to_reports"
-            app:destination="@id/upload_reports_screen"/>
+            app:destination="@id/upload_reports_screen"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

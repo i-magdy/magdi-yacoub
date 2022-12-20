@@ -3,27 +3,32 @@
     {
       "name": "Heart Report",
       "size": "2MB",
-      "img": "@drawable/pdf"
+      "img": "@drawable/pdf",
+      "note": "Note for Heart Report."
     },
     {
       "name": "Records",
       "size": "1.5MB",
-      "img": "@drawable/word"
+      "img": "@drawable/word",
+      "note": "Note for records file."
     },
     {
       "name": "All Files",
       "size": "5MB",
-      "img": "@drawable/word"
+      "img": "@drawable/word",
+      "note": "Note for all files."
     },
     {
       "name": "INR",
       "size": "3MB",
-      "img": "@drawable/ic_photo"
+      "img": "@drawable/ic_photo",
+      "note": "Note INR."
     },
     {
       "name": "New INR",
       "size": "3.5MB",
-      "img": "@drawable/ic_photo"
+      "img": "@drawable/ic_photo",
+      "note": "Note!."
     }
   ]
 }
