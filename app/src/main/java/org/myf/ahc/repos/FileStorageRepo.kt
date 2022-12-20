@@ -4,11 +4,14 @@ import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.models.DocumentModel
+import org.myf.ahc.util.FileTypesUtil.subStringFileName
 import javax.inject.Inject
 
 class FileStorageRepo @Inject constructor(
@@ -22,6 +25,7 @@ class FileStorageRepo @Inject constructor(
     val isSucceed = MutableStateFlow(false)
     val progress = MutableStateFlow(0)
     val isDeleted = MutableStateFlow(false)
+    val document = MutableStateFlow<DocumentModel?>(null)
 
     fun uploadFile(
         path: String,
@@ -45,6 +49,40 @@ class FileStorageRepo @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getFileByPath(
+        path: String
+    ){
+        val ref = storageRef.child(path)
+        ref.metadata.addOnSuccessListener { meta ->
+            val doc = DocumentModel(
+                path = meta.path,
+                type = meta.contentType ?: "",
+                name = subStringFileName(
+                    name = meta.name ?: "",
+                    type = meta.contentType ?: ""
+                ),
+                note = meta.getCustomMetadata("note"),
+                size = meta.sizeBytes
+            )
+            coroutine.launch { document.emit(doc) }
+        }
+    }
+
+    fun updateDocumentNote(
+        path: String,
+        note: String
+    ){
+        val ref = storageRef.child(path)
+        val meta = storageMetadata {
+            setCustomMetadata("note",note)
+        }
+        ref.updateMetadata(meta).addOnSuccessListener {
+            coroutine.launch {
+                isSucceed.emit(true)
+            }
+        }.addOnFailureListener { Log.e("update_note",it.message.toString()) }
     }
 
     fun deleteFile(

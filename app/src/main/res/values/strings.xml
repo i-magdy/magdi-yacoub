@@ -52,7 +52,7 @@
     <string name="review_request_title">Review your request</string>
     <string name="verify_log_in_message">We have sent you a verification code to your registered number.\n\n Your last two digits is</string>
     <string name="upload_id_photo_title">Upload your ID photo</string>
-
+    <string name="edit_report_label">Edit report</string>
     <string name="verified_title">Verified</string>
     <string name="files_uploaded_message">you have uploaded</string>
     <string name="files_title">files</string>
@@ -64,4 +64,9 @@
     <string name="edit_name_label">Edit name label</string>
     <string name="edit_reports_label">Edit reports label</string>
     <string name="diagnosis_title">Write a Diagnosis</string>
+    <string name="Edit_report_doc_title">Edit Document</string>
+    <string name="add_note_title">Add Note</string>
+    <string name="note_title">Note</string>
+    <string name="add_title">Add</string>
+    <string name="delete_doc_title">Delete Document</string>
 </resources>

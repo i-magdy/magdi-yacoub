@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.myf.ahc.models.DocumentModel
 import org.myf.ahc.util.EndPoints
 import org.myf.ahc.util.FileTypesUtil
+import org.myf.ahc.util.FileTypesUtil.subStringFileName
 import javax.inject.Inject
 
 class StorageListRepo @Inject constructor(){
@@ -37,6 +38,7 @@ class StorageListRepo @Inject constructor(){
                                     name = meta.name ?: "",
                                     type = meta.contentType ?: ""
                                 ),
+                                note = meta.getCustomMetadata("note"),
                                 size = meta.sizeBytes
                             )
                         )
@@ -55,18 +57,6 @@ class StorageListRepo @Inject constructor(){
         }
     }
 
-    private fun subStringFileName(
-        name: String,
-        type: String
-    ): String{
-        return when(type){
-            FileTypesUtil.MICROSOFT_WORD -> name.replace(FileTypesUtil.WORD_EX,"")
-            FileTypesUtil.JPG -> name.replace(FileTypesUtil.JPG_EX,"")
-            FileTypesUtil.PNG -> name.replace(FileTypesUtil.PNG_EX,"")
-            FileTypesUtil.PDF -> name.replace(FileTypesUtil.PDF_EX,"")
-            else -> ""
-        }
-    }
 
     fun cancelJob() = coroutine.cancel()
 }

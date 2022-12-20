@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
+import org.myf.ahc.models.DocumentModel
 import org.myf.ahc.util.FileTypesUtil
 import javax.inject.Inject
 
@@ -14,9 +15,15 @@ class ReportsViewModel @Inject constructor(
 ): ViewModel(){
 
     val uiState: StateFlow<ReportsUiState>  = repo.uiState
-
+    val editDocument: StateFlow<DocumentModel?> = repo.editDocument
 
     fun getReportsList() = repo.getReportsList()
+
+    fun getReportByPath(
+        path: String
+    ) = repo.getReportByPath(
+        path = path
+    )
 
     fun uploadFile(
         data: ByteArray,
@@ -24,6 +31,14 @@ class ReportsViewModel @Inject constructor(
     ) = repo.uploadFile(
         data = data,
         name = name
+    )
+
+    fun updateDocumentNote(
+        path: String,
+        note: String
+    ) = repo.updateDocumentNote(
+        path = path,
+        note = note
     )
 
     fun onAttemptToDeleteFile(

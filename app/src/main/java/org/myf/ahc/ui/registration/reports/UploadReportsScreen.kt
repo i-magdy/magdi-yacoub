@@ -50,6 +50,7 @@ class UploadReportsScreen : Fragment(
     private var size = 0L
     private val adapter = ReportsAdapter(this)
     private val deleteDialog = DeleteReportDialog()
+    private val editDialog = EditReportDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +129,7 @@ class UploadReportsScreen : Fragment(
             binding.reportsProgress.progress = ui.progress
         }
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
+            if (editDialog.isAdded){ editDialog.dismiss() }
             deleteDialog.show(parentFragmentManager, "tag_name")
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
@@ -344,8 +346,11 @@ class UploadReportsScreen : Fragment(
         _binding = null
     }
 
-    override fun onDeleteFile(path: String) {
-        viewModel.onAttemptToDeleteFile(path)
+    override fun onEditFile(path: String) {
+        if (!editDialog.isAdded){
+            viewModel.getReportByPath(path)
+            editDialog.show(parentFragmentManager,"edit_report_dialog")
+        }
     }
 
 }

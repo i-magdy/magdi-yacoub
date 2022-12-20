@@ -17,4 +17,17 @@ object FileTypesUtil {
         PNG -> PNG_EX
         else -> ""
     }
+
+    fun subStringFileName(
+        name: String,
+        type: String
+    ): String{
+        return when(type){
+            FileTypesUtil.MICROSOFT_WORD -> name.replace(FileTypesUtil.WORD_EX,"")
+            FileTypesUtil.JPG -> name.replace(FileTypesUtil.JPG_EX,"")
+            FileTypesUtil.PNG -> name.replace(FileTypesUtil.PNG_EX,"")
+            FileTypesUtil.PDF -> name.replace(FileTypesUtil.PDF_EX,"")
+            else -> ""
+        }
+    }
 }
