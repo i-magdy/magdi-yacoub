@@ -8,9 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -22,14 +22,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import org.myf.ahc.R
 import org.myf.ahc.adapters.ReportsAdapter
+import org.myf.ahc.databinding.ScreenUploadReportsBinding
 import org.myf.ahc.util.FileTypesUtil
 import org.myf.ahc.util.FilesSizeUtil.REPORTS_SIZE
 import org.myf.ahc.util.FilesSizeUtil.calculateSizePercentage
@@ -38,25 +36,21 @@ import java.io.FileNotFoundException
 
 @AndroidEntryPoint
 class UploadReportsScreen : Fragment(
-    R.layout.screen_upload_reports
+
 ), ReportsAdapter.ReportAdapterListener {
 
+    private var _binding: ScreenUploadReportsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickImageIntent: Intent
     private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFileIntent: Intent
     private val viewModel by activityViewModels<ReportsViewModel>()
     private val coroutine = CoroutineScope(Dispatchers.Default)
-    private lateinit var sizeProgress: LinearProgressIndicator
-    private lateinit var reportsMessageTv: TextView
-    private lateinit var loading: ProgressBar
-    private lateinit var percentageTv: TextView
-    private lateinit var progress: LinearProgressIndicator
-    private lateinit var fileTv: TextView
-    private lateinit var uploadButton: MaterialButton
     private var size = 0L
     private val adapter = ReportsAdapter(this)
     private val deleteDialog = DeleteReportDialog()
+    private val editDialog = EditReportDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,25 +68,26 @@ class UploadReportsScreen : Fragment(
         viewModel.getReportsList()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = ScreenUploadReportsBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val behavior = BottomSheetBehavior.from(
             view.findViewById(R.id.pick_up_chooser_bottom_sheet)
         )
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
-        sizeProgress = view.findViewById(R.id.reports_size_progress)
-        loading = view.findViewById(R.id.reports_loading_progress)
-        reportsMessageTv = view.findViewById(R.id.reports_list_message_tv)
-        percentageTv = view.findViewById(R.id.reports_size_percentage_tv)
-        progress = view.findViewById(R.id.reports_progress)
-        fileTv = view.findViewById(R.id.reports_file_in_progress_tv)
-        view.findViewById<RecyclerView>(R.id.reports_rv)
-            .apply {
-                adapter = this@UploadReportsScreen.adapter
-                layoutManager = LinearLayoutManager(context)
-            }
-        uploadButton = view.findViewById<MaterialButton>(R.id.upload_button)
-        uploadButton.setOnClickListener {
+        binding.reportsRv.apply {
+            adapter = this@UploadReportsScreen.adapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        binding.uploadButton.setOnClickListener {
             val chooserDialog = PickupChooserDialog()
             chooserDialog.show(parentFragmentManager, "chooser_dialog")
         }
@@ -103,8 +98,10 @@ class UploadReportsScreen : Fragment(
                 }
             }
         }
-        view.findViewById<MaterialButton>(R.id.review_button)
-            .setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_navigate_from_upload_to_submit) }
+        binding.reviewButton.setOnClickListener {
+            Navigation.findNavController(view)
+                .navigate(R.id.action_navigate_from_upload_to_submit)
+        }
     }
 
 
@@ -116,22 +113,23 @@ class UploadReportsScreen : Fragment(
             pickImageIntentLauncher.launch(pickImageIntent)
         }
         size = ui.size
-        uploadButton.isEnabled = size < REPORTS_SIZE  && !ui.isUploading
-        sizeProgress.progress = ui.size.toInt()
-        loading.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
-        reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
+        binding.uploadButton.isEnabled = size < REPORTS_SIZE && !ui.isUploading
+        binding.reportsSizeProgress.progress = ui.size.toInt()
+        binding.reportsLoadingProgress.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
+        binding.reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
         adapter.setDocuments(ui.list.sortedBy { it.name })
-        percentageTv.text = calculateSizePercentage(ui.size.toDouble())
+        binding.reportsSizePercentageTv.text = calculateSizePercentage(ui.size.toDouble())
         if (ui.progress == 0) {
-            progress.visibility = View.GONE
-            fileTv.visibility = View.GONE
+            binding.reportsProgress.visibility = View.GONE
+            binding.reportsFileInProgressTv.visibility = View.GONE
         } else {
-            progress.visibility = View.VISIBLE
-            fileTv.visibility = View.VISIBLE
-            fileTv.text = ui.fileName
-            progress.progress = ui.progress
+            binding.reportsProgress.visibility = View.VISIBLE
+            binding.reportsFileInProgressTv.visibility = View.VISIBLE
+            binding.reportsFileInProgressTv.text = ui.fileName
+            binding.reportsProgress.progress = ui.progress
         }
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
+            if (editDialog.isAdded){ editDialog.dismiss() }
             deleteDialog.show(parentFragmentManager, "tag_name")
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
@@ -182,9 +180,8 @@ class UploadReportsScreen : Fragment(
 
     @Throws(FileNotFoundException::class)
     fun openDocument(uri: Uri) = coroutine.launch {
-        var type: String? = null
         var name = ""
-        type = requireActivity().contentResolver.getType(uri)
+        val type: String? = requireActivity().contentResolver.getType(uri)
         requireActivity().contentResolver.query(
             uri,
             null,
@@ -268,9 +265,8 @@ class UploadReportsScreen : Fragment(
 
     @Throws(FileNotFoundException::class)
     fun openImage(uri: Uri) = coroutine.launch {
-        var type: String? = null
         var name = ""
-        type = requireActivity().contentResolver.getType(uri)
+        val type = requireActivity().contentResolver.getType(uri)
         requireActivity().contentResolver.query(
             uri,
             null,
@@ -347,10 +343,14 @@ class UploadReportsScreen : Fragment(
             pickFileIntentLauncher.unregister()
         }
         coroutine.cancel()
+        _binding = null
     }
 
-    override fun onDeleteFile(path: String) {
-        viewModel.onAttemptToDeleteFile(path)
+    override fun onEditFile(path: String) {
+        if (!editDialog.isAdded){
+            viewModel.getReportByPath(path)
+            editDialog.show(parentFragmentManager,"edit_report_dialog")
+        }
     }
 
 }

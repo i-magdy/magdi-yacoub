@@ -1,5 +1,6 @@
 package org.myf.ahc.ui.registration.reports
 
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
@@ -18,6 +19,7 @@ class SubmitReportsRepo @Inject constructor(
     private val listenerCoroutine = CoroutineScope(Dispatchers.IO)
     val uiState = MutableStateFlow(ReportsUiState())
     private val user = Firebase.auth.currentUser
+    val editDocument = storageRepo.document
 
     init {
         listenerCoroutine.launch {
@@ -84,9 +86,24 @@ class SubmitReportsRepo @Inject constructor(
         storageListRepo.getPatientReportsList(user.uid)
     }
 
+    fun getReportByPath(
+        path: String
+    ) = storageRepo.getFileByPath(
+        path = path
+    )
+
+    fun updateDocumentNote(
+        path: String,
+        note: String
+    ) = storageRepo.updateDocumentNote(
+        path = path,
+        note = note
+    )
+
     fun attemptToDeleteFile(
         path: String
     ) = coroutine.launch {
+        Log.e("path",path)
         uiState.value.list.forEach {
             if (path == it.path){
                 uiState.emit(

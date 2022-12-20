@@ -24,15 +24,17 @@ class ReportsAdapter(
         private val name = view.findViewById<TextView>(R.id.report_item_name_tv)
         private val img = view.findViewById<ImageView>(R.id.report_item_type_iv)
         private val size = itemView.findViewById<TextView>(R.id.report_item_size_tv)
-        private val deleteIv = itemView.findViewById<ImageView>(R.id.report_item_remove_iv)
+        private val editIv = itemView.findViewById<ImageView>(R.id.report_item_edit_iv)
+        private val note = itemView.findViewById<TextView>(R.id.report_item_note_tv)
 
         init {
-            deleteIv.setOnClickListener(this)
+            editIv.setOnClickListener(this)
         }
 
         fun onBind(document: DocumentModel){
             name.text = document.name
             size.text = FilesSizeUtil.getSize(document.size)
+            note.text = document.note
             when(document.type){
                 FileTypesUtil.MICROSOFT_WORD -> img.setImageResource(R.drawable.word)
                 FileTypesUtil.PDF -> img.setImageResource(R.drawable.pdf)
@@ -41,7 +43,7 @@ class ReportsAdapter(
         }
 
         override fun onClick(v: View?) {
-            listener.onDeleteFile(path = list[adapterPosition].path)
+            listener.onEditFile(path = list[adapterPosition].path)
         }
     }
 
@@ -62,6 +64,6 @@ class ReportsAdapter(
     override fun getItemCount(): Int = list.size
 
     interface ReportAdapterListener{
-        fun onDeleteFile(path: String)
+        fun onEditFile(path: String)
     }
 }

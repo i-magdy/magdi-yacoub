@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/edit_report_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/Edit_report_doc_title"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/edit_report_doc_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:layout_marginTop="16dp"
+        tools:text="File name"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="@+id/edit_report_title"
+        app:layout_constraintStart_toStartOf="@+id/edit_report_title"
+        app:layout_constraintTop_toBottomOf="@+id/edit_report_title" />
+
+    <TextView
+        android:id="@+id/edit_doc_note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_note_title"
+        android:layout_marginTop="24dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintStart_toStartOf="@+id/edit_report_doc_title"
+        app:layout_constraintTop_toBottomOf="@+id/edit_report_doc_title" />
+
+    <EditText
+        android:id="@+id/edit_doc_note_et"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/note_title"
+        android:inputType="textMultiLine"
+        android:maxLines="@integer/note_lines"
+        android:lines="@integer/note_lines"
+        android:maxLength="@integer/note_max_length"
+        app:layout_constraintTop_toBottomOf="@+id/edit_doc_note_title"
+        android:importantForAutofill="no" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_doc_add_note_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:textColor="@color/black_light"
+        android:text="@string/add_title"
+        android:textAllCaps="false"
+        app:cornerRadius="@dimen/button_normal_rad"
+        android:elevation="@dimen/button_normal_elevation"
+        app:layout_constraintEnd_toEndOf="@+id/edit_doc_note_et"
+        app:layout_constraintTop_toBottomOf="@+id/edit_doc_note_et" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_doc_delete_button"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="32dp"
+        android:elevation="@dimen/button_normal_elevation"
+        android:minHeight="@dimen/button_min_height"
+        android:text="@string/delete_doc_title"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorError"
+        app:cornerRadius="@dimen/button_normal_rad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_doc_add_note_button"
+        app:layout_constraintVertical_bias="0"
+        app:strokeColor="?attr/colorError"
+        app:strokeWidth="2dp"
+        tools:ignore="TextContrastCheck" />
+</androidx.constraintlayout.widget.ConstraintLayout>
