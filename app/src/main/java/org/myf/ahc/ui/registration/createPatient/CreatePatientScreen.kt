@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.databinding.ScreenCreatePatientBinding
 import org.myf.ahc.util.CreatePatientUiError
-import java.io.FileNotFoundException
 
 @AndroidEntryPoint
 class CreatePatientScreen : Fragment() {

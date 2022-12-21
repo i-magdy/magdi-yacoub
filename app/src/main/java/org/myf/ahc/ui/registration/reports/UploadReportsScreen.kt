@@ -99,7 +99,9 @@ class UploadReportsScreen : Fragment(
             }
         }
         binding.reviewButton.setOnClickListener {
-            Navigation.findNavController(view)
+            viewModel.saveFilesCount()
+            Navigation
+                .findNavController(view)
                 .navigate(R.id.action_navigate_from_upload_to_submit)
         }
     }

@@ -10,6 +10,7 @@ import org.myf.ahc.api.CountriesService
 import org.myf.ahc.data.DatastoreImpl
 import org.myf.ahc.models.CountryCodeModel
 import org.myf.ahc.models.CountryModel
+import org.myf.ahc.repos.PatientDataRepo
 import org.myf.ahc.util.CountriesUtil
 import retrofit2.Response
 import javax.inject.Inject
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class VerifyRepo @Inject constructor(
     private val countryService: CountriesService,
     private val util: CountriesUtil,
-    private val datastore: DatastoreImpl
+    private val datastore: DatastoreImpl,
+    private val patientRepo: PatientDataRepo
 ) {
 
     private val coroutine = CoroutineScope(Dispatchers.Default)
@@ -92,6 +94,14 @@ class VerifyRepo @Inject constructor(
             }
         }
     }
+
+    suspend fun savePatientData(
+        primaryPhone: String,
+        verified: Boolean
+    ) = patientRepo.updatePatientDataOnVerifyScreen(
+        primaryPhone = primaryPhone,
+        verified = verified
+    )
 
     private fun setSelectedCountry(
         country: CountryCodeModel
