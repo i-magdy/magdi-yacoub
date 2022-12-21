@@ -18,25 +18,25 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
-import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.databinding.ScreenCreatePatientBinding
 import org.myf.ahc.util.CreatePatientUiError
-import java.io.FileNotFoundException
 
 @AndroidEntryPoint
-class CreatePatientScreen :Fragment(){
+class CreatePatientScreen : Fragment() {
 
     private var _binding: ScreenCreatePatientBinding? = null
     private val binding get() = _binding!!
-    private lateinit var  pickImageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickImageIntent: Intent
     private val viewModel by viewModels<CreatePatientViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.sync()
         pickImageIntent = Intent(Intent.ACTION_PICK)
             .apply {
                 type = "image/*"
@@ -49,28 +49,30 @@ class CreatePatientScreen :Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ScreenCreatePatientBinding.inflate(layoutInflater,container,false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        _binding = ScreenCreatePatientBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.patientNameEt.doAfterTextChanged {
-            viewModel.setPatientName(it?.toString() ?: "")
             binding.patientNameIl.helperText = null
             viewModel.clearError()
         }
         binding.nationalIdEt.doAfterTextChanged {
-            viewModel.setNationalId(it?.toString() ?: "")
             binding.nationalIdIl.helperText = null
             viewModel.clearError()
         }
-        val nextButton = view.findViewById<MaterialButton>(R.id.next_button)
-        nextButton.setOnClickListener {
-            viewModel.validateInput()
-            Navigation.findNavController(view).navigate(R.id.action_navigate_to_verify)
+        binding.nextButton.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.attemptSavePatient(
+                    name = binding.patientNameEt.editableText.toString(),
+                    id = binding.nationalIdEt.editableText.toString(),
+                    email = binding.patientEmailEt.editableText.toString()
+                )
+                delay(200)
+                Navigation.findNavController(view).navigate(R.id.action_navigate_to_verify)
+            }
         }
         binding.splitCv.setOnClickListener {
             pickImageIntentLauncher.launch(pickImageIntent)
@@ -79,15 +81,15 @@ class CreatePatientScreen :Fragment(){
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.uiState.collect{
-                        showUiError(it.error)
-                    }
+                    viewModel.uiState.collect { updateUi(it) }
                 }
             }
         }
     }
 
-    private fun showUiError(error: CreatePatientUiError) = when(error){
+    private fun showUiError(
+        error: CreatePatientUiError
+    ) = when (error) {
         CreatePatientUiError.INVALID_PATIENT_NAME -> {
             binding.patientNameIl.error = getString(R.string.invalid_patient_name)
         }
@@ -102,7 +104,30 @@ class CreatePatientScreen :Fragment(){
     }
 
 
-    private fun pickImageLauncher(){
+    private fun updateUi(ui: CreatePatientUiState) {
+        showUiError(ui.error)
+        if (ui.img.toString().isNotEmpty()) {
+            try {
+                val inputStream = requireActivity().contentResolver.openInputStream(ui.img)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                binding.nationalIdImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding.nationalIdImage.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (ui.email.isNotEmpty()){
+            binding.patientEmailEt.setText(ui.email)
+        }
+        if (ui.nationalId.isNotEmpty()){
+            binding.nationalIdEt.setText(ui.nationalId)
+        }
+        if (ui.patientName.isNotEmpty()){
+            binding.patientNameEt.setText(ui.patientName)
+        }
+    }
+
+    private fun pickImageLauncher() {
         pickImageIntentLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->
@@ -110,16 +135,8 @@ class CreatePatientScreen :Fragment(){
                 val data = result.data
                 if (data != null) {
                     val uri = data.data
-                    try {
-                        val inputStream = uri?.let {
-                            //TODO save image uri
-                            requireActivity().contentResolver.openInputStream(it)
-                        }
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        binding.nationalIdImage.scaleType = ImageView.ScaleType.CENTER_CROP
-                        binding.nationalIdImage.setImageBitmap(bitmap)
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
+                    uri?.let {
+                        viewModel.setImageUri(it)
                     }
                 }
             }
@@ -130,7 +147,7 @@ class CreatePatientScreen :Fragment(){
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        if (this::pickImageIntentLauncher.isInitialized){
+        if (this::pickImageIntentLauncher.isInitialized) {
             pickImageIntentLauncher.unregister()
         }
     }

@@ -231,6 +231,10 @@ class VerifyFragment : Fragment() {
                 isSucceed = true,
                 forLogin = shouldLogin
             )
+            viewModel.savePatient(
+                verified = auth.currentUser != null,
+                phone = auth.currentUser?.phoneNumber ?: ""
+            )
         }else {
             val p: String? = binding.phone
             if (p == null || p.isBlank()) {
@@ -313,6 +317,10 @@ class VerifyFragment : Fragment() {
                     viewModel.succeed(
                         isSucceed = user != null,
                         forLogin = shouldLogin
+                    )
+                    viewModel.savePatient(
+                        verified = user != null,
+                        phone = user?.phoneNumber ?: ""
                     )
                 } else {
                     // Sign in failed, display a message and update the UI

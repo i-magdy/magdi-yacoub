@@ -7,12 +7,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.myf.ahc.repos.StorageListRepo
 import org.myf.ahc.repos.FileStorageRepo
+import org.myf.ahc.repos.PatientDataRepo
 import org.myf.ahc.util.EndPoints
 import javax.inject.Inject
 
-class SubmitReportsRepo @Inject constructor(
+class UploadReportsRepo @Inject constructor(
     private val storageRepo: FileStorageRepo,
-    private val storageListRepo: StorageListRepo
+    private val storageListRepo: StorageListRepo,
+    private val patientRepo: PatientDataRepo
 ) {
 
     private val coroutine = CoroutineScope(Dispatchers.IO)
@@ -135,6 +137,10 @@ class SubmitReportsRepo @Inject constructor(
             clearDeleteFile()
         }
     }
+
+    suspend fun saveFilesCount() = patientRepo.updatePatientDataOnReportsScreen(
+        fileCount = uiState.value.list.size
+    )
 
 
     fun openFiles() = coroutine.launch {

@@ -54,7 +54,7 @@
     <string name="review_request_title">راجع طلبك</string>
     <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
     <string name="upload_id_photo_title">إرفع صوره من البطاقه او شهادة الميلاد</string>
-
+    <string name="edit_report_label">تعديل التقرير</string>
     <string name="verified_title">تم التحقق</string>
     <string name="files_uploaded_message">لقد رفعت</string>
     <string name="files_title">ملفات</string>
@@ -66,4 +66,10 @@
     <string name="edit_name_label">علامة تعديل الاسم</string>
     <string name="edit_reports_label">علامة تعديل التقارير</string>
     <string name="diagnosis_title">إكتب التشخيص</string>
+    <string name="Edit_report_doc_title">تعديل الملف</string>
+    <string name="add_note_title">أضف ملاحظه</string>
+    <string name="note_title">ملاحظه</string>
+    <string name="add_title">أضف</string>
+    <string name="delete_doc_title">حذف الملف</string>
+    <string name="email_optional_title">بريد إلكتروني (إختياري)</string>
 </resources>

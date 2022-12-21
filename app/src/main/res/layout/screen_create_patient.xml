@@ -5,134 +5,177 @@
     tools:context=".ui.registration.createPatient.CreatePatientScreen">
 
     <data>
-        <variable
-            name="viewModel"
-            type="org.myf.ahc.ui.registration.createPatient.CreatePatientViewModel" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorOnBackground">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/register_patient_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/register_patient_details"
-            android:textAlignment="viewStart"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/patient_name_il"
-            android:layout_width="0dp"
-            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="32dp"
-            android:hint="@string/patient_name"
-            app:errorEnabled="true"
-            app:boxStrokeColor="?attr/colorSecondary"
-            app:hintTextColor="?attr/colorSecondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_patient_title">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/patient_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:maxLength="@integer/patient_name_max_length"
-                android:maxLines="@integer/single_line"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/national_id_il"
-            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:hint="@string/national_id"
-            app:errorEnabled="true"
-            app:boxStrokeColor="?attr/colorSecondary"
-            app:hintTextColor="?attr/colorSecondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/patient_name_il">
+            android:background="?attr/colorOnBackground">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/national_id_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number"
-                android:maxLength="@integer/id_max_length"
-                android:maxLines="@integer/single_line"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/create_upload_id_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBody1"
-            android:text="@string/upload_id_photo_title"
-            app:layout_constraintBottom_toTopOf="@+id/split_cv"
-            app:layout_constraintStart_toStartOf="@+id/split_cv" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/split_cv"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="@dimen/button_normal_rad"
-            android:elevation="@dimen/button_normal_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/national_id_il"
-            app:layout_constraintBottom_toTopOf="@+id/next_button">
+            <TextView
+                android:id="@+id/register_patient_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/register_patient_details"
+                android:textAlignment="viewStart"
+                android:visibility="gone"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/national_id_image"
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/upload_id_photo_title"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_circle" />
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_myf_logo"
+                app:layout_constraintBottom_toTopOf="@+id/patient_name_il"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_name_il"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/patient_name"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:errorEnabled="true"
+                app:hintTextColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/national_id_il"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLength="@integer/patient_name_max_length"
+                    android:maxLines="@integer/single_line"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/national_id_il"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/national_id"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:errorEnabled="true"
+                app:hintTextColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/patient_email_il"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/national_id_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLength="@integer/id_max_length"
+                    android:maxLines="@integer/single_line"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/next_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="32dp"
-            android:minHeight="@dimen/button_min_height"
-            android:text="@string/next_title"
-            android:textColor="@color/black_light"
-            android:textAllCaps="false"
-            android:elevation="@dimen/button_normal_elevation"
-            app:backgroundTint="?attr/colorSecondary"
-            app:cornerRadius="@dimen/button_normal_rad"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_email_il"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/email_optional_title"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:errorEnabled="true"
+                app:hintTextColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/create_upload_id_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="@integer/max_email_length"
+                    android:maxLines="@integer/single_line"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/create_upload_id_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/upload_id_photo_title"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toTopOf="@+id/split_cv"
+                app:layout_constraintStart_toStartOf="@+id/split_cv" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/split_cv"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:clickable="true"
+                android:elevation="@dimen/button_normal_elevation"
+                android:focusable="true"
+                app:cardCornerRadius="@dimen/button_normal_rad"
+                app:layout_constraintBottom_toTopOf="@+id/next_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/national_id_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/upload_id_photo_title"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_circle" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="32dp"
+                android:elevation="@dimen/button_normal_elevation"
+                android:minHeight="@dimen/button_min_height"
+                android:text="@string/next_title"
+                android:textAllCaps="false"
+                android:textColor="@color/black_light"
+                app:backgroundTint="?attr/colorSecondary"
+                app:cornerRadius="@dimen/button_normal_rad"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

@@ -1,9 +1,11 @@
 package org.myf.ahc.ui.registration.reports
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.myf.ahc.models.DocumentModel
 import org.myf.ahc.util.FileTypesUtil
@@ -11,10 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
-    private val repo: SubmitReportsRepo
-): ViewModel(){
+    private val repo: UploadReportsRepo
+) : ViewModel() {
 
-    val uiState: StateFlow<ReportsUiState>  = repo.uiState
+    val uiState: StateFlow<ReportsUiState> = repo.uiState
     val editDocument: StateFlow<DocumentModel?> = repo.editDocument
 
     fun getReportsList() = repo.getReportsList()
@@ -49,14 +51,18 @@ class ReportsViewModel @Inject constructor(
 
     suspend fun isFileExist(
         name: String
-    ): Boolean = withContext(Dispatchers.Default){
+    ): Boolean = withContext(Dispatchers.Default) {
         uiState.value.list.forEach {
-            val file = it.name+FileTypesUtil.getFileTypeExtension(it.type)
-            if (name == file){
+            val file = it.name + FileTypesUtil.getFileTypeExtension(it.type)
+            if (name == file) {
                 return@withContext true
             }
         }
         false
+    }
+
+    fun saveFilesCount() = viewModelScope.launch {
+        repo.saveFilesCount()
     }
 
     fun clearDeleteFile() = repo.clearDeleteFile()

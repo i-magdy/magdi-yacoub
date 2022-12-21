@@ -13,4 +13,5 @@
     <integer name="patient_name_max_length">64</integer>
     <integer name="note_lines">4</integer>
     <integer name="note_max_length">512</integer>
+    <integer name="max_email_length">64</integer>
 </resources>

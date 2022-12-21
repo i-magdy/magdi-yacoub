@@ -70,6 +70,16 @@ class VerifyViewModel @Inject constructor(
         }
     }
 
+    fun savePatient(
+        phone: String,
+        verified: Boolean
+    ) = viewModelScope.launch {
+        repo.savePatientData(
+            primaryPhone = phone,
+            verified = verified
+        )
+    }
+
     fun verify(
         code: String?
     ) = viewModelScope.launch {

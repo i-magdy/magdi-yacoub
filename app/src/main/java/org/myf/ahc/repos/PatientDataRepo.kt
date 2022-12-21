@@ -25,12 +25,14 @@ class PatientDataRepo @Inject constructor(
     suspend fun updatePatientDataOnCreateScreen(
         name: String,
         id: String,
-        img: Uri
+        img: Uri,
+        email: String /* Optional */
     ) {
         dataStore.updateData { patient ->
             patient.toBuilder()
                 .setName(name)
                 .setId(id)
+                .setEmail(email)
                 .setImgUri(img.toString())
                 .build()
         }
@@ -39,23 +41,31 @@ class PatientDataRepo @Inject constructor(
 
     suspend fun updatePatientDataOnVerifyScreen(
         primaryPhone: String,
-        secondaryPhone: String
+        verified: Boolean
     ) {
         dataStore.updateData { patient ->
             patient.toBuilder()
                 .setPrimaryPhone(primaryPhone)
+                .setVerified(verified)
+                .build()
+        }
+    }
+
+    suspend fun updateSecondaryPhone(
+        secondaryPhone: String
+    ){
+        dataStore.updateData { patient ->
+            patient.toBuilder()
                 .setSecondaryPhone(secondaryPhone)
                 .build()
         }
     }
 
     suspend fun updatePatientDataOnReportsScreen(
-        verified: Boolean,
         fileCount: Int
     ) {
         dataStore.updateData { patient ->
             patient.toBuilder()
-                .setVerified(verified)
                 .setFilesCount(fileCount)
                 .build()
         }
