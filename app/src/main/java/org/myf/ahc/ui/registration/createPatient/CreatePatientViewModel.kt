@@ -1,39 +1,56 @@
 package org.myf.ahc.ui.registration.createPatient
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.repos.PatientDataRepo
 import org.myf.ahc.util.CreatePatientUiError
 import javax.inject.Inject
 
 @HiltViewModel
 class CreatePatientViewModel @Inject constructor(
-    private val repo: CreatePatientRepo,
+    private val patientRepo: PatientDataRepo
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(CreatePatientUiState())
     val uiState: StateFlow<CreatePatientUiState> = _uiState
 
-
-    fun setPatientName(
-        name: String
-    ) = viewModelScope.launch {
-        val patientName = _uiState.value.patientName
-        if (name.isNotBlank() && patientName != name) {
-            _uiState.emit(_uiState.value.copy(patientName = name))
+    fun sync() =   viewModelScope.launch {
+        patientRepo.patient.collect{
+            _uiState.emit(
+                value = _uiState.value.copy(
+                    patientName = it.name,
+                    nationalId = it.id,
+                    img = Uri.parse(it.imgUri),
+                    email = it.email
+                )
+            )
         }
     }
 
-    fun setNationalId(
-        id: String
+    fun attemptSavePatient(
+        name: String,
+        id: String,
+        email: String
     ) = viewModelScope.launch {
-        val nationalId = _uiState.value.nationalId
-        if (id.isNotBlank() && nationalId != id) {
-            _uiState.emit(_uiState.value.copy(nationalId = id))
-        }
+        patientRepo.updatePatientDataOnCreateScreen(
+            name = name,
+            id = id,
+            img = _uiState.value.img,
+            email = email
+        )
+    }
+
+    fun setImageUri(
+        img: Uri
+    ) = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(img = img)
+        )
     }
 
     fun clearError() = viewModelScope.launch {

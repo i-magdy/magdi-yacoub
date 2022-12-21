@@ -25,12 +25,14 @@ class PatientDataRepo @Inject constructor(
     suspend fun updatePatientDataOnCreateScreen(
         name: String,
         id: String,
-        img: Uri
+        img: Uri,
+        email: String /* Optional */
     ) {
         dataStore.updateData { patient ->
             patient.toBuilder()
                 .setName(name)
                 .setId(id)
+                .setEmail(email)
                 .setImgUri(img.toString())
                 .build()
         }

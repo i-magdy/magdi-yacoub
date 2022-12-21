@@ -12,4 +12,5 @@ message PatientData {
   bool verified = 6;
   string device_token = 7;
   int32 files_count = 8;
+  string email = 9;
 }

@@ -69,4 +69,5 @@
     <string name="note_title">Note</string>
     <string name="add_title">Add</string>
     <string name="delete_doc_title">Delete Document</string>
+    <string name="email_optional_title">Email (Optional)</string>
 </resources>

@@ -10,13 +10,13 @@ import org.myf.ahc.api.CountriesService
 import org.myf.ahc.data.DatastoreImpl
 import org.myf.ahc.models.CountryCodeModel
 import org.myf.ahc.models.CountryModel
-import org.myf.ahc.util.VerifyUtil
+import org.myf.ahc.util.CountriesUtil
 import retrofit2.Response
 import javax.inject.Inject
 
 class VerifyRepo @Inject constructor(
     private val countryService: CountriesService,
-    private val util: VerifyUtil,
+    private val util: CountriesUtil,
     private val datastore: DatastoreImpl
 ) {
 

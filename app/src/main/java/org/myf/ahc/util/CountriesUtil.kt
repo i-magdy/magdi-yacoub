@@ -1,12 +1,10 @@
 package org.myf.ahc.util
 
-import dagger.hilt.android.scopes.ViewModelScoped
 import org.myf.ahc.models.CountryCodeModel
 import org.myf.ahc.models.CountryModel
 import javax.inject.Inject
 
-@ViewModelScoped
-class VerifyUtil @Inject constructor() {
+class CountriesUtil @Inject constructor() {
 
     var appLang = ""
     private var _selectedCountry: CountryCodeModel? = null

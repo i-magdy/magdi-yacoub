@@ -1,13 +1,20 @@
 package org.myf.ahc.ui.registration.submit
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.databinding.ScreenSubmitBinding
 
@@ -38,6 +45,21 @@ class SubmitScreen : Fragment() {
         }
         binding.editReportIv.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_reports)
+        }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED){
+                launch {
+                    viewModel.patient.collect{
+                        if (it.imgUri.isNotEmpty()) {
+                            val inputStream =
+                                requireActivity().contentResolver.openInputStream(Uri.parse(it.imgUri))
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
+                            binding.submitPatientIdIv.scaleType = ImageView.ScaleType.CENTER_CROP
+                            binding.submitPatientIdIv.setImageBitmap(bitmap)
+                        }
+                    }
+                }
+            }
         }
     }
 
