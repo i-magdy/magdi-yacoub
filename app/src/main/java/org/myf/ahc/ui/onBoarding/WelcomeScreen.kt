@@ -1,14 +1,21 @@
 package org.myf.ahc.ui.onBoarding
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.launch
 import org.myf.ahc.R
+import org.myf.ahc.ui.registration.RegistrationActivity
 
 @AndroidEntryPoint
 class WelcomeScreen: Fragment(
@@ -18,7 +25,7 @@ class WelcomeScreen: Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel by activityViewModels<OnBoardingViewModel>()
+        val viewModel by viewModels<OnBoardingViewModel>()
         val arabicButton = view.findViewById<MaterialButton>(R.id.arabic_button)
         val englishButton = view.findViewById<MaterialButton>(R.id.english_button)
 
@@ -41,6 +48,21 @@ class WelcomeScreen: Fragment(
         englishButton.setOnClickListener { viewModel.updateAppLanguage("en") }
         view.findViewById<MaterialButton>(R.id.start_button).setOnClickListener {
             viewModel.updateState(1)
+        }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.state.collect {
+                    when (it) {
+                        1 -> {
+                            val toRegistration = Intent(requireActivity(),
+                                RegistrationActivity::class.java)
+                            startActivity(toRegistration)
+                            requireActivity().finish()
+                        }
+                    }
+                    viewModel.state.cancellable()
+                }
+            }
         }
     }
 }
