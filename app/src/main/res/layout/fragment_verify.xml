@@ -87,6 +87,7 @@
                     android:inputType="text"
                     android:maxLength="@integer/country_max_length"
                     android:maxLines="@integer/single_line"
+                    tools:text="@sample/data.json/verify_screen/country"
                     android:textAlignment="viewStart"
                     tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +105,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/phone_il"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/phone_il"
-                tools:text="EGY" />
+                tools:text="@sample/data.json/verify_screen/country_iso" />
 
             <TextView
                 android:id="@+id/selected_country_code_tv"
@@ -118,7 +119,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/selected_country_flag_tv"
                 app:layout_constraintStart_toEndOf="@+id/selected_country_flag_tv"
                 app:layout_constraintTop_toTopOf="@+id/selected_country_flag_tv"
-                tools:text="(+20)" />
+                tools:text="@sample/data.json/verify_screen/country_code" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phone_il"
@@ -142,6 +143,7 @@
                     android:layout_height="match_parent"
                     android:inputType="number"
                     android:maxLength="@integer/phone_max_length"
+                    tools:text="@sample/data.json/verify_screen/phone"
                     android:maxLines="@integer/single_line"
                     android:text="@{viewModel.uiState.phone}"
                     android:textAlignment="viewStart"
@@ -174,6 +176,7 @@
                     android:inputType="number"
                     android:maxLength="@integer/verification_code_length"
                     android:maxLines="@integer/single_line"
+                    tools:text="@sample/data.json/verify_screen/verify_code"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 

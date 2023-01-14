@@ -90,7 +90,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
                         app:layout_constraintTop_toTopOf="@+id/submit_patient_id_iv"
-                        tools:text="الاسم ثلاثي - فلان الفلاني" />
+                        tools:text="@sample/data.json/patient/name" />
 
 
                     <TextView
@@ -105,7 +105,7 @@
                         app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
                         app:layout_constraintTop_toBottomOf="@+id/submit_patient_name"
                         app:layout_constraintVertical_bias="0"
-                        tools:text="125469758132647" />
+                        tools:text="@sample/data.json/patient/id" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -142,7 +142,7 @@
                         android:id="@+id/submit_email_tv"
                         android:layout_width="0dp"
                         android:layout_margin="16dp"
-                        tools:text="ibrahim.magdy31@gmail.com"
+                        tools:text="@sample/data.json/patient/email"
                         android:layout_height="wrap_content"
                         android:maxLines="@integer/single_line"
                         android:ellipsize="end"
@@ -185,7 +185,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/submit_primary_phone_label"
                             app:layout_constraintTop_toTopOf="@+id/submit_primary_phone_label"
-                            tools:text="+201234567890" />
+                            tools:text="@sample/data.json/patient/primary_phone" />
 
                         <Space
                             android:layout_width="0dp"
@@ -229,7 +229,7 @@
                         android:text="@{viewModel.patient.secondaryPhone}"
                         app:layout_constraintStart_toEndOf="@+id/submit_secondary_phone_label"
                         app:layout_constraintTop_toTopOf="@+id/submit_secondary_phone_label"
-                        tools:text="+201234567891" />
+                        tools:text="@sample/data.json/patient/secondary_phone" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -303,7 +303,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:text="@{String.valueOf(viewModel.patient.filesCount)}"
-                            tools:text="3" />
+                            tools:text="@sample/data.json/patient/file_counts" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -342,6 +342,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:lines="@integer/note_lines"
+                        tools:text="@sample/data.json/patient/diagnoses_note"
                         android:maxLength="@integer/note_max_length"
                         android:maxLines="@integer/note_lines"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -66,6 +66,7 @@
                     android:inputType="text"
                     android:maxLength="@integer/patient_name_max_length"
                     android:maxLines="@integer/single_line"
+                    tools:text="@sample/data.json/patient/name"
                     tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -91,6 +92,7 @@
                     android:inputType="number"
                     android:maxLength="@integer/id_max_length"
                     android:maxLines="@integer/single_line"
+                    tools:text="@sample/data.json/patient/id"
                     tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -117,6 +119,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLength="@integer/max_email_length"
                     android:maxLines="@integer/single_line"
+                    tools:text="@sample/data.json/patient/email"
                     tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
