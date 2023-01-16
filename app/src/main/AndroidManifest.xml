@@ -19,25 +19,21 @@
         android:theme="@style/Theme.MYFApp"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.onBoarding.OnBoardingActivity"
             android:exported="true"
             android:screenOrientation="locked">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.registration.RegistrationActivity"
-            android:exported="false"
-            android:screenOrientation="locked">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
 
         <service

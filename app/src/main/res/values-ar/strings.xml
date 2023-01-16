@@ -2,22 +2,7 @@
 <resources>
     <string name="app_name">مجدي يعقوب</string>
     <string name="name">مجدي يعقوب - مركز اسوان للقلب</string>
-    <string name="verify_content_message">تحقق من شخصيتك</string>
-    <string name="phone_title">رقم الهاتف</string>
-    <string name="verify_title">تأكيد</string>
-    <string name="verify_code_title">رمز التأكيد</string>
-    <string name="send_code_title">إرسال الرمز</string>
-    <string name="select_country_title">إختر بلد</string>
-    <string name="offline_message">لا يوجد اتصال بالانترنت</string>
-    <string name="wrong_phone_message">رقم الهاتف خطأ</string>
-    <string name="wrong_code_message">رمز التأكيد خطأ</string>
-    <string name="select_country_message">فضلا إختر بلد</string>
-    <string name="enter_phone_message">إدخل رقم هاتف المريض</string>
-    <string name="succeed_verify_message">تم بنجاح\nتأكيد رقم الهاتف</string>
-    <string name="other_phone_title">هاتف اخر</string>
-    <string name="phone_content_label">علامة رقم الهاتف</string>
-    <string name="other_phone_message">فضلا إدخل رقم هاتف اخر</string>
-    <string name="success_label">علامة النجاح</string>
+
     <string name="next_title">التالي</string>
     <string name="start_title">لنبداء</string>
     <string name="select_language_title">Select Language - إختر لغه</string>
@@ -25,51 +10,4 @@
     <string name="english_title">English</string>
     <string name="welcome_title">مرحبا في تطبيق مجدي يعقوب</string>
     <string name="welcome_message">تطبيق لجعل التواصل بين المرضى و المستشفى اسهل.</string>
-    <string name="send_reports_title">إرسل نسخه من التقارير الطبيه</string>
-    <string name="send_reports_message">تشمل نسخة من الموجات فوق الصوتيه
-و تقرير القسطره إذا وجد
-تحاليل سيوله إذا وجد</string>
-    <string name="submit_title">إرسل</string>
-
-    <string name="register_patient_details">تسجيل بيانات الحالة</string>
-    <string name="patient_name">اسم الحالة</string>
-    <string name="national_id">الرقم القومي</string>
-    <string name="upload_national_id_title">ارفع صورة الرقم القومي</string>
-    <string name="invalid_patient_name">اسم المريض غير صالح</string>
-    <string name="invalid_national_id">الرقم القومي خطأ</string>
-    <string name="upload_files_title">رفع ملفات</string>
-    <string name="upload_image_title">حمل صوره</string>
-    <string name="upload_file_title">حمل ملف</string>
-    <string name="reports_view_message">التقارير الخاصه بك تظهر هنا</string>
-    <string name="total_size_value">من 20م.ب</string>
-    <string name="file_size_message">ملف اكبر من 20 م.ب</string>
-    <string name="report_content_label">علامة التقرير</string>
-    <string name="cancel_title">إلغاء</string>
-    <string name="delete_title">حذف</string>
-    <string name="delete_report_message">هل تريد حذف هذا الملف؟</string>
-    <string name="file_exist_message">تم تحميل الملف بالفعل</string>
-    <string name="used_storage">المساحه المستخدمه</string>
-    <string name="register_title">تسجيل</string>
-    <string name="log_in_title">دخول</string>
-    <string name="review_request_title">راجع طلبك</string>
-    <string name="verify_log_in_message">لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. \n\ n آخر رقمين لديك هما</string>
-    <string name="upload_id_photo_title">إرفع صوره من البطاقه او شهادة الميلاد</string>
-    <string name="edit_report_label">تعديل التقرير</string>
-    <string name="verified_title">تم التحقق</string>
-    <string name="files_uploaded_message">لقد رفعت</string>
-    <string name="files_title">ملفات</string>
-    <string name="submit_request_title">إرسل الطلب</string>
-    <string name="name_id_info_title">الاسم و الرقم القومي</string>
-    <string name="contact_info_title">بيانات التواصل</string>
-    <string name="reports_diagnosis_info_title">التقارير و التشخيص</string>
-    <string name="diagnosis_description_title">شرح التشخيص</string>
-    <string name="edit_name_label">علامة تعديل الاسم</string>
-    <string name="edit_reports_label">علامة تعديل التقارير</string>
-    <string name="diagnosis_title">إكتب التشخيص</string>
-    <string name="Edit_report_doc_title">تعديل الملف</string>
-    <string name="add_note_title">أضف ملاحظه</string>
-    <string name="note_title">ملاحظه</string>
-    <string name="add_title">أضف</string>
-    <string name="delete_doc_title">حذف الملف</string>
-    <string name="email_optional_title">بريد إلكتروني (إختياري)</string>
 </resources>

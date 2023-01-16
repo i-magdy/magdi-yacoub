@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.myf.ahc.data.DatastoreImpl
+import org.myf.ahc.core.datastore.DatastoreImpl
+
 import javax.inject.Inject
 
 @HiltViewModel

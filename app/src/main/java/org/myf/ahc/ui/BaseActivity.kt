@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
-import org.myf.ahc.data.DatastoreImpl
+import org.myf.ahc.core.datastore.DatastoreImpl
 import java.util.*
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ open class BaseActivity : AppCompatActivity {
     constructor(): super()
     constructor(contentLayoutId: Int): super(contentLayoutId)
 
-    @Inject
+   @Inject
     lateinit var datastoreImpl: DatastoreImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
