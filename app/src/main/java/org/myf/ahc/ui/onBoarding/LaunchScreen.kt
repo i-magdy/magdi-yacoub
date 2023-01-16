@@ -3,8 +3,8 @@ package org.myf.ahc.ui.onBoarding
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,15 +16,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import org.myf.ahc.R
-import org.myf.ahc.ui.registration.RegistrationActivity
+import org.myf.ahc.ui.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class LaunchScreen : Fragment(
     R.layout.screen_launch
 ) {
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel by viewModels<OnBoardingViewModel>()
@@ -34,7 +32,9 @@ class LaunchScreen : Fragment(
                 val nav = Navigation.findNavController(
                     view = view
                 )
+                nav.navigate(R.id.action_navigate_to_welcome_screen)
                 viewModel.state.collect {
+                    Log.e("state",it.toString())
                     when (it) {
                         0 -> {
                             val dest = nav.currentDestination
@@ -43,9 +43,9 @@ class LaunchScreen : Fragment(
                             }
                         }
                         1 -> {
-                            val toRegistration =
-                                Intent(requireActivity(), RegistrationActivity::class.java)
-                            startActivity(toRegistration)
+                            val toMainActivity = Intent(requireActivity(),
+                                MainActivity::class.java)
+                            startActivity(toMainActivity)
                             requireActivity().finish()
                         }
                     }
