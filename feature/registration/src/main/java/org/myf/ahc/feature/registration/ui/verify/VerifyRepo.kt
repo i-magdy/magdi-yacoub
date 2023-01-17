@@ -7,13 +7,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.data.repository.CountriesRepository
+import org.myf.ahc.core.datastore.DatastoreImpl
 import org.myf.ahc.core.datastore.PatientDataRepo
 import org.myf.ahc.core.model.countries.CountryCodeModel
 import javax.inject.Inject
 
 class VerifyRepo @Inject constructor(
     private val countriesRepo : CountriesRepository,
-  //  private val datastore: DatastoreImpl,
+    private val datastore: DatastoreImpl,
     private val patientRepo: PatientDataRepo
 ) {
 
@@ -94,7 +95,7 @@ class VerifyRepo @Inject constructor(
 
 
     fun updateStateForLogin() = coroutine.launch {
-       // datastore.updateState(2)
+        datastore.updateState(2)
     }
 
     fun cancelJobs() = coroutine.cancel()

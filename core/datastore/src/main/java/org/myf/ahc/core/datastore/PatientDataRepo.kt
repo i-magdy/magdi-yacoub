@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import org.myf.ahc.core.datastore.PatientData
 import javax.inject.Inject
 
@@ -14,7 +15,25 @@ class PatientDataRepo @Inject constructor(
     private val dataStore: DataStore<PatientData>
 ) {
 
-    val patient: Flow<PatientData> = dataStore.data.catch {
+    suspend fun getPatientMessage(): Flow<PatientModel> = flow{
+        patient.collect{
+            emit(
+                PatientModel(
+                    name = it.name,
+                    id = it.id,
+                    email = it.email,
+                    img = it.imgUri,
+                    primaryPhone = it.primaryPhone,
+                    secondaryPhone = it.secondaryPhone,
+                    fileCount = it.filesCount,
+                    isVerified = it.verified,
+                    deviceToken = it.deviceToken
+                )
+            )
+        }
+    }
+
+    private val patient: Flow<PatientData> = dataStore.data.catch {
         if (it is IOException) {
             Log.e("patient_datastore", "Error reading patient data.", it)
             emit(PatientData.getDefaultInstance())

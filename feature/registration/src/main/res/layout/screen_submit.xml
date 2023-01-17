@@ -85,6 +85,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:textAlignment="viewStart"
+                        android:text="@{viewModel.patient.name}"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
@@ -98,6 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:textAlignment="viewStart"
+                        android:text="@{viewModel.patient.id}"
                         app:layout_constraintBottom_toBottomOf="@+id/submit_patient_id_iv"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/submit_patient_id_iv"
@@ -131,6 +133,7 @@
                         android:layout_height="24dp"
                         android:layout_margin="16dp"
                         android:src="@drawable/ic_email"
+                        android:visibility="@{viewModel.patient.email.isEmpty ? View.GONE : View.VISIBLE}"
                         android:contentDescription="@string/email_optional_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -143,6 +146,8 @@
                         android:layout_height="wrap_content"
                         android:maxLines="@integer/single_line"
                         android:ellipsize="end"
+                        android:text="@{viewModel.patient.email}"
+                        android:visibility="@{viewModel.patient.email.isEmpty ? View.GONE : View.VISIBLE}"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintBottom_toBottomOf="@+id/submit_email_iv"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -174,6 +179,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
+                            android:text="@{viewModel.patient.primaryPhone}"
                             android:textAppearance="?attr/textAppearanceBody1"
                             app:layout_constraintBottom_toBottomOf="@+id/submit_primary_phone_label"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -195,6 +201,7 @@
                             android:textAppearance="?attr/textAppearanceBody1"
                             android:textColor="@color/color_verified"
                             android:textStyle="bold"
+                            android:visibility="@{viewModel.patient.verified ? View.VISIBLE : View.GONE}"
                             tools:ignore="TextContrastCheck" />
                     </LinearLayout>
 
@@ -205,6 +212,7 @@
                         android:layout_marginTop="16dp"
                         android:contentDescription="@string/phone_content_label"
                         android:src="@drawable/ic_phone"
+                        android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="@+id/primary_phone_linearlayout"
                         app:layout_constraintTop_toBottomOf="@+id/primary_phone_linearlayout" />
 
@@ -214,6 +222,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:textAlignment="viewStart"
+                        android:visibility="@{viewModel.patient.secondaryPhone.isEmpty ? View.GONE : View.VISIBLE}"
+                        android:text="@{viewModel.patient.secondaryPhone}"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintBottom_toBottomOf="@+id/submit_secondary_phone_label"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -292,6 +302,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
+                            android:text="@{String.valueOf(viewModel.patient.fileCount)}"
                             tools:text="@sample/data.json/patient/file_counts" />
 
                         <TextView
@@ -356,6 +367,5 @@
                 app:cornerRadius="@dimen/button_normal_rad" />
         </LinearLayout>
     </ScrollView>
-
 
 </layout>

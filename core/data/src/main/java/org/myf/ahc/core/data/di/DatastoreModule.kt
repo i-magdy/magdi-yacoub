@@ -20,8 +20,8 @@ class DatastoreModule {
     @Singleton
     fun provideDatastoreImpl(@ApplicationContext context: Context) = DatastoreImpl(context)*/
 
-    @Provides
+   /* @Provides
     @Singleton
-    fun provideProtoDatastore(@ApplicationContext context: Context): DataStore<PatientData> = context.patientDatastore
+    fun provideProtoDatastore(@ApplicationContext context: Context): DataStore<PatientData> = context.patientDatastore*/
 
 }

@@ -45,8 +45,8 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
             }
         }
         lifecycleScope.launch {
-            patientRepo.patient.collect{
-                secondaryPhoneEt.setText("secondaryPhone")
+            patientRepo.getPatientMessage().collect{
+                secondaryPhoneEt.setText(it.secondaryPhone)
             }
         }
     }

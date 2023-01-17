@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.myf.ahc.core.datastore.PatientData
+import org.myf.ahc.core.datastore.PatientModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,7 +14,7 @@ class SubmitViewModel @Inject constructor(
 ): ViewModel(){
 
 
-    val patient: StateFlow<PatientData?> = repo.patient
+    val patient: StateFlow<PatientModel> = repo.patient
 
 
     fun syncPatientData() = viewModelScope.launch {

@@ -21,14 +21,13 @@ class CreatePatientViewModel @Inject constructor(
     val uiState: StateFlow<CreatePatientUiState> = _uiState
 
     fun sync() =   viewModelScope.launch {
-        patientRepo.patient.collect{
-
+        patientRepo.getPatientMessage().collect{
             _uiState.emit(
                 value = _uiState.value.copy(
-                    patientName = "it.name",
-                    nationalId = "it.id",
-                    img = Uri.parse("it.imgUri"),
-                    email = "it.email"
+                    patientName = it.name,
+                    nationalId = it.id,
+                    img = Uri.parse(it.img),
+                    email = it.email
                 )
             )
         }
