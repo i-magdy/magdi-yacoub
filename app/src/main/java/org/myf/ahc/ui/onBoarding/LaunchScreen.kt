@@ -3,7 +3,6 @@ package org.myf.ahc.ui.onBoarding
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,13 +27,11 @@ class LaunchScreen : Fragment(
         val viewModel by viewModels<OnBoardingViewModel>()
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                delay(1600)
+                delay(1600) //TODO change it with api call!!
                 val nav = Navigation.findNavController(
                     view = view
                 )
-                nav.navigate(R.id.action_navigate_to_welcome_screen)
                 viewModel.state.collect {
-                    Log.e("state",it.toString())
                     when (it) {
                         0 -> {
                             val dest = nav.currentDestination

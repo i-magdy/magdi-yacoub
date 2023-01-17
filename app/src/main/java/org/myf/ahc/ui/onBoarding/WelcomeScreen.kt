@@ -7,8 +7,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.ui.main.MainActivity
 
@@ -16,7 +23,6 @@ import org.myf.ahc.ui.main.MainActivity
 class WelcomeScreen: Fragment(
     R.layout.screen_welcome
 ){
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +53,22 @@ class WelcomeScreen: Fragment(
                 MainActivity::class.java)
             startActivity(toMainActivity)
             requireActivity().finish()
+        }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.state
+                    .map { it == 1 }
+                    .distinctUntilChanged()
+                    .collect {
+                    if (it){
+                        val toMainActivity = Intent(requireActivity(),
+                            MainActivity::class.java)
+                        startActivity(toMainActivity)
+                        requireActivity().finish()
+                    }
+                    viewModel.state.cancellable()
+                }
+            }
         }
     }
 }

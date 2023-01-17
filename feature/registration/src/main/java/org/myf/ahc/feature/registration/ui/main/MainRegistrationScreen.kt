@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenMainRegistrationBinding
 
+@AndroidEntryPoint
 class MainRegistrationScreen : Fragment() {
 
     private var _binding: ScreenMainRegistrationBinding? = null

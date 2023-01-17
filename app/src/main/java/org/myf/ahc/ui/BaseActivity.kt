@@ -7,7 +7,10 @@ import android.os.LocaleList
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import org.myf.ahc.core.datastore.DatastoreImpl
 import java.util.*
 import javax.inject.Inject
@@ -23,15 +26,17 @@ open class BaseActivity : AppCompatActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this::datastoreImpl.isInitialized) {
-            lifecycleScope.launchWhenCreated {
-                datastoreImpl.appLanguage.collect {
-                    val lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                        resources.configuration.locales[0].language
-                    }else{
-                        resources.configuration.locale.language
-                    }
-                    if (lang != it){
-                        changeAppLanguage(it)
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    datastoreImpl.appLanguage.collect {
+                        val lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            resources.configuration.locales[0].language
+                        } else {
+                            resources.configuration.locale.language
+                        }
+                        if (lang != it) {
+                            changeAppLanguage(it)
+                        }
                     }
                 }
             }
