@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.model.storage.DocumentModel
-import org.myf.ahc.feature.registration.util.FileTypesUtil
 import javax.inject.Inject
 
 @HiltViewModel

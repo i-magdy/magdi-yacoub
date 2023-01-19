@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.util
+package org.myf.ahc.core.common.util
 
 
 object FilesSizeUtil {

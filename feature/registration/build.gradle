@@ -49,6 +49,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation project(path: ':core:datastore')
     implementation project(path: ':core:model')
+    implementation project(path: ':core:common')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -62,7 +63,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.3')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
-    implementation 'com.google.firebase:firebase-storage-ktx'
 
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"

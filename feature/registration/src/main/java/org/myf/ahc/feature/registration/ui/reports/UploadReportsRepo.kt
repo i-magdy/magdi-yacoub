@@ -1,10 +1,11 @@
 package org.myf.ahc.feature.registration.ui.reports
 
-import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.myf.ahc.core.data.repository.FileStorageRepo
+import org.myf.ahc.core.data.repository.StorageListRepo
 import org.myf.ahc.core.datastore.PatientDataRepo
 import javax.inject.Inject
 
@@ -73,7 +74,7 @@ class UploadReportsRepo @Inject constructor(
         name: String
     ) = coroutine.launch {
         storageRepo.uploadFile(
-            path = "",//TODO "EndPoints.REPORTS_PATH",
+            path = "Patient_Reports",
             data = data,
             name = name
         )
@@ -102,7 +103,6 @@ class UploadReportsRepo @Inject constructor(
     fun attemptToDeleteFile(
         path: String
     ) = coroutine.launch {
-        Log.e("path",path)
         uiState.value.list.forEach {
             if (path == it.path){
                 uiState.emit(

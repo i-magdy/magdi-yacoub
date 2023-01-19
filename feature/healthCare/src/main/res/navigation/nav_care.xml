@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_care"
     app:startDestination="@id/health_care_list_screen">
-
     <fragment
         android:id="@+id/health_care_list_screen"
         tools:layout="@layout/screen_care_list"
+        android:label="@string/care_main_screen_title"
         android:name="org.myf.ahc.feature.healthcare.HealthCareListScreen"/>
 </navigation>

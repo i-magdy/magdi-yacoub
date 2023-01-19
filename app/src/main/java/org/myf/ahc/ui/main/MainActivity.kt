@@ -8,6 +8,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import dagger.hilt.android.AndroidEntryPoint
 import org.myf.ahc.R
 import org.myf.ahc.feature.registration.R as registrationResource
@@ -25,6 +27,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.main_tool_bar))
+        Firebase.initialize(applicationContext)
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_main_host_container
         ) as NavHostFragment
@@ -32,7 +35,6 @@ class MainActivity : BaseActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
-
 
         appBarConfiguration = AppBarConfiguration(
             setOf(homeResource.id.home_screen,registrationResource.id.main_screen,healthResource.id.health_care_list_screen)

@@ -25,13 +25,19 @@
     <string name="welcome_title">Welcome to MYF App</string>
     <string name="welcome_message">An application to make the communication with patients easier.</string>
 
+    <string name="main_screen_title">Profile</string>
+    <string name="log_in_screen_title">Log In</string>
+    <string name="create_screen_title">Name &amp; Id</string>
+    <string name="verify_phone_screen_title">Verification</string>
+    <string name="upload_reports_screen_title">Upload reports</string>
+    <string name="submit_screen_title">Submit</string>
+
     <string name="register_patient_details">Register patient details</string>
     <string name="patient_name">Patient name</string>
     <string name="national_id">National id</string>
     <string name="upload_national_id_title">Upload national id image</string>
     <string name="invalid_patient_name">Invalid Patient Name</string>
     <string name="invalid_national_id">Invalid National Id</string>
-
     <string name="send_reports_title">Send a copy of Medical reports</string>
     <string name="send_reports_message">Include a copy of the ultrasound and a catheterization report, if any. Fluidity analysis, if any</string>
     <string name="submit_title">Submit</string>
