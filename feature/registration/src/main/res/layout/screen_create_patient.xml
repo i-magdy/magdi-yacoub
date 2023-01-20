@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorOnBackground">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/register_patient_title"
@@ -27,18 +26,19 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/register_patient_details"
                 android:textAlignment="viewStart"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintBottom_toTopOf="@+id/create_logo_iv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/create_logo_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_myf_logo"
                 app:layout_constraintBottom_toTopOf="@+id/patient_name_il"
@@ -47,7 +47,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/patient_name_il"
-                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -73,7 +73,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/national_id_il"
-                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -100,7 +100,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/patient_email_il"
-                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"

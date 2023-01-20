@@ -1,7 +1,10 @@
 package org.myf.ahc.feature.registration.ui.verify
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,7 +31,6 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottom_dialog_view)
-        isCancelable = false
         val behavior = (dialog!! as BottomSheetDialog).behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isHideable = false
@@ -49,5 +51,10 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
                 secondaryPhoneEt.setText(it.secondaryPhone)
             }
         }
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        parentFragment?.findNavController()?.navigate(R.id.action_pop_up_from_verification_to_create_screen)
     }
 }

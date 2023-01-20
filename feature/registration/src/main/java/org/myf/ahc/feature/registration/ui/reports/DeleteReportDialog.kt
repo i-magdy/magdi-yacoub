@@ -56,7 +56,7 @@ class DeleteReportDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogDeleteReportBinding.inflate(layoutInflater)
         return AlertDialog
-            .Builder(requireActivity())
+            .Builder(requireContext())
             .setView(binding.root)
             .create()
     }

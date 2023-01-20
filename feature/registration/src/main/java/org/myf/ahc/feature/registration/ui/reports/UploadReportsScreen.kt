@@ -107,7 +107,7 @@ class UploadReportsScreen : Fragment(
     }
 
 
-    private fun updateUi(ui: ReportsUiState) {
+    private suspend fun updateUi(ui: ReportsUiState) {
         if (ui.pickFile) {
             pickFileIntentLauncher.launch(pickFileIntent)
         }
@@ -132,7 +132,8 @@ class UploadReportsScreen : Fragment(
         }
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
             if (editDialog.isAdded){ editDialog.dismiss() }
-            deleteDialog.show(parentFragmentManager, "tag_name")
+            delay(200)
+            deleteDialog.show(childFragmentManager, "tag_name")
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
@@ -351,7 +352,7 @@ class UploadReportsScreen : Fragment(
     override fun onEditFile(path: String) {
         if (!editDialog.isAdded){
             viewModel.getReportByPath(path)
-            editDialog.show(parentFragmentManager,"edit_report_dialog")
+            editDialog.show(childFragmentManager,"edit_report_dialog")
         }
     }
 
