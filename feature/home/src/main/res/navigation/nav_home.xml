@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
-    app:startDestination="@id/home_screen">
+    app:startDestination="@id/home_start_screen">
 
     <fragment
-        android:id="@+id/home_screen"
+        android:id="@+id/home_start_screen"
         android:name="org.myf.ahc.feature.home.HomeScreen"
         android:label="@string/home_main_screen_title"
         tools:layout="@layout/screen_home"/>

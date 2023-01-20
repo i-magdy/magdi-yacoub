@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="phone"
-            type="String" />
-
-        <variable
             name="code"
             type="String" />
 

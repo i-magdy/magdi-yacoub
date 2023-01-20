@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_registration"
-    app:startDestination="@id/main_screen">
+    app:startDestination="@id/registration_start_fragment">
 
     <fragment
-        android:id="@+id/main_screen"
+        android:id="@+id/registration_start_fragment"
         android:label="@string/main_screen_title"
         tools:layout="@layout/screen_main_registration"
         android:name="org.myf.ahc.feature.registration.ui.main.MainRegistrationScreen">
@@ -18,6 +18,13 @@
             app:exitAnim="@anim/slide_out_left"/>
         <action android:id="@+id/action_navigate_to_log_in"
             app:destination="@id/log_in_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_navigate_from_main_to_profile"
+            app:destination="@id/profile_screen"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -66,7 +73,6 @@
         </action>
     </fragment>
 
-
     <fragment
         android:id="@+id/verify_screen"
         android:label="@string/verify_phone_screen_title"
@@ -80,6 +86,14 @@
             android:name="phone"
             android:defaultValue=""
             app:argType="string"/>
+        <action android:id="@+id/action_pop_up_from_verification_to_create_screen"
+            app:destination="@+id/create_patient_screen"
+            app:popUpTo="@id/create_patient_screen"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_navigate_to_upload_reports"
             app:destination="@id/upload_reports_screen"
@@ -110,16 +124,33 @@
         android:label="@string/submit_screen_title">
         <action android:id="@+id/action_navigate_from_submit_to_create"
             app:destination="@id/create_patient_screen"
+            app:popUpTo="@id/create_patient_screen"
+            app:popUpToInclusive="true"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
         <action android:id="@+id/action_navigate_from_submit_to_reports"
+            app:popUpToInclusive="true"
             app:destination="@id/upload_reports_screen"
+            app:popUpTo="@id/upload_reports_screen"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_navigate_from_submit_to_profile"
+            app:destination="@id/profile_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
+
+
+    <fragment android:id="@+id/profile_screen"
+        android:name="org.myf.ahc.feature.registration.ui.profile.ProfileScreen"
+        tools:layout="@layout/screen_profile"
+        android:label="@string/profile_screen_title"/>
 
 </navigation>

@@ -28,10 +28,10 @@ class VerifyRepo @Inject constructor(
     suspend fun getCountryByCode(code: String) {
         val country = countriesRepo.getCountryByCode(code)
         if (country != null) {
-            selectedCountry.emit(country)
+            _selectedCountry = country
+            selectedCountry.emit(_selectedCountry!!)
         }
     }
-
 
 
     fun setSelectedCountryByName(

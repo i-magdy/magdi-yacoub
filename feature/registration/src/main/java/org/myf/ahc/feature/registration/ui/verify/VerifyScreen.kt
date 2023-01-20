@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -212,7 +213,7 @@ class VerifyScreen : Fragment() {
             startActivity(toLaunchIntent)
             requireActivity().finish()*/
         }else {
-            dialog.show(parentFragmentManager, "success_dialog")
+            dialog.show(childFragmentManager, "success_dialog")
         }
     }
     private fun requestCode(phone: String){
@@ -236,8 +237,8 @@ class VerifyScreen : Fragment() {
                 phone = auth.currentUser?.phoneNumber ?: ""
             )
         }else {
-            val p: String? = binding.phone
-            if (p == null || p.isBlank()) {
+            val p: String = binding.phoneEt.editableText.toString()
+            if (p.isBlank()) {
                 if (!shouldLogin) {
                     requestPhoneNumberHint()
                 }

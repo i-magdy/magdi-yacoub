@@ -37,6 +37,8 @@
     <string name="verify_phone_screen_title">التأكيد</string>
     <string name="upload_reports_screen_title">التقارير</string>
     <string name="submit_screen_title">الارسال</string>
+    <string name="profile_screen_title">صفحه شخصيه</string>
+
 
     <string name="register_patient_details">تسجيل بيانات الحالة</string>
     <string name="patient_name">اسم الحالة</string>

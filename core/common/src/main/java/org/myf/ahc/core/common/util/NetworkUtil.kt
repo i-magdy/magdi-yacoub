@@ -18,14 +18,7 @@ object NetworkUtil {
             val linkProperties = connectivityManager.getLinkProperties(currentNetwork)
             linkProperties != null && caps != null
         } else {
-            connectivityManager.activeNetworkInfo?.run {
-                when(type){
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    else -> false
-                }
-            }
-            false
+            connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo?.isConnected ?: false
         }
     }
 }

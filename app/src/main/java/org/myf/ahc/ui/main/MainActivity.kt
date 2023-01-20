@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
         bottomNavigationView.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(homeResource.id.home_screen,registrationResource.id.main_screen,healthResource.id.health_care_list_screen)
+            setOf(homeResource.id.home_start_screen,registrationResource.id.registration_start_fragment,healthResource.id.health_care_start_screen)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
