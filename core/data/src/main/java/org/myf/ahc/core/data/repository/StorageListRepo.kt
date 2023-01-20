@@ -56,6 +56,5 @@ class StorageListRepo @Inject constructor(){
         }
     }
 
-
     fun cancelJob() = coroutine.cancel()
 }

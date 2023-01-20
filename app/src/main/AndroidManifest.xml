@@ -20,7 +20,8 @@
         tools:targetApi="tiramisu">
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.onBoarding.OnBoardingActivity"
             android:exported="true"

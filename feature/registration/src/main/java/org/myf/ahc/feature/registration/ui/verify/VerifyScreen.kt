@@ -34,8 +34,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.util.NetworkUtil.isMobileConnectedToInternet
 import org.myf.ahc.feature.registration.databinding.ScreenVerifyBinding
-import org.myf.ahc.feature.registration.util.NetworkUtil
 import org.myf.ahc.feature.registration.util.PhoneAuthErrorMessage
 import org.myf.ahc.feature.registration.util.VerifyUiError
 
@@ -62,7 +62,7 @@ class VerifyScreen : Fragment() {
         shouldLogin = args.isShouldLogin && args.phone.isNotBlank()
         if (shouldLogin){ viewModel.shouldUpdateUiForLogIn() }
         val phone = requireActivity().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        if (NetworkUtil.isMobileConnectedToInternet(requireContext())){
+        if (isMobileConnectedToInternet(requireContext())){
             var code: String? = phone.simCountryIso
             code = code ?: phone.networkCountryIso
             if (!shouldLogin) {
@@ -207,7 +207,7 @@ class VerifyScreen : Fragment() {
     private fun showBottomSheet(){
         if (dialog.isAdded) return
         if (shouldLogin){
-            //TODO
+            //TODO navigate when success log in
            /* val toLaunchIntent = Intent(requireActivity(),OnBoardingActivity::class.java)
             startActivity(toLaunchIntent)
             requireActivity().finish()*/

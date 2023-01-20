@@ -31,8 +31,11 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
+            app:itemTextColor="@drawable/bottom_nav_selector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:itemIconTint="@drawable/bottom_nav_selector"
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
             app:menu="@menu/bottom_nav"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
