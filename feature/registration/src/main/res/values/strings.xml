@@ -31,6 +31,7 @@
     <string name="verify_phone_screen_title">Verification</string>
     <string name="upload_reports_screen_title">Upload reports</string>
     <string name="submit_screen_title">Submit</string>
+    <string name="profile_screen_title">Profile</string>
 
     <string name="register_patient_details">Register patient details</string>
     <string name="patient_name">Patient name</string>
