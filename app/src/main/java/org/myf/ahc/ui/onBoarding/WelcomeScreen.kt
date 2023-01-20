@@ -35,24 +35,31 @@ class WelcomeScreen: Fragment(
         }else{
             resources.configuration.locale.language
         }
-
         if (lang == "ar"){
-            arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100,null))
-            arabicButton.setTextColor(resources.getColor(R.color.purple_700,null))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100,null))
+                arabicButton.setTextColor(resources.getColor(R.color.purple_700,null))
+            }else{
+                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100))
+                arabicButton.setTextColor(resources.getColor(R.color.purple_700))
+            }
             arabicButton.strokeWidth = 3
         }else{
-            englishButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100,null))
-            englishButton.setTextColor(resources.getColor(R.color.purple_700,null))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                englishButton.backgroundTintList =
+                    ColorStateList.valueOf(resources.getColor(R.color.purple_100, null))
+                englishButton.setTextColor(resources.getColor(R.color.purple_700, null))
+            }else{
+                englishButton.backgroundTintList =
+                    ColorStateList.valueOf(resources.getColor(R.color.purple_100))
+                englishButton.setTextColor(resources.getColor(R.color.purple_700))
+            }
             englishButton.strokeWidth = 3
         }
         arabicButton.setOnClickListener { viewModel.updateAppLanguage("ar") }
         englishButton.setOnClickListener { viewModel.updateAppLanguage("en") }
         view.findViewById<MaterialButton>(R.id.start_button).setOnClickListener {
             viewModel.updateState(1)
-            val toMainActivity = Intent(requireActivity(),
-                MainActivity::class.java)
-            startActivity(toMainActivity)
-            requireActivity().finish()
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {

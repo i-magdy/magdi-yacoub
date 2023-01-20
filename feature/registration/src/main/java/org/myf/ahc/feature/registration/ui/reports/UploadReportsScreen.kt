@@ -25,12 +25,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import org.myf.ahc.core.common.util.FileTypesUtil
+import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
+import org.myf.ahc.core.common.util.FilesSizeUtil.calculateSizePercentage
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.adapters.ReportsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding
-import org.myf.ahc.feature.registration.util.FileTypesUtil
-import org.myf.ahc.feature.registration.util.FilesSizeUtil.REPORTS_SIZE
-import org.myf.ahc.feature.registration.util.FilesSizeUtil.calculateSizePercentage
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 

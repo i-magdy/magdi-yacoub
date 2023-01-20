@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.myf.ahc.core.common.util.FileTypesUtil
+import org.myf.ahc.core.common.util.FilesSizeUtil
 import org.myf.ahc.core.model.storage.DocumentModel
 import org.myf.ahc.feature.registration.R
-import org.myf.ahc.feature.registration.util.FileTypesUtil
-import org.myf.ahc.feature.registration.util.FilesSizeUtil
 
 
 class ReportsAdapter(

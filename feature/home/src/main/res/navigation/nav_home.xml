@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/home_screen"
         android:name="org.myf.ahc.feature.home.HomeScreen"
+        android:label="@string/home_main_screen_title"
         tools:layout="@layout/screen_home"/>
-
 </navigation>

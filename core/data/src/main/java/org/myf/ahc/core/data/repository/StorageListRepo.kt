@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.ui.reports
+package org.myf.ahc.core.data.repository
 
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.util.FileTypesUtil.subStringFileName
 import org.myf.ahc.core.model.storage.DocumentModel
-import org.myf.ahc.feature.registration.util.FileTypesUtil.subStringFileName
 
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class StorageListRepo @Inject constructor(){
     fun getPatientReportsList(
         patientId: String
     ){
-        val listRef = storage.reference.child("${"EndPoints.REPORTS_PATH"}/$patientId")//TODO
+        val listRef = storage.reference.child("Patient_Reports/$patientId")//TODO
         val list = ArrayList<DocumentModel>()
         var s = 0L
         coroutine.launch {
@@ -55,7 +55,6 @@ class StorageListRepo @Inject constructor(){
             }
         }
     }
-
 
     fun cancelJob() = coroutine.cancel()
 }

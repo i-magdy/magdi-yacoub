@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.ui.reports
+package org.myf.ahc.core.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
@@ -10,8 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.util.FileTypesUtil.subStringFileName
 import org.myf.ahc.core.model.storage.DocumentModel
-import org.myf.ahc.feature.registration.util.FileTypesUtil.subStringFileName
 import javax.inject.Inject
 
 class FileStorageRepo @Inject constructor(

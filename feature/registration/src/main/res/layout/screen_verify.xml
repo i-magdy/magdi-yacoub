@@ -140,7 +140,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phone_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="@integer/phone_max_length"
                     tools:text="@sample/data.json/verify_screen/phone"

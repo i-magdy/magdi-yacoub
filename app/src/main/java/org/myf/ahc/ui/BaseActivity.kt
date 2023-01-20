@@ -20,7 +20,7 @@ open class BaseActivity : AppCompatActivity {
     constructor(): super()
     constructor(contentLayoutId: Int): super(contentLayoutId)
 
-   @Inject
+    @Inject
     lateinit var datastoreImpl: DatastoreImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {

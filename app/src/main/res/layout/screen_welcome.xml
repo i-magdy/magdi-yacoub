@@ -83,6 +83,7 @@
                 android:textColor="?android:textColor"
                 android:textAllCaps="false"
                 android:text="@string/english_title"
+                android:maxWidth="300dp"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 app:strokeColor="@color/purple_500" />
         </LinearLayout>

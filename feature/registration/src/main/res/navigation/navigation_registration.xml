@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/main_screen"
-        android:label="main_screen"
+        android:label="@string/main_screen_title"
         tools:layout="@layout/screen_main_registration"
         android:name="org.myf.ahc.feature.registration.ui.main.MainRegistrationScreen">
         <action android:id="@+id/action_navigate_to_registration"
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/log_in_screen"
-        android:label="log_in_screen"
+        android:label="@string/log_in_screen_title"
         android:name="org.myf.ahc.feature.registration.ui.login.LogInScreen"
         tools:layout="@layout/screen_log_in">
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/create_patient_screen"
-        android:label="create_patient"
+        android:label="@string/create_screen_title"
         android:name="org.myf.ahc.feature.registration.ui.createPatient.CreatePatientScreen"
         tools:layout="@layout/screen_create_patient">
         <action
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/verify_screen"
-        android:label="verify_screen"
+        android:label="@string/verify_phone_screen_title"
         tools:layout="@layout/screen_verify"
         android:name="org.myf.ahc.feature.registration.ui.verify.VerifyScreen">
         <argument
@@ -92,7 +92,7 @@
     <fragment
         android:id="@+id/upload_reports_screen"
         tools:layout="@layout/screen_upload_reports"
-        android:label="upload_reports"
+        android:label="@string/upload_reports_screen_title"
         android:name="org.myf.ahc.feature.registration.ui.reports.UploadReportsScreen">
         <action
             android:id="@+id/action_navigate_from_upload_to_submit"
@@ -107,7 +107,7 @@
         android:id="@+id/submit_screen"
         tools:layout="@layout/screen_submit"
         android:name="org.myf.ahc.feature.registration.ui.submit.SubmitScreen"
-        android:label="submit_screen">
+        android:label="@string/submit_screen_title">
         <action android:id="@+id/action_navigate_from_submit_to_create"
             app:destination="@id/create_patient_screen"
             app:popEnterAnim="@anim/slide_in_right"

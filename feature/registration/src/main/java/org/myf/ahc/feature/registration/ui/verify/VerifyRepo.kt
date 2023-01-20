@@ -47,19 +47,19 @@ class VerifyRepo @Inject constructor(
                     return@launch
                 }
             }
-        }
-        countries.forEach {
-            if (_appLang == "ar") {
-                if (it.ar_name == name) {
-                    setSelectedCountry(it)
-                }
-            } else {
-                if (it.en_name == name) {
-                    setSelectedCountry(it)
+            countries.forEach {
+                if (_appLang == "ar") {
+                    if (it.ar_name == name) {
+                        setSelectedCountry(it)
+                    }
+                } else {
+                    if (it.en_name == name) {
+                        setSelectedCountry(it)
+                    }
                 }
             }
+            selectedCountry.emit(_selectedCountry!!)
         }
-        selectedCountry.emit(_selectedCountry!!)
     }
 
     suspend fun getCountries() {

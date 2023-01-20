@@ -25,7 +25,6 @@ class VerifyViewModel @Inject constructor(
     val phoneToVerify: StateFlow<String> = _phoneToVerify
     val verifyCode: StateFlow<String> = _verifyCode
 
-
     fun shouldUpdateUiForLogIn() = viewModelScope.launch {
         _uiState.emit(
             value = _uiState.value.copy(
