@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.myf.ahc.core.common.util.FileTypesUtil
+import org.myf.ahc.core.data.repository.UploadReportsRepository
 import org.myf.ahc.core.model.storage.DocumentModel
+import org.myf.ahc.core.model.uiState.ReportsUiState
 import javax.inject.Inject
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
-    private val repo: UploadReportsRepo
+    private val repo: UploadReportsRepository
 ) : ViewModel() {
 
     val uiState: StateFlow<ReportsUiState> = repo.uiState

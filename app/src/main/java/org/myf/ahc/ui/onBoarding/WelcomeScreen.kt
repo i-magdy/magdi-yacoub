@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.ahc.R
 import org.myf.ahc.ui.main.MainActivity
+import org.myf.ahc.ui.R as uiResource
 
 @AndroidEntryPoint
 class WelcomeScreen: Fragment(
@@ -37,22 +38,22 @@ class WelcomeScreen: Fragment(
         }
         if (lang == "ar"){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100,null))
-                arabicButton.setTextColor(resources.getColor(R.color.purple_700,null))
+                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(uiResource.color.purple_100,null))
+                arabicButton.setTextColor(resources.getColor(uiResource.color.purple_700,null))
             }else{
-                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.purple_100))
-                arabicButton.setTextColor(resources.getColor(R.color.purple_700))
+                arabicButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(uiResource.color.purple_100))
+                arabicButton.setTextColor(resources.getColor(uiResource.color.purple_700))
             }
             arabicButton.strokeWidth = 3
         }else{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 englishButton.backgroundTintList =
-                    ColorStateList.valueOf(resources.getColor(R.color.purple_100, null))
-                englishButton.setTextColor(resources.getColor(R.color.purple_700, null))
+                    ColorStateList.valueOf(resources.getColor(uiResource.color.purple_100, null))
+                englishButton.setTextColor(resources.getColor(uiResource.color.purple_700, null))
             }else{
                 englishButton.backgroundTintList =
-                    ColorStateList.valueOf(resources.getColor(R.color.purple_100))
-                englishButton.setTextColor(resources.getColor(R.color.purple_700))
+                    ColorStateList.valueOf(resources.getColor(uiResource.color.purple_100))
+                englishButton.setTextColor(resources.getColor(uiResource.color.purple_700))
             }
             englishButton.strokeWidth = 3
         }

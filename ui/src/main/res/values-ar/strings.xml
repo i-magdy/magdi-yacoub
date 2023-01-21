@@ -38,6 +38,8 @@
     <string name="upload_reports_screen_title">التقارير</string>
     <string name="submit_screen_title">الارسال</string>
     <string name="profile_screen_title">صفحه شخصيه</string>
+    <string name="home_main_screen_title">home</string>
+    <string name="care_main_screen_title">رعايه شخصيه</string>
 
 
     <string name="register_patient_details">تسجيل بيانات الحالة</string>

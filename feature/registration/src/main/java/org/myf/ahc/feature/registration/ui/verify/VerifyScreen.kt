@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +41,7 @@ import org.myf.ahc.feature.registration.util.VerifyUiError
 
 import java.util.concurrent.TimeUnit
 import org.myf.ahc.feature.registration.R as resource
+import org.myf.ahc.ui.R as uiResource
 
 @AndroidEntryPoint
 class VerifyScreen : Fragment() {
@@ -71,7 +71,7 @@ class VerifyScreen : Fragment() {
                 viewModel.getCountryCode(code ?: "eg")
             }
         }else{
-            Toast.makeText(context,getString(resource.string.offline_message),Toast.LENGTH_LONG).show()
+            Toast.makeText(context,getString(uiResource.string.offline_message),Toast.LENGTH_LONG).show()
         }
         lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             resources.configuration.locales[0].language
@@ -183,7 +183,7 @@ class VerifyScreen : Fragment() {
     private fun updateUi(){
         if (shouldLogin){
             val n = args.phone.subSequence(args.phone.length-2,args.phone.length)
-            binding.verifyLogInMessage.text = "${getString(resource.string.verify_log_in_message)}: ****$n"
+            binding.verifyLogInMessage.text = "${getString(uiResource.string.verify_log_in_message)}: ****$n"
             val constrain = ConstraintSet()
             constrain.clone(binding.verifyConstraintLayout)
             constrain.connect(binding.verifyCodeIl.id,
@@ -264,24 +264,24 @@ class VerifyScreen : Fragment() {
                 } catch (e: Exception) {
                     println("Phone Number Hint failed")
                     e.printStackTrace()
-                    binding.phoneIl.helperText = getString(resource.string.enter_phone_message)
+                    binding.phoneIl.helperText = getString(uiResource.string.enter_phone_message)
                 }
             }else{
                 Log.e("phone","cancelled")
-                binding.phoneIl.helperText = getString(resource.string.enter_phone_message)
+                binding.phoneIl.helperText = getString(uiResource.string.enter_phone_message)
             }
         }
     }
 
     private fun showUiError(error: VerifyUiError) = when(error){
         VerifyUiError.INVALID_PHONE -> {
-            binding.phoneIl.error = getString(resource.string.wrong_phone_message)
+            binding.phoneIl.error = getString(uiResource.string.wrong_phone_message)
         }
         VerifyUiError.INVALID_CODE -> {
-            binding.verifyCodeIl.error = getString(resource.string.wrong_code_message)
+            binding.verifyCodeIl.error = getString(uiResource.string.wrong_code_message)
         }
         VerifyUiError.SELECT_COUNTRY -> {
-            binding.countriesIl.error = getString(resource.string.select_country_message)
+            binding.countriesIl.error = getString(uiResource.string.select_country_message)
         }
         VerifyUiError.NONE -> {
             binding.verifyCodeIl.error = null

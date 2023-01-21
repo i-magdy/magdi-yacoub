@@ -24,6 +24,8 @@ import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenCreatePatientBinding
 import org.myf.ahc.feature.registration.util.CreatePatientUiError
+import org.myf.ahc.ui.R as uiResource
+
 
 @AndroidEntryPoint
 class CreatePatientScreen : Fragment() {
@@ -91,10 +93,10 @@ class CreatePatientScreen : Fragment() {
         error: CreatePatientUiError
     ) = when (error) {
         CreatePatientUiError.INVALID_PATIENT_NAME -> {
-            binding.patientNameIl.error = getString(R.string.invalid_patient_name)
+            binding.patientNameIl.error = getString(uiResource.string.invalid_patient_name)
         }
         CreatePatientUiError.INVALID_NATIONAL_ID -> {
-            binding.nationalIdEt.error = getString(R.string.invalid_national_id)
+            binding.nationalIdEt.error = getString(uiResource.string.invalid_national_id)
         }
         //iamge errors.....?
         CreatePatientUiError.NONE -> {

@@ -1,15 +1,14 @@
-package org.myf.ahc.feature.registration.ui.reports
+package org.myf.ahc.core.data.repository
 
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.myf.ahc.core.data.repository.FileStorageRepo
-import org.myf.ahc.core.data.repository.StorageListRepo
 import org.myf.ahc.core.datastore.PatientDataRepo
+import org.myf.ahc.core.model.uiState.ReportsUiState
 import javax.inject.Inject
 
-class UploadReportsRepo @Inject constructor(
+class UploadReportsRepository @Inject constructor(
     private val storageRepo: FileStorageRepo,
     private val storageListRepo: StorageListRepo,
     private val patientRepo: PatientDataRepo
