@@ -25,6 +25,8 @@
     <string name="welcome_title">Welcome to MYF App</string>
     <string name="welcome_message">An application to make the communication with patients easier.</string>
     <string name="home_main_screen_title">home</string>
+    <string name="home_settings_title">Settings</string>
+    <string name="ok_title">OK</string>
 
     <string name="main_screen_title">Profile</string>
     <string name="log_in_screen_title">Log In</string>

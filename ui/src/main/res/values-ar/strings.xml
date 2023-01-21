@@ -30,6 +30,7 @@
 و تقرير القسطره إذا وجد
 تحاليل سيوله إذا وجد</string>
     <string name="submit_title">إرسل</string>
+    <string name="home_settings_title">ضبط</string>
 
     <string name="main_screen_title">صفحه شخصيه</string>
     <string name="log_in_screen_title">تسجيل دخول</string>
@@ -38,8 +39,9 @@
     <string name="upload_reports_screen_title">التقارير</string>
     <string name="submit_screen_title">الارسال</string>
     <string name="profile_screen_title">صفحه شخصيه</string>
-    <string name="home_main_screen_title">home</string>
+    <string name="home_main_screen_title">الرئيسيه</string>
     <string name="care_main_screen_title">رعايه شخصيه</string>
+    <string name="ok_title">تم</string>
 
 
     <string name="register_patient_details">تسجيل بيانات الحالة</string>
