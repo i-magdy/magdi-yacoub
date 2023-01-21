@@ -2,9 +2,7 @@ package org.myf.ahc.feature.registration.ui.verify
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -17,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.datastore.PatientDataRepo
 import org.myf.ahc.feature.registration.R
+import org.myf.ahc.ui.R as uiResource
 
 import javax.inject.Inject
 
@@ -30,7 +29,7 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.bottom_dialog_view)
+        dialog?.window?.setBackgroundDrawableResource(uiResource.drawable.bottom_dialog_view)
         val behavior = (dialog!! as BottomSheetDialog).behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isHideable = false
@@ -43,7 +42,7 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
                 )
                 delay(200)
                 parentFragment?.findNavController()?.navigate(R.id.action_navigate_to_upload_reports)
-                dismissNow()
+                dismiss()
             }
         }
         lifecycleScope.launch {

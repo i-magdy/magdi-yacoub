@@ -28,11 +28,14 @@ import kotlinx.coroutines.*
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
 import org.myf.ahc.core.common.util.FilesSizeUtil.calculateSizePercentage
+import org.myf.ahc.core.model.uiState.ReportsUiState
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.adapters.ReportsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
+import org.myf.ahc.ui.R as uiResource
+
 
 @AndroidEntryPoint
 class UploadReportsScreen : Fragment(
@@ -211,7 +214,7 @@ class UploadReportsScreen : Fragment(
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_exist_message),
+                            getString(uiResource.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -227,7 +230,7 @@ class UploadReportsScreen : Fragment(
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 context,
-                                getString(R.string.file_size_message),
+                                getString(uiResource.string.file_size_message),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -239,7 +242,7 @@ class UploadReportsScreen : Fragment(
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_exist_message),
+                            getString(uiResource.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -255,7 +258,7 @@ class UploadReportsScreen : Fragment(
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 context,
-                                getString(R.string.file_size_message),
+                                getString(uiResource.string.file_size_message),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -297,7 +300,7 @@ class UploadReportsScreen : Fragment(
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            getString(R.string.file_exist_message),
+                            getString(uiResource.string.file_exist_message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -326,7 +329,7 @@ class UploadReportsScreen : Fragment(
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 context,
-                                getString(R.string.file_size_message),
+                                getString(uiResource.string.file_size_message),
                                 Toast.LENGTH_LONG
                             ).show()
                         }

@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/feature/healthCare" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/registration" />
+            <option value="$PROJECT_DIR$/ui" />
           </set>
         </option>
       </GradleProjectSettings>

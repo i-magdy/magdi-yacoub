@@ -13,8 +13,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
-import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.DialogDeleteReportBinding
+import org.myf.ahc.ui.R as uiResource
 
 
 class DeleteReportDialog : DialogFragment() {
@@ -28,7 +28,7 @@ class DeleteReportDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_view)
+        dialog?.window?.setBackgroundDrawableResource(uiResource.drawable.dialog_view)
         return binding.root
     }
 
@@ -43,7 +43,7 @@ class DeleteReportDialog : DialogFragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED){
                 viewModel.uiState.collect{
                     if (it.deleteFile != null) {
-                        binding.actionDialogTitle.text = it.deleteFile.name
+                        binding.actionDialogTitle.text = it.deleteFile?.name
                     }else{
                         dismiss()
                     }

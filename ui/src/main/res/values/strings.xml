@@ -24,6 +24,9 @@
     <string name="english_title">English</string>
     <string name="welcome_title">Welcome to MYF App</string>
     <string name="welcome_message">An application to make the communication with patients easier.</string>
+    <string name="home_main_screen_title">home</string>
+    <string name="home_settings_title">Settings</string>
+    <string name="ok_title">OK</string>
 
     <string name="main_screen_title">Profile</string>
     <string name="log_in_screen_title">Log In</string>
@@ -32,6 +35,7 @@
     <string name="upload_reports_screen_title">Upload reports</string>
     <string name="submit_screen_title">Submit</string>
     <string name="profile_screen_title">Profile</string>
+    <string name="care_main_screen_title">Health Care</string>
 
     <string name="register_patient_details">Register patient details</string>
     <string name="patient_name">Patient name</string>

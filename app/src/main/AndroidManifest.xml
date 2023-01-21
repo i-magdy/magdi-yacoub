@@ -21,7 +21,8 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.MYFApp"/>
         <activity
             android:name=".ui.onBoarding.OnBoardingActivity"
             android:exported="true"

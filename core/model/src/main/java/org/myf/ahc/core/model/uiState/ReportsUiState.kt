@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.ui.reports
+package org.myf.ahc.core.model.uiState
 
 import org.myf.ahc.core.model.storage.DocumentModel
 

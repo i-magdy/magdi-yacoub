@@ -11,6 +11,7 @@ import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil
 import org.myf.ahc.core.model.storage.DocumentModel
 import org.myf.ahc.feature.registration.R
+import org.myf.ahc.ui.R as uiResource
 
 
 class ReportsAdapter(
@@ -37,9 +38,9 @@ class ReportsAdapter(
             size.text = FilesSizeUtil.getSize(document.size)
             note.text = document.note
             when(document.type){
-                FileTypesUtil.MICROSOFT_WORD -> img.setImageResource(R.drawable.word)
-                FileTypesUtil.PDF -> img.setImageResource(R.drawable.pdf)
-                else -> img.setImageResource(R.drawable.ic_photo)
+                FileTypesUtil.MICROSOFT_WORD -> img.setImageResource(uiResource.drawable.word)
+                FileTypesUtil.PDF -> img.setImageResource(uiResource.drawable.pdf)
+                else -> img.setImageResource(uiResource.drawable.ic_photo)
             }
         }
 
