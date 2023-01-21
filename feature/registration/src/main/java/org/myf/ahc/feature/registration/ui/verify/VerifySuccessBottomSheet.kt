@@ -15,7 +15,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.datastore.PatientDataRepo
 import org.myf.ahc.feature.registration.R
-import org.myf.ahc.ui.R as uiResource
 
 import javax.inject.Inject
 
@@ -29,7 +28,6 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setBackgroundDrawableResource(uiResource.drawable.bottom_dialog_view)
         val behavior = (dialog!! as BottomSheetDialog).behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isHideable = false

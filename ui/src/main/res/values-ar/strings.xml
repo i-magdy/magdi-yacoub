@@ -87,4 +87,7 @@
     <string name="email_optional_title">بريد إلكتروني (إختياري)</string>
     <string name="kilo_byte_title">ك.ب</string>
     <string name="mega_byte_title">م.ب</string>
+    <string name="name_content_label">علامة اسم المريض</string>
+    <string name="id_content_label">علامة رقم البطاقه</string>
+    <string name="email_content_label">علامة البريد الالكتروني</string>
 </resources>

@@ -31,8 +31,7 @@ Please Install the latest version of Android Studio [Electric Eel](https://devel
  The App structure follows this [Pattern](https://developer.android.com/topic/modularization/patterns) 
     
 
-<img src="structure.png" height="280" alt="On boarding"/>
-<img src="layers.png" height="280" alt="On boarding"/>
+<img src="structure.png" height="260" alt="On boarding"/>
 
 
 ## On Boarding Screens

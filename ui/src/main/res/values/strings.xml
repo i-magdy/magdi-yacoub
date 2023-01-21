@@ -83,4 +83,8 @@
     <string name="email_optional_title">Email (Optional)</string>
     <string name="kilo_byte_title">KB</string>
     <string name="mega_byte_title">MB</string>
+    <string name="name_content_label">Patient name label</string>
+    <string name="id_content_label">Patient Id label</string>
+    <string name="email_content_label">Patient email label</string>
+
 </resources>

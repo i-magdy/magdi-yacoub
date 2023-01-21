@@ -238,7 +238,6 @@
             app:behavior_hideable="true"
             app:behavior_fitToContents="true"
             app:behavior_draggable="false"
-            android:background="@drawable/bottom_dialog_view"
             style="@style/Widget.MaterialComponents.BottomSheet.Modal"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
