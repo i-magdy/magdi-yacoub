@@ -54,8 +54,8 @@
     <string name="upload_image_title">حمل صوره</string>
     <string name="upload_file_title">حمل ملف</string>
     <string name="reports_view_message">التقارير الخاصه بك تظهر هنا</string>
-    <string name="total_size_value">من 20م.ب</string>
-    <string name="file_size_message">ملف اكبر من 20 م.ب</string>
+    <string name="total_size_value">من ٢٠ م.ب</string>
+    <string name="file_size_message">ملف اكبر من ٢٠ م.ب</string>
     <string name="report_content_label">علامة التقرير</string>
     <string name="cancel_title">إلغاء</string>
     <string name="delete_title">حذف</string>
@@ -85,4 +85,6 @@
     <string name="add_title">أضف</string>
     <string name="delete_doc_title">حذف الملف</string>
     <string name="email_optional_title">بريد إلكتروني (إختياري)</string>
+    <string name="kilo_byte_title">ك.ب</string>
+    <string name="mega_byte_title">م.ب</string>
 </resources>

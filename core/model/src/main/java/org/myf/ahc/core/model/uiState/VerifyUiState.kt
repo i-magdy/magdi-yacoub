@@ -1,6 +1,7 @@
-package org.myf.ahc.feature.registration.ui.verify
+package org.myf.ahc.core.model.uiState
 
-import org.myf.ahc.feature.registration.util.VerifyUiError
+import org.myf.ahc.core.common.util.VerifyUiError
+
 
 data class VerifyUiState(
     val phone: String = "",

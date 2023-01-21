@@ -12,14 +12,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorOnBackground">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/app_logo_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             android:src="@drawable/ic_myf_logo"
             app:layout_constraintBottom_toTopOf="@+id/log_in_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,8 @@
             android:textAllCaps="false"
             android:textColor="?attr/colorSecondaryVariant"
             app:cornerRadius="@dimen/button_normal_rad"
-            app:elevation="@dimen/button_normal_rad"
+            app:elevation="@dimen/button_normal_elevation"
+            android:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/register_button"
             app:layout_constraintEnd_toEndOf="@+id/register_button"
             app:layout_constraintStart_toStartOf="@+id/register_button"

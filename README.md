@@ -28,7 +28,7 @@ Please Install the latest version of Android Studio [Electric Eel](https://devel
     UI Layer in :feature
     and data layers in :core
     any resourses related to UI (like strings,drawable,colors ..) In :ui Module
- the App structure follows this [Pattern](https://developer.android.com/topic/modularization/patterns) 
+ The App structure follows this [Pattern](https://developer.android.com/topic/modularization/patterns) 
     
 
 <img src="structure.png" height="280" alt="On boarding"/>

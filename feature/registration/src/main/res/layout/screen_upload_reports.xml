@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnBackground"
     tools:context=".ui.reports.UploadReportsScreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceOverline"
-            app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+            app:layout_constraintBottom_toBottomOf="@+id/reports_total_size_title"
             app:layout_constraintEnd_toStartOf="@+id/reports_total_size_title"
             tools:text="50%" />
 
@@ -51,7 +50,9 @@
             android:text="@string/total_size_value"
             android:textAppearance="?attr/textAppearanceOverline"
             app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
-            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress" />
+            app:layout_constraintEnd_toEndOf="@+id/reports_size_progress"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@+id/reports_size_progress" />
 
         <TextView
             android:layout_width="wrap_content"
