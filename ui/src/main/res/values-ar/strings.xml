@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="profile_title">صفحه شخصيه</string>
+    <string name="home_title">الرئيسيه</string>
+    <string name="health_care_title">العنايه الصحيه</string>
     <string name="app_name">مجدي يعقوب</string>
     <string name="name">مجدي يعقوب - مركز اسوان للقلب</string>
     <string name="verify_content_message">تحقق من شخصيتك</string>
