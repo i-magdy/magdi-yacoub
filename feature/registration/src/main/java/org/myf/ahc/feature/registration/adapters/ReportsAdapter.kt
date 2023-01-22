@@ -1,6 +1,7 @@
 package org.myf.ahc.feature.registration.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +36,13 @@ class ReportsAdapter(
 
         fun onBind(document: DocumentModel){
             name.text = document.name
-            size.text = FilesSizeUtil.getSize(document.size)
+            size.text = FilesSizeUtil.getSize(
+                size = document.size,
+                kb = itemView.context.getString(uiResource.string.kilo_byte_title),
+                mb = itemView.context.getString(uiResource.string.mega_byte_title)
+            )
             note.text = document.note
+            img.setBackgroundColor(Color.TRANSPARENT)
             when(document.type){
                 FileTypesUtil.MICROSOFT_WORD -> img.setImageResource(uiResource.drawable.word)
                 FileTypesUtil.PDF -> img.setImageResource(uiResource.drawable.pdf)

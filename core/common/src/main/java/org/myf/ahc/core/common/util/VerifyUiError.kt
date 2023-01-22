@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.util
+package org.myf.ahc.core.common.util
 
 object PhoneAuthErrorMessage{
     const val invalid_phone: String = "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code]. [ TOO_SHORT ]"

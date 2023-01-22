@@ -7,13 +7,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.util.VerifyUiError
+import org.myf.ahc.core.data.repository.VerificationRepository
 import org.myf.ahc.core.model.countries.CountryCodeModel
-import org.myf.ahc.feature.registration.util.VerifyUiError
+import org.myf.ahc.core.model.uiState.VerifyUiState
 import javax.inject.Inject
 
 @HiltViewModel
 class VerifyViewModel @Inject constructor(
-    private val repo: VerifyRepo
+    private val repo: VerificationRepository
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(VerifyUiState())

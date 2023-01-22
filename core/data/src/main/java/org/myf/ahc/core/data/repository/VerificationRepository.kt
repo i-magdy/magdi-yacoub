@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.ui.verify
+package org.myf.ahc.core.data.repository
 
 
 import kotlinx.coroutines.CoroutineScope
@@ -6,13 +6,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.myf.ahc.core.data.repository.CountriesRepository
 import org.myf.ahc.core.datastore.DatastoreImpl
 import org.myf.ahc.core.datastore.PatientDataRepo
 import org.myf.ahc.core.model.countries.CountryCodeModel
 import javax.inject.Inject
 
-class VerifyRepo @Inject constructor(
+class VerificationRepository @Inject constructor(
     private val countriesRepo : CountriesRepository,
     private val datastore: DatastoreImpl,
     private val patientRepo: PatientDataRepo
@@ -65,12 +64,12 @@ class VerifyRepo @Inject constructor(
     suspend fun getCountries() {
         countries = countriesRepo.getCountries()
         val list = ArrayList<String>()
-        countries.forEach {
-            if (_appLang == "ar"){
-                list.add(it.ar_name)
-            }else{
-                list.add(it.en_name)
-            }
+        if (_appLang == "ar"){
+            countries = countries.sortedBy { it.ar_name }
+            countries.forEach { list.add(it.ar_name) }
+        }else{
+            countries = countries.sortedBy { it.en_name }
+            countries.forEach { list.add(it.en_name) }
         }
         countriesName.emit(list)
     }

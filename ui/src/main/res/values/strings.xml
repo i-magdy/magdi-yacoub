@@ -1,4 +1,7 @@
 <resources>
+    <string name="profile_title">Profile</string>
+    <string name="home_title">Home</string>
+    <string name="health_care_title">Health Care</string>
     <string name="app_name">AHC App</string>
     <string name="name">MYF - Aswan Heart Center</string>
     <string name="verify_content_message">Verify it\'s you</string>
@@ -22,9 +25,9 @@
     <string name="select_language_title">Select Language - إختر لغه</string>
     <string name="arabic_title">العربيه</string>
     <string name="english_title">English</string>
-    <string name="welcome_title">Welcome to MYF App</string>
+    <string name="welcome_title">Welcome to MYF App</string>i
     <string name="welcome_message">An application to make the communication with patients easier.</string>
-    <string name="home_main_screen_title">home</string>
+    <string name="home_main_screen_title">Home</string>
     <string name="home_settings_title">Settings</string>
     <string name="ok_title">OK</string>
 
@@ -81,4 +84,10 @@
     <string name="add_title">Add</string>
     <string name="delete_doc_title">Delete Document</string>
     <string name="email_optional_title">Email (Optional)</string>
+    <string name="kilo_byte_title">KB</string>
+    <string name="mega_byte_title">MB</string>
+    <string name="name_content_label">Patient name label</string>
+    <string name="id_content_label">Patient Id label</string>
+    <string name="email_content_label">Patient email label</string>
+
 </resources>

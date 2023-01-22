@@ -11,11 +11,15 @@ object FilesSizeUtil {
         return String.format("%.2f%c",p,'%')
     }
 
-    fun getSize(size: Long): String {
+    fun getSize(
+        size: Long,
+        kb: String,
+        mb: String
+    ): String {
         return if (size < 1000000){
-             String.format("%d KB",(size/1000).toInt())
+             String.format("%d $kb",(size/1000).toInt())
         }else{
-             String.format("%d MB",(size/1000000).toInt())
+             String.format("%d $mb",(size/1000000).toInt())
         }
     }
 }

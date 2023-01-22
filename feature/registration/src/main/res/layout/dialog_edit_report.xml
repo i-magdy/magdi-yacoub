@@ -50,6 +50,7 @@
         android:inputType="textMultiLine"
         android:maxLines="@integer/note_lines"
         android:lines="@integer/note_lines"
+        android:textAlignment="viewStart"
         android:maxLength="@integer/note_max_length"
         app:layout_constraintTop_toBottomOf="@+id/edit_doc_note_title"
         android:importantForAutofill="no" />

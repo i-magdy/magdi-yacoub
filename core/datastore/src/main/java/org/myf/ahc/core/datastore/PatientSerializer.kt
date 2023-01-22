@@ -5,10 +5,10 @@ import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
+import javax.inject.Inject
 
-object PatientSerializer : Serializer<PatientData> {
-    override val defaultValue: PatientData
-        get() = PatientData.getDefaultInstance()
+class PatientSerializer @Inject constructor(): Serializer<PatientData> {
+    override val defaultValue: PatientData = PatientData.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): PatientData {
         try {

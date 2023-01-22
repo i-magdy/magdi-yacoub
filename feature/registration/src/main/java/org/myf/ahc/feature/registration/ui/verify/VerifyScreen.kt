@@ -35,12 +35,11 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.common.util.NetworkUtil.isMobileConnectedToInternet
+import org.myf.ahc.core.common.util.PhoneAuthErrorMessage
+import org.myf.ahc.core.common.util.VerifyUiError
 import org.myf.ahc.feature.registration.databinding.ScreenVerifyBinding
-import org.myf.ahc.feature.registration.util.PhoneAuthErrorMessage
-import org.myf.ahc.feature.registration.util.VerifyUiError
 
 import java.util.concurrent.TimeUnit
-import org.myf.ahc.feature.registration.R as resource
 import org.myf.ahc.ui.R as uiResource
 
 @AndroidEntryPoint

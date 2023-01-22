@@ -1,89 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="0dp"
-    app:cardElevation="4dp"
-    android:layout_marginBottom="2dp">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    app:cardElevation="2dp">
+
+    <ImageView
+        android:id="@+id/report_item_type_iv"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        app:layout_constraintVertical_bias="0"
+        android:contentDescription="@string/report_content_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@sample/data.json/reports/img"
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/report_item_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textAlignment="viewStart"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintEnd_toStartOf="@+id/report_item_edit_iv"
+        app:layout_constraintStart_toEndOf="@+id/report_item_type_iv"
+        app:layout_constraintTop_toBottomOf="@+id/report_item_size_tv"
+        tools:text="@sample/data.json/reports/name" />
+
+    <TextView
+        android:id="@+id/report_item_note_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="viewStart"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="?attr/colorControlNormal"
+        tools:text="@sample/data.json/reports/note"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/report_item_name_tv"
+        app:layout_constraintStart_toStartOf="@+id/report_item_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/report_item_name_tv" />
+
+    <ImageView
+        android:id="@+id/report_item_edit_iv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/item_ripple"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:focusable="true"
+        android:contentDescription="@string/edit_reports_label"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/report_item_size_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceOverline"
+        app:layout_constraintStart_toStartOf="@+id/report_item_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/report_item_type_iv"
+        tools:text="@sample/data.json/reports/size" />
+
+    <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        app:dividerColor="?attr/colorControlNormal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/report_item_type_iv"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintVertical_bias="0"
-            android:contentDescription="@string/report_content_label"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@sample/data.json/reports/img"
-            tools:ignore="ImageContrastCheck" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/report_item_name_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textAlignment="viewStart"
-            android:layout_marginEnd="16dp"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintEnd_toStartOf="@+id/report_item_edit_iv"
-            app:layout_constraintStart_toEndOf="@+id/report_item_type_iv"
-            app:layout_constraintTop_toTopOf="@+id/report_item_type_iv"
-            tools:text="@sample/data.json/reports/name" />
-
-        <TextView
-            android:id="@+id/report_item_note_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:textAlignment="viewStart"
-            android:ellipsize="end"
-            android:maxLines="3"
-            tools:text="@sample/data.json/reports/note"
-            android:textAppearance="?attr/textAppearanceCaption"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/report_item_name_tv"
-            app:layout_constraintStart_toStartOf="@+id/report_item_name_tv"
-            app:layout_constraintTop_toBottomOf="@+id/report_item_name_tv" />
-
-        <ImageView
-            android:id="@+id/report_item_edit_iv"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/item_ripple"
-            android:clickable="true"
-            android:elevation="8dp"
-            android:focusable="true"
-            android:contentDescription="@string/edit_reports_label"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/report_item_size_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceOverline"
-            android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/report_item_name_tv"
-            app:layout_constraintStart_toStartOf="@+id/report_item_name_tv"
-            tools:text="@sample/data.json/reports/size" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>

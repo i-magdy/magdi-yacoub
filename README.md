@@ -26,13 +26,16 @@ Please Install the latest version of Android Studio [Electric Eel](https://devel
 ### Modularization
     We have here the base code in app module, 
     UI Layer in :feature
-    and data layers in :core
+    and data layer in :core
     any resourses related to UI (like strings,drawable,colors ..) In :ui Module
- the App structure follows this [Pattern](https://developer.android.com/topic/modularization/patterns) 
+ The App structure follows this [Pattern](https://developer.android.com/topic/modularization/patterns) 
     
 
-<img src="structure.png" height="280" alt="On boarding"/>
-<img src="layers.png" height="280" alt="On boarding"/>
+<img src="structure.png" height="260" alt="On boarding"/>
+
+## Phone Verification Flow
+
+<img src="phone_auth_flow.png" height="360" alt="On boarding"/>
 
 
 ## On Boarding Screens
