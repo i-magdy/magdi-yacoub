@@ -32,13 +32,13 @@ class SubmitScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = ScreenSubmitBinding.inflate(layoutInflater,container,false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.syncPatientData()
         binding.editNameIv.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_create)

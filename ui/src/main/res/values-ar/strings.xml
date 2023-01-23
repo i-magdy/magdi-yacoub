@@ -93,4 +93,6 @@
     <string name="name_content_label">علامة اسم المريض</string>
     <string name="id_content_label">علامة رقم البطاقه</string>
     <string name="email_content_label">علامة البريد الالكتروني</string>
+    <string name="english_iso">en</string>
+    <string name="arabic_iso">ar</string>
 </resources>

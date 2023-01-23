@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="org.myf.ahc.feature.home.SettingsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/settings_title_textView"
@@ -67,8 +75,10 @@
                 android:text="@string/arabic_title"
                 android:textAllCaps="false"
                 android:textColor="?android:textColor"
+                app:selectedLanguageIsArabic="@{viewModel.appLanguage}"
+                android:onClick="@{() -> viewModel.updateAppLanguage(@string/arabic_iso)}"
                 app:cornerRadius="@dimen/button_normal_rad"
-                app:strokeColor="@color/purple_500" />
+                app:strokeColor="@color/purple_500"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/english_button"
@@ -84,6 +94,8 @@
                 android:text="@string/english_title"
                 android:textAllCaps="false"
                 android:textColor="?android:textColor"
+                app:selectedLanguageIsEnglish="@{viewModel.appLanguage}"
+                android:onClick="@{() -> viewModel.updateAppLanguage(@string/english_iso)}"
                 app:cornerRadius="@dimen/button_normal_rad"
                 app:strokeColor="@color/purple_500" />
         </LinearLayout>
@@ -113,3 +125,4 @@
             app:layout_constraintTop_toBottomOf="@+id/settings_lang_materialDivider"
             app:layout_constraintVertical_bias="0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
