@@ -23,7 +23,7 @@ class ReportsViewModel @Inject constructor(
 
     fun getReportsList() = repo.getReportsList()
 
-    fun getReportByPath(
+    fun getDocumentByPath(
         path: String
     ) = repo.getReportByPath(
         path = path

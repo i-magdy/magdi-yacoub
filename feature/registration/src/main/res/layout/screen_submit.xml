@@ -146,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="@integer/single_line"
                         android:ellipsize="end"
+                        android:textAlignment="viewStart"
                         android:text="@{viewModel.patient.email}"
                         android:visibility="@{viewModel.patient.email.isEmpty ? View.GONE : View.VISIBLE}"
                         android:textAppearance="?attr/textAppearanceBody1"

@@ -1,6 +1,5 @@
 package org.myf.ahc.ui
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Build
@@ -28,7 +27,7 @@ fun setSelectedLanguageIsArabic(
                     button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.black_light,button.context.theme))
                     button.setTextColor(button.context.resources.getColor(R.color.white,button.context.theme))
                 }
-                else -> {
+                Configuration.UI_MODE_NIGHT_NO -> {
                     button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(android.R.color.white,button.context.theme))
                     button.setTextColor(button.context.resources.getColor(R.color.black_light,button.context.theme))
                 }
@@ -41,7 +40,6 @@ fun setSelectedLanguageIsArabic(
     }
 }
 
-@SuppressLint("ResourceType")
 @BindingAdapter("app:selectedLanguageIsEnglish")
 fun setSelectedLanguageIsEnglish(
     button: MaterialButton,
@@ -63,7 +61,7 @@ fun setSelectedLanguageIsEnglish(
                     button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.black_light,button.context.theme))
                     button.setTextColor(button.context.resources.getColor(R.color.white,button.context.theme))
                 }
-                else -> {
+                Configuration.UI_MODE_NIGHT_NO -> {
                     button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(android.R.color.white,button.context.theme))
                     button.setTextColor(button.context.resources.getColor(R.color.black_light,button.context.theme))
                 }

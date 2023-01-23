@@ -54,6 +54,7 @@ class FileStorageRepo @Inject constructor(
     fun getFileByPath(
         path: String
     ){
+        if (path.isEmpty()) return
         val ref = storageRef.child(path)
         ref.metadata.addOnSuccessListener { meta ->
             val doc = DocumentModel(
