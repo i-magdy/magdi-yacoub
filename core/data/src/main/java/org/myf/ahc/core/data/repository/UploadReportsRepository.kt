@@ -24,7 +24,6 @@ class UploadReportsRepository @Inject constructor(
     private val user = Firebase.auth.currentUser
     val editDocument = MutableStateFlow<DocumentModel?>(null)
 
-
     suspend fun uploadFile(
         data: ByteArray,
         name: String
@@ -119,7 +118,7 @@ class UploadReportsRepository @Inject constructor(
     }
 
     suspend fun saveFilesCount() = patientRepo.updatePatientDataOnReportsScreen(
-        fileCount = uiState.value.list.size
+        documents = uiState.value.list
     )
 
 

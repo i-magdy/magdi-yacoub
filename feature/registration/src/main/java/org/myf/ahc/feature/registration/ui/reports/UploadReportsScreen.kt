@@ -117,7 +117,7 @@ class UploadReportsScreen : Fragment(){
         size = ui.size
         adapter.setDocuments(ui.list.sortedBy { it.name })
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
-            deleteDialog.show(childFragmentManager, "tag_name")
+            deleteDialog.show(childFragmentManager, DeleteReportDialog.TAG)
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()

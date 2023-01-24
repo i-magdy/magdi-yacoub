@@ -1,6 +1,7 @@
 package org.myf.ahc.feature.registration.ui.submit
 
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,7 @@ class SubmitScreen : Fragment() {
                         .map { it.img }
                         .distinctUntilChanged()
                         .collect{
-                        if (it.isNotEmpty()) {
+                        if (it != Uri.EMPTY) {
                             /*val inputStream =
                                 requireActivity().contentResolver.openInputStream(Uri.parse(it))
                             val bitmap = BitmapFactory.decodeStream(inputStream)

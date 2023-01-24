@@ -7,7 +7,7 @@ import androidx.datastore.core.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import org.myf.ahc.core.datastore.PatientData
+import org.myf.ahc.core.model.storage.DocumentModel
 import javax.inject.Inject
 
 
@@ -22,10 +22,10 @@ class PatientDataRepo @Inject constructor(
                     name = it.name,
                     id = it.id,
                     email = it.email,
-                    img = it.imgUri,
+                    img = Uri.parse(it.imgUri),
                     primaryPhone = it.primaryPhone,
                     secondaryPhone = it.secondaryPhone,
-                    fileCount = it.filesCount,
+                    fileCount = it.documentsMap.size,
                     isVerified = it.verified,
                     deviceToken = it.deviceToken
                 )
@@ -82,12 +82,24 @@ class PatientDataRepo @Inject constructor(
     }
 
     suspend fun updatePatientDataOnReportsScreen(
-        fileCount: Int
+        documents: List<DocumentModel>
     ) {
+        dataStore.updateData { data ->
+            data.toBuilder().clearDocuments().build()
+        }
+        val documentMap: MutableMap<String,Document> = mutableMapOf()
+        documents.forEach { document ->
+            val documentBuilder = Document.newBuilder()
+            documentBuilder.name = document.name
+            documentBuilder.type = document.type
+            documentBuilder.url = document.url
+            documentBuilder.size = document.size.toInt()
+            documentBuilder.note = document.note ?: ""
+            documentMap[document.url] = documentBuilder.build()
+        }
         dataStore.updateData { patient ->
-            patient.toBuilder().build()
             patient.toBuilder()
-                .setFilesCount(fileCount)
+                .putAllDocuments(documentMap)
                 .build()
         }
     }

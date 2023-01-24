@@ -35,7 +35,7 @@ fun setImageByUri(
     view: ImageView,
     uri: Uri
 ) = try {
-    if (uri.toString().isNotEmpty()) {
+    if (uri != Uri.EMPTY) {
         view.setBackgroundColor(Color.TRANSPARENT)
         view.scaleType = ImageView.ScaleType.CENTER_CROP
         view.setImageURI(uri)

@@ -13,6 +13,14 @@ message PatientData {
   optional string secondary_phone = 5;
   bool verified = 6;
   string device_token = 7;
-  int32 files_count = 8;
-  string email = 9;
+  string email = 8;
+  map<string,Document> documents = 9;
+}
+
+message Document {
+  string name = 1;
+  string type = 2;
+  string url = 3;
+  string note = 4;
+  int32 size = 5;
 }

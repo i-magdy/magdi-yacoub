@@ -27,7 +27,7 @@ class CreatePatientViewModel @Inject constructor(
                 value = _uiState.value.copy(
                     patientName = it.name,
                     nationalId = it.id,
-                    img = Uri.parse(it.img),
+                    img = it.img,
                     email = it.email
                 )
             )
