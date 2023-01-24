@@ -1,7 +1,7 @@
-package org.myf.ahc.feature.registration.ui.createPatient
+package org.myf.ahc.core.model.uiState
 
 import android.net.Uri
-import org.myf.ahc.feature.registration.util.CreatePatientUiError
+import org.myf.ahc.core.common.util.CreatePatientUiError
 
 data class CreatePatientUiState (
     val patientName: String = "",

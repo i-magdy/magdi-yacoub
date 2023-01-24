@@ -7,8 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.util.CreatePatientUiError
 import org.myf.ahc.core.datastore.PatientDataRepo
-import org.myf.ahc.feature.registration.util.CreatePatientUiError
+import org.myf.ahc.core.model.uiState.CreatePatientUiState
 
 import javax.inject.Inject
 

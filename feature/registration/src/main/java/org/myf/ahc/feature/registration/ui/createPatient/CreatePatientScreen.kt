@@ -2,29 +2,23 @@ package org.myf.ahc.feature.registration.ui.createPatient
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenCreatePatientBinding
-import org.myf.ahc.feature.registration.util.CreatePatientUiError
-import org.myf.ahc.ui.R as uiResource
 
 
 @AndroidEntryPoint
@@ -57,14 +51,10 @@ class CreatePatientScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.patientNameEt.doAfterTextChanged {
-            binding.patientNameIl.helperText = null
-            viewModel.clearError()
-        }
-        binding.nationalIdEt.doAfterTextChanged {
-            binding.nationalIdIl.helperText = null
-            viewModel.clearError()
-        }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.patientNameEt.doAfterTextChanged { viewModel.clearError() }
+        binding.nationalIdEt.doAfterTextChanged { viewModel.clearError() }
         binding.nextButton.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.attemptSavePatient(
@@ -78,54 +68,6 @@ class CreatePatientScreen : Fragment() {
         }
         binding.splitCv.setOnClickListener {
             pickImageIntentLauncher.launch(pickImageIntent)
-        }
-
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    viewModel.uiState.collect { updateUi(it) }
-                }
-            }
-        }
-    }
-
-    private fun showUiError(
-        error: CreatePatientUiError
-    ) = when (error) {
-        CreatePatientUiError.INVALID_PATIENT_NAME -> {
-            binding.patientNameIl.error = getString(uiResource.string.invalid_patient_name)
-        }
-        CreatePatientUiError.INVALID_NATIONAL_ID -> {
-            binding.nationalIdEt.error = getString(uiResource.string.invalid_national_id)
-        }
-        //iamge errors.....?
-        CreatePatientUiError.NONE -> {
-            binding.patientNameIl.error = null
-            binding.patientNameIl.error = null
-        }
-    }
-
-
-    private fun updateUi(ui: CreatePatientUiState) {
-        showUiError(ui.error)
-        if (ui.img.toString().isNotEmpty()) {
-            try {
-                val inputStream = requireActivity().contentResolver.openInputStream(ui.img)
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                binding.nationalIdImage.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding.nationalIdImage.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        if (ui.email.isNotEmpty()){
-            binding.patientEmailEt.setText(ui.email)
-        }
-        if (ui.nationalId.isNotEmpty()){
-            binding.nationalIdEt.setText(ui.nationalId)
-        }
-        if (ui.patientName.isNotEmpty()){
-            binding.patientNameEt.setText(ui.patientName)
         }
     }
 
@@ -144,7 +86,6 @@ class CreatePatientScreen : Fragment() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

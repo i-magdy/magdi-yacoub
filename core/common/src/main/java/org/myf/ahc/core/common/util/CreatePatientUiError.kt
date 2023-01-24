@@ -1,4 +1,4 @@
-package org.myf.ahc.feature.registration.util
+package org.myf.ahc.core.common.util
 
 object PatientBasicInfo{
     const val invalid_patientName: String = "The provided patient name is incorrect. Please provide patient name written in the format [First name][Second name][Last name]."
