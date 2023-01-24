@@ -45,4 +45,3 @@ fun setImageByUri(
     view.setImageResource(R.drawable.ic_add_circle)
     e.printStackTrace()
 }
-

@@ -25,9 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
-import org.myf.ahc.core.model.uiState.ReportsUiState
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.adapters.DocumentsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding

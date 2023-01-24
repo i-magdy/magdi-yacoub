@@ -5,5 +5,6 @@ data class DocumentModel(
     val name: String,
     val type: String,
     val note: String?,
-    val size: Long
+    val size: Long,
+    val url: String
 )

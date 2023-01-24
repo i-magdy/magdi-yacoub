@@ -4,100 +4,80 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.myf.ahc.core.common.annotation.Dispatcher
+import org.myf.ahc.core.common.annotation.MyDispatchers.IO
+import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.datastore.PatientDataRepo
-import org.myf.ahc.core.model.uiState.ReportsUiState
+import org.myf.ahc.core.model.storage.DocumentModel
 import javax.inject.Inject
 
 class UploadReportsRepository @Inject constructor(
-    private val storageRepo: FileStorageRepo,
-    private val storageListRepo: StorageListRepo,
-    private val patientRepo: PatientDataRepo
+    private val readStorageRepo: ReadStorageRepository,
+    private val patientRepo: PatientDataRepo,
+    private val modifyDocumentRepo: StorageRepository,
+    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    private val coroutine = CoroutineScope(Dispatchers.IO)
-    private val listenerCoroutine = CoroutineScope(Dispatchers.IO)
+
+    private val coroutine = CoroutineScope(ioDispatcher + SupervisorJob())
     val uiState = MutableStateFlow(ReportsUiState())
     private val user = Firebase.auth.currentUser
-    val editDocument = storageRepo.document
+    val editDocument = MutableStateFlow<DocumentModel?>(null)
 
-    init {
-        listenerCoroutine.launch {
-            launch {
-                storageListRepo.files.collect {
-                    uiState.emit(
-                        uiState.value.copy(
-                            list = it,
-                            isLoading = false,
-                            isEmpty = it.isEmpty()
-                        )
-                    )
-                }
-            }
-            delay(700)
-            launch {
-                storageListRepo.size.collect {
-                    uiState.emit(uiState.value.copy(size = it))
-                }
-            }
-            launch {
-                storageRepo.isSucceed.collect {
-                    if (it) {
-                        getReportsList()
-                        storageRepo.reset()
-                    }
-                    uiState.emit(
-                        value = uiState.value.copy(
-                            isUploading = false
-                        )
-                    )
-                }
-            }
-            launch {
-                storageRepo.progress.collect { progress ->
-                    uiState.emit(uiState.value.copy(progress = progress))
-                }
-            }
-            launch {
-                storageRepo.isDeleted.collect {
-                    if (it) {
-                        clearDeleteFile()
-                        getReportsList()
-                    }
-                }
-            }
-        }
-    }
 
-    fun uploadFile(
+    suspend fun uploadFile(
         data: ByteArray,
         name: String
-    ) = coroutine.launch {
-        storageRepo.uploadFile(
+    ){
+        modifyDocumentRepo.uploadDocument(
             path = "Patient_Reports",
             data = data,
             name = name
-        )
-        uiState.emit(uiState.value.copy(fileName = name, isUploading = true))
+        ).collect{
+            if (it.isUploaded){ getReportsList() }
+            uiState.emit(
+                value = uiState.value.copy(
+                    fileName = name,
+                    isUploading = !it.isUploaded,
+                    progress = it.progress
+                )
+            )
+        }
     }
 
     fun getReportsList() = coroutine.launch {
         user ?: return@launch
-        storageListRepo.getPatientReportsList(user.uid)
+        readStorageRepo.getDocuments(user.uid).collect{ docs ->
+            uiState.emit(
+                uiState.value.copy(
+                    list = docs.documents,
+                    isLoading = false,
+                    isEmpty = docs.documents.isEmpty(),
+                    size = docs.totalSize
+                )
+            )
+        }
     }
 
     fun getReportByPath(
         path: String
-    ) = storageRepo.getFileByPath(
-        path = path
-    )
+    ) = coroutine.launch {
+        readStorageRepo.getDocument(
+            path = path
+        ).collect { editDocument.emit(it) }
+    }
 
     fun updateDocumentNote(
         path: String,
         note: String
-    ) = storageRepo.updateDocumentNote(
-        path = path,
-        note = note
-    )
+    ) = coroutine.launch {
+        modifyDocumentRepo.addDocumentNote(
+            path = path,
+            note = note
+        ).collect{
+            if (it) { getReportsList() }
+        }
+    }
 
     fun attemptToDeleteFile(
         path: String
@@ -120,15 +100,19 @@ class UploadReportsRepository @Inject constructor(
                 deleteFile = null
             )
         )
-        storageRepo.reset()
     }
 
     fun deleteFile() = coroutine.launch {
         val path = uiState.value.deleteFile?.path ?: ""
         if (path.isNotEmpty()){
-            storageRepo.deleteFile(
+            modifyDocumentRepo.deleteDocument(
                 path = path
-            )
+            ).collect{
+                if (it) {
+                    clearDeleteFile()
+                    getReportsList()
+                }
+            }
         }else{
             clearDeleteFile()
         }
@@ -160,8 +144,7 @@ class UploadReportsRepository @Inject constructor(
 
     fun cancelJob() {
         coroutine.cancel()
-        storageRepo.cancelJob()
-        storageListRepo.cancelJob()
-        listenerCoroutine.cancel()
+        modifyDocumentRepo.cancelJob()
+        readStorageRepo.cancelJob()
     }
 }

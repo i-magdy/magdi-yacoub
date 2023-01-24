@@ -1,4 +1,4 @@
-package org.myf.ahc.core.model.uiState
+package org.myf.ahc.core.common.uiState
 
 import org.myf.ahc.core.common.util.VerifyUiError
 

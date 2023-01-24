@@ -7,10 +7,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.myf.ahc.core.common.uiState.VerifyUiState
 import org.myf.ahc.core.common.util.VerifyUiError
 import org.myf.ahc.core.data.repository.VerificationRepository
 import org.myf.ahc.core.model.countries.CountryCodeModel
-import org.myf.ahc.core.model.uiState.VerifyUiState
 import javax.inject.Inject
 
 @HiltViewModel
