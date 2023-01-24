@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -12,14 +13,16 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.R
 
+@AndroidEntryPoint
 class EditReportDialog : BottomSheetDialogFragment(
     R.layout.dialog_edit_report
 ) {
 
-    private val viewModel by activityViewModels<ReportsViewModel>()
+    private val viewModel by viewModels<ReportsViewModel>({requireParentFragment()})
     private var path: String = ""
 
 

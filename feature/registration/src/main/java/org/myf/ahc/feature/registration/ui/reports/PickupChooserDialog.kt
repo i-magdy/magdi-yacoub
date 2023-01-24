@@ -3,7 +3,7 @@ package org.myf.ahc.feature.registration.ui.reports
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -17,7 +17,7 @@ class PickupChooserDialog : BottomSheetDialogFragment(
     R.layout.dialog_pick_up_chooser
 ) {
 
-    private val viewModel by activityViewModels<ReportsViewModel>()
+    private val viewModel by viewModels<ReportsViewModel>({requireParentFragment()})
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val behavior = (dialog!! as BottomSheetDialog).behavior

@@ -17,6 +17,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.findFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -45,7 +47,7 @@ class UploadReportsScreen : Fragment(){
     private lateinit var pickImageIntent: Intent
     private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFileIntent: Intent
-    private val viewModel by activityViewModels<ReportsViewModel>()
+    private val viewModel by viewModels<ReportsViewModel>()
     private val coroutine = CoroutineScope(Dispatchers.Default) //TODO refactor!, remove it..
     private var size = 0L
     private val adapter = DocumentsAdapter()
@@ -107,7 +109,9 @@ class UploadReportsScreen : Fragment(){
     }
 
 
-    private fun updateUi(ui: ReportsUiState) {
+    private suspend fun updateUi(
+        ui: ReportsUiState
+    ) = withContext(Dispatchers.Main) {
         if (ui.pickFile) {
             pickFileIntentLauncher.launch(pickFileIntent)
         }
@@ -117,7 +121,9 @@ class UploadReportsScreen : Fragment(){
         size = ui.size
         adapter.setDocuments(ui.list.sortedBy { it.name })
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
-            deleteDialog.show(childFragmentManager, DeleteReportDialog.TAG)
+            this@UploadReportsScreen.view?.findFragment<UploadReportsScreen>()?.let {
+                deleteDialog.show(it.childFragmentManager, DeleteReportDialog.TAG)
+            }
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
@@ -330,6 +336,6 @@ class UploadReportsScreen : Fragment(){
             pickFileIntentLauncher.unregister()
         }
         coroutine.cancel()
-        _binding = null
+        //_binding = null
     }
 }
