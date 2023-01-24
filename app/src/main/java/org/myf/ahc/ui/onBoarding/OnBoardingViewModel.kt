@@ -3,6 +3,8 @@ package org.myf.ahc.ui.onBoarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.datastore.DatastoreImpl
 
@@ -13,7 +15,17 @@ class OnBoardingViewModel @Inject constructor(
     private val datastore: DatastoreImpl
 ): ViewModel() {
 
+    private val _appLanguage = MutableStateFlow("")
+    val appLanguage: StateFlow<String> = _appLanguage
     val state = datastore.state
+
+    init {
+        viewModelScope.launch {
+            datastore.appLanguage.collect{
+                _appLanguage.emit(it)
+            }
+        }
+    }
 
     fun updateState(i: Int) = viewModelScope.launch {
         datastore.updateState(i)

@@ -22,8 +22,13 @@ class EditReportDialog : BottomSheetDialogFragment(
     private val viewModel by activityViewModels<ReportsViewModel>()
     private var path: String = ""
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getString(PATH_KEY)?.let {
+            path = it
+        }
+        viewModel.getDocumentByPath(path = path)
         val behavior = (dialog!! as BottomSheetDialog).behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isHideable = true
@@ -34,6 +39,7 @@ class EditReportDialog : BottomSheetDialogFragment(
                 if (path.isNotEmpty()) viewModel.onAttemptToDeleteFile(
                     path = path
                 )
+                dismiss()
             }
         view.findViewById<MaterialButton>(R.id.edit_doc_add_note_button)
             .setOnClickListener {
@@ -59,5 +65,10 @@ class EditReportDialog : BottomSheetDialogFragment(
             }
         }
 
+    }
+
+    companion object{
+        const val tag = "Edit report dialog tag"
+        const val PATH_KEY = "document path key"
     }
 }

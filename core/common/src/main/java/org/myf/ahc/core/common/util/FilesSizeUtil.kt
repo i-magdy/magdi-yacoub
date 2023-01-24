@@ -5,6 +5,7 @@ object FilesSizeUtil {
 
     const val REPORTS_SIZE: Long = 20000000
     private const val total_size: Double = 20000000.0
+
     fun calculateSizePercentage(size: Double): String {
         val v = size/ total_size
         val p = v * 100

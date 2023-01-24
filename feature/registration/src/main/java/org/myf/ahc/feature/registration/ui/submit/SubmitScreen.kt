@@ -1,6 +1,7 @@
 package org.myf.ahc.feature.registration.ui.submit
 
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,13 +33,13 @@ class SubmitScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = ScreenSubmitBinding.inflate(layoutInflater,container,false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.syncPatientData()
         binding.editNameIv.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_create)
@@ -53,7 +54,7 @@ class SubmitScreen : Fragment() {
                         .map { it.img }
                         .distinctUntilChanged()
                         .collect{
-                        if (it.isNotEmpty()) {
+                        if (it != Uri.EMPTY) {
                             /*val inputStream =
                                 requireActivity().contentResolver.openInputStream(Uri.parse(it))
                             val bitmap = BitmapFactory.decodeStream(inputStream)

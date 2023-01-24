@@ -74,6 +74,7 @@
                         android:contentDescription="@string/upload_image_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_photo"
+                        app:showImageUri="@{viewModel.patient.img}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -146,6 +147,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="@integer/single_line"
                         android:ellipsize="end"
+                        android:textAlignment="viewStart"
                         android:text="@{viewModel.patient.email}"
                         android:visibility="@{viewModel.patient.email.isEmpty ? View.GONE : View.VISIBLE}"
                         android:textAppearance="?attr/textAppearanceBody1"

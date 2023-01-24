@@ -5,7 +5,9 @@
     tools:context=".ui.registration.createPatient.CreatePatientScreen">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="org.myf.ahc.feature.registration.ui.createPatient.CreatePatientViewModel" />
     </data>
 
     <ScrollView
@@ -21,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/register_patient_details"
                 android:textAlignment="viewStart"
@@ -64,6 +66,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:hint="@string/patient_name"
+                app:showCreateError="@{viewModel.uiState.error}"
                 app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
                 app:hintTextColor="?attr/colorSecondary"
@@ -78,6 +81,7 @@
                     android:inputType="text"
                     android:maxLength="@integer/patient_name_max_length"
                     android:maxLines="@integer/single_line"
+                    app:showCreateInputText="@{viewModel.uiState.patientName}"
                     android:textAlignment="viewStart"
                     tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/name" />
@@ -103,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                app:showCreateError="@{viewModel.uiState.error}"
                 android:layout_marginEnd="32dp"
                 android:hint="@string/national_id"
                 app:boxStrokeColor="?attr/colorSecondary"
@@ -119,6 +124,7 @@
                     android:inputType="number"
                     android:maxLength="@integer/id_max_length"
                     android:maxLines="@integer/single_line"
+                    app:showCreateInputText="@{viewModel.uiState.nationalId}"
                     android:textAlignment="viewStart"
                     tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/id" />
@@ -142,16 +148,17 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="16dp"
                 android:hint="@string/email_optional_title"
                 app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
                 app:hintTextColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/patient_email_iv"
-                app:layout_constraintTop_toBottomOf="@+id/national_id_il">
+                app:layout_constraintTop_toBottomOf="@+id/national_id_il"
+                app:showCreateError="@{viewModel.uiState.error}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_email_et"
@@ -160,6 +167,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLength="@integer/max_email_length"
                     android:maxLines="@integer/single_line"
+                    app:showCreateInputText="@{viewModel.uiState.email}"
                     android:textAlignment="viewStart"
                     tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/email" />
@@ -198,6 +206,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/upload_id_photo_title"
                     android:scaleType="fitCenter"
+                    app:showImageUri="@{viewModel.uiState.img}"
                     android:src="@drawable/ic_add_circle" />
 
             </com.google.android.material.card.MaterialCardView>

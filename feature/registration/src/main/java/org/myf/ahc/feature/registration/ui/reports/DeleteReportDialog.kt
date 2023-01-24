@@ -70,4 +70,8 @@ class DeleteReportDialog : DialogFragment() {
         super.onDestroy()
         _binding = null
     }
+
+    companion object{
+        const val TAG = "Delete Document message dialog"
+    }
 }

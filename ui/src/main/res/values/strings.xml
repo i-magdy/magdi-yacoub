@@ -89,5 +89,7 @@
     <string name="name_content_label">Patient name label</string>
     <string name="id_content_label">Patient Id label</string>
     <string name="email_content_label">Patient email label</string>
+    <string name="english_iso">en</string>
+    <string name="arabic_iso">ar</string>
 
 </resources>

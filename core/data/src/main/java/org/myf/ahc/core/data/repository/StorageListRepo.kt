@@ -12,6 +12,7 @@ import org.myf.ahc.core.model.storage.DocumentModel
 
 import javax.inject.Inject
 
+@Deprecated("use [ReadDocumentsRepository]")
 class StorageListRepo @Inject constructor(){
 
     private val storage = Firebase.storage
@@ -25,6 +26,7 @@ class StorageListRepo @Inject constructor(){
         val listRef = storage.reference.child("Patient_Reports/$patientId")//TODO
         val list = ArrayList<DocumentModel>()
         var s = 0L
+
         coroutine.launch {
             listRef.listAll().addOnSuccessListener {  result ->
                 result.items.forEach { storageReference ->
@@ -38,7 +40,8 @@ class StorageListRepo @Inject constructor(){
                                     type = meta.contentType ?: ""
                                 ),
                                 note = meta.getCustomMetadata("note"),
-                                size = meta.sizeBytes
+                                size = meta.sizeBytes,
+                                url = ""
                             )
                         )
                         s += meta.sizeBytes

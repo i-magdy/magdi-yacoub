@@ -25,12 +25,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
-import org.myf.ahc.core.common.util.FilesSizeUtil.calculateSizePercentage
-import org.myf.ahc.core.model.uiState.ReportsUiState
 import org.myf.ahc.feature.registration.R
-import org.myf.ahc.feature.registration.adapters.ReportsAdapter
+import org.myf.ahc.feature.registration.adapters.DocumentsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -38,9 +37,7 @@ import org.myf.ahc.ui.R as uiResource
 
 
 @AndroidEntryPoint
-class UploadReportsScreen : Fragment(
-
-), ReportsAdapter.ReportAdapterListener {
+class UploadReportsScreen : Fragment(){
 
     private var _binding: ScreenUploadReportsBinding? = null
     private val binding get() = _binding!!
@@ -49,11 +46,10 @@ class UploadReportsScreen : Fragment(
     private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFileIntent: Intent
     private val viewModel by activityViewModels<ReportsViewModel>()
-    private val coroutine = CoroutineScope(Dispatchers.Default)
+    private val coroutine = CoroutineScope(Dispatchers.Default) //TODO refactor!, remove it..
     private var size = 0L
-    private val adapter = ReportsAdapter(this)
+    private val adapter = DocumentsAdapter()
     private val deleteDialog = DeleteReportDialog()
-    private val editDialog = EditReportDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,10 +78,12 @@ class UploadReportsScreen : Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val behavior = BottomSheetBehavior.from(
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        val bottomSheetBehavior = BottomSheetBehavior.from(
             view.findViewById(R.id.pick_up_chooser_bottom_sheet)
         )
-        behavior.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         binding.reportsRv.apply {
             adapter = this@UploadReportsScreen.adapter
             layoutManager = LinearLayoutManager(context)
@@ -96,21 +94,20 @@ class UploadReportsScreen : Fragment(
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                launch {
+                launch(Job()) {
                     viewModel.uiState.collect { updateUi(it) }
                 }
             }
         }
         binding.reviewButton.setOnClickListener {
             viewModel.saveFilesCount()
-            Navigation
-                .findNavController(view)
+            Navigation.findNavController(view)
                 .navigate(R.id.action_navigate_from_upload_to_submit)
         }
     }
 
 
-    private suspend fun updateUi(ui: ReportsUiState) {
+    private fun updateUi(ui: ReportsUiState) {
         if (ui.pickFile) {
             pickFileIntentLauncher.launch(pickFileIntent)
         }
@@ -118,25 +115,9 @@ class UploadReportsScreen : Fragment(
             pickImageIntentLauncher.launch(pickImageIntent)
         }
         size = ui.size
-        binding.uploadButton.isEnabled = size < REPORTS_SIZE && !ui.isUploading
-        binding.reportsSizeProgress.progress = ui.size.toInt()
-        binding.reportsLoadingProgress.visibility = if (ui.isLoading) View.VISIBLE else View.GONE
-        binding.reportsMessageTv.visibility = if (ui.isEmpty) View.VISIBLE else View.GONE
         adapter.setDocuments(ui.list.sortedBy { it.name })
-        binding.reportsSizePercentageTv.text = calculateSizePercentage(ui.size.toDouble())
-        if (ui.progress == 0) {
-            binding.reportsProgress.visibility = View.GONE
-            binding.reportsFileInProgressTv.visibility = View.GONE
-        } else {
-            binding.reportsProgress.visibility = View.VISIBLE
-            binding.reportsFileInProgressTv.visibility = View.VISIBLE
-            binding.reportsFileInProgressTv.text = ui.fileName
-            binding.reportsProgress.progress = ui.progress
-        }
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
-            if (editDialog.isAdded){ editDialog.dismiss() }
-            delay(200)
-            deleteDialog.show(childFragmentManager, "tag_name")
+            deleteDialog.show(childFragmentManager, DeleteReportDialog.TAG)
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
@@ -351,12 +332,4 @@ class UploadReportsScreen : Fragment(
         coroutine.cancel()
         _binding = null
     }
-
-    override fun onEditFile(path: String) {
-        if (!editDialog.isAdded){
-            viewModel.getReportByPath(path)
-            editDialog.show(childFragmentManager,"edit_report_dialog")
-        }
-    }
-
 }

@@ -14,6 +14,7 @@ import org.myf.ahc.core.common.util.FileTypesUtil.subStringFileName
 import org.myf.ahc.core.model.storage.DocumentModel
 import javax.inject.Inject
 
+@Deprecated("try [StorageModule]")
 class FileStorageRepo @Inject constructor(
 
 ) {
@@ -54,6 +55,7 @@ class FileStorageRepo @Inject constructor(
     fun getFileByPath(
         path: String
     ){
+        if (path.isEmpty()) return
         val ref = storageRef.child(path)
         ref.metadata.addOnSuccessListener { meta ->
             val doc = DocumentModel(
@@ -64,7 +66,8 @@ class FileStorageRepo @Inject constructor(
                     type = meta.contentType ?: ""
                 ),
                 note = meta.getCustomMetadata("note"),
-                size = meta.sizeBytes
+                size = meta.sizeBytes,
+                url = ""
             )
             coroutine.launch { document.emit(doc) }
         }

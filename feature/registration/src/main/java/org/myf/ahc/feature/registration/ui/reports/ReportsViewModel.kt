@@ -7,10 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.data.repository.UploadReportsRepository
 import org.myf.ahc.core.model.storage.DocumentModel
-import org.myf.ahc.core.model.uiState.ReportsUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +23,7 @@ class ReportsViewModel @Inject constructor(
 
     fun getReportsList() = repo.getReportsList()
 
-    fun getReportByPath(
+    fun getDocumentByPath(
         path: String
     ) = repo.getReportByPath(
         path = path
@@ -32,10 +32,12 @@ class ReportsViewModel @Inject constructor(
     fun uploadFile(
         data: ByteArray,
         name: String
-    ) = repo.uploadFile(
-        data = data,
-        name = name
-    )
+    ) = viewModelScope.launch {
+        repo.uploadFile(
+            data = data,
+            name = name
+        )
+    }
 
     fun updateDocumentNote(
         path: String,
