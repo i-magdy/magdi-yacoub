@@ -46,7 +46,7 @@ class UploadReportsScreen : Fragment(){
     private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFileIntent: Intent
     private val viewModel by activityViewModels<ReportsViewModel>()
-    private val coroutine = CoroutineScope(Dispatchers.Default)
+    private val coroutine = CoroutineScope(Dispatchers.Default) //TODO refactor!, remove it..
     private var size = 0L
     private val adapter = DocumentsAdapter()
     private val deleteDialog = DeleteReportDialog()

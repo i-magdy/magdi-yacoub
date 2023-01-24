@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,13 @@ import org.myf.ahc.ui.main.MainActivity
 class WelcomeScreen: Fragment(){
 
     private lateinit var binding: ScreenWelcomeBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() { requireActivity().finish() }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

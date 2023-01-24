@@ -21,7 +21,7 @@ class CreatePatientViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CreatePatientUiState())
     val uiState: StateFlow<CreatePatientUiState> = _uiState
 
-    fun sync() =   viewModelScope.launch {
+    fun sync() = viewModelScope.launch {
         patientRepo.getPatientMessage().collect{
             _uiState.emit(
                 value = _uiState.value.copy(

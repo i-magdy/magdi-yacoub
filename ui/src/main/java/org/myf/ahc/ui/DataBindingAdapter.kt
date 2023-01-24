@@ -35,9 +35,11 @@ fun setImageByUri(
     view: ImageView,
     uri: Uri
 ) = try {
-    view.setBackgroundColor(Color.TRANSPARENT)
-    view.scaleType = ImageView.ScaleType.CENTER_CROP
-    view.setImageURI(uri)
+    if (uri.toString().isNotEmpty()) {
+        view.setBackgroundColor(Color.TRANSPARENT)
+        view.scaleType = ImageView.ScaleType.CENTER_CROP
+        view.setImageURI(uri)
+    } else {  }
 }catch (e: Exception){
     view.scaleType = ImageView.ScaleType.FIT_CENTER
     view.setImageResource(R.drawable.ic_add_circle)
