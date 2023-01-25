@@ -38,7 +38,8 @@ class UploadReportsRepository @Inject constructor(
                 value = uiState.value.copy(
                     fileName = name,
                     isUploading = !it.isUploaded,
-                    progress = it.progress
+                    progress = it.progress,
+                    isLoading = it.progress == 0
                 )
             )
         }

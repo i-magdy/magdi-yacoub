@@ -50,6 +50,7 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         super.onCreate(savedInstanceState)
         observer = ActivityLauncherObserver(requireActivity().activityResultRegistry,this)
         lifecycle.addObserver(observer)
+        viewModel.getReportsList()
     }
 
     override fun onCreateView(
@@ -282,6 +283,7 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
     }
 
     override fun onImagePicked(uri: Uri) {
+        Log.e("image","uri")
         openImage(uri = uri)
     }
 

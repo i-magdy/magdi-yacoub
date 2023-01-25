@@ -2,6 +2,7 @@ package org.myf.ahc.feature.registration.util
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -38,7 +39,7 @@ open class ActivityLauncherObserver(
     private fun pickImageLauncher(
         owner: LifecycleOwner
     ) = registry.register(
-        CALL_IMAGE_KEY,
+        CALL_IMAGE_KEY+this,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -48,6 +49,7 @@ open class ActivityLauncherObserver(
                 val uri = data.data
                 try {
                     uri?.let {
+                        Log.e("launcher",it.toString())
                        listener.onImagePicked(uri = it)
                     }
                 } catch (e: FileNotFoundException) {
@@ -60,7 +62,7 @@ open class ActivityLauncherObserver(
     private fun pickFileLauncher(
         owner: LifecycleOwner
     )  = registry.register(
-        CALL_FILE_KEY,
+        CALL_FILE_KEY+this,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
