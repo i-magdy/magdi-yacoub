@@ -18,6 +18,7 @@ class PickupChooserDialog : BottomSheetDialogFragment(
 ) {
 
     private val viewModel by viewModels<ReportsViewModel>({requireParentFragment()})
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val behavior = (dialog!! as BottomSheetDialog).behavior
@@ -42,6 +43,10 @@ class PickupChooserDialog : BottomSheetDialogFragment(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        viewModel.clearOpenFiles()
+        viewModel.removeOpenFilesObserver()
+    }
+
+    companion object{
+        const val TAG = "Pick action bottom dialog"
     }
 }

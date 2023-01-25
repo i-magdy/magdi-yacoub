@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.databinding.DialogDeleteReportBinding
 import org.myf.ahc.ui.R as uiResource
 
-
 class DeleteReportDialog : DialogFragment() {
 
     private var _binding: DialogDeleteReportBinding? = null
@@ -63,7 +62,7 @@ class DeleteReportDialog : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        viewModel.clearDeleteFile()
+        viewModel.removeDeleteFileObserver()
         binding.actionDialogCheckbox.isChecked = false
     }
     override fun onDestroy() {

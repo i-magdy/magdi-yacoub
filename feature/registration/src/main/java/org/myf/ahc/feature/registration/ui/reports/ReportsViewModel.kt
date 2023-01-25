@@ -69,7 +69,7 @@ class ReportsViewModel @Inject constructor(
         repo.saveFilesCount()
     }
 
-    fun clearDeleteFile() = repo.clearDeleteFile()
+    fun removeDeleteFileObserver() = repo.clearDeleteFile()
 
     fun deleteFile() = repo.deleteFile()
 
@@ -77,7 +77,7 @@ class ReportsViewModel @Inject constructor(
 
     fun openImage() = repo.openImage()
 
-    fun clearOpenFiles() = repo.clearOpenFiles()
+    fun removeOpenFilesObserver() = repo.clearOpenFiles()
 
     override fun onCleared() {
         super.onCleared()
