@@ -39,7 +39,7 @@ class LaunchScreen : Fragment(
                                 nav.navigate(R.id.action_navigate_to_welcome_screen)
                             }
                         }
-                        1 -> {
+                        1,2 -> {
                             val toMainActivity = Intent(requireActivity(),
                                 MainActivity::class.java)
                             startActivity(toMainActivity)

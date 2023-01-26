@@ -1,7 +1,6 @@
 package org.myf.ahc.feature.registration.ui.verify
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
@@ -11,11 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -24,8 +19,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -33,11 +26,15 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.common.util.NetworkUtil.isMobileConnectedToInternet
 import org.myf.ahc.core.common.util.PhoneAuthErrorMessage
 import org.myf.ahc.core.common.util.VerifyUiError
 import org.myf.ahc.feature.registration.databinding.ScreenVerifyBinding
+import org.myf.ahc.feature.registration.util.PhoneHintListener
+import org.myf.ahc.feature.registration.util.PhoneHintObserver
 
 import java.util.concurrent.TimeUnit
 import org.myf.ahc.ui.R as uiResource
@@ -50,7 +47,7 @@ class VerifyScreen : Fragment() {
     private val auth = Firebase.auth
     private lateinit var options: PhoneAuthOptions.Builder
     private var storedVerificationId: String = ""
-    private lateinit var phoneNumberHintIntentResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+    private lateinit var phoneObserver: PhoneHintObserver
     private val viewModel by viewModels<VerifyViewModel>()
     private lateinit var lang: String
     private val dialog = VerifySuccessBottomSheet()
@@ -61,11 +58,26 @@ class VerifyScreen : Fragment() {
         super.onCreate(savedInstanceState)
         shouldLogin = args.isShouldLogin && args.phone.isNotBlank()
         if (shouldLogin){ viewModel.shouldUpdateUiForLogIn() }
+        phoneObserver = PhoneHintObserver(
+            activity = requireActivity(),
+            registry = requireActivity().activityResultRegistry,
+            listener = object : PhoneHintListener{
+                override fun phoneHint(phone: String) {
+                    if (phone.isEmpty()){
+                        binding.phoneIl.helperText = getString(uiResource.string.enter_phone_message)
+                    }else {
+                        viewModel.setPhone(phone)
+                    }
+                }
+
+            }
+        )
+        lifecycle.addObserver(phoneObserver)
         val phone = requireActivity().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (isMobileConnectedToInternet(requireContext())){
             var code: String? = phone.simCountryIso
             code = code ?: phone.networkCountryIso
-            if (!shouldLogin) {
+            if (!shouldLogin && auth.currentUser == null) {
                 viewModel.getCountries()
                 viewModel.getCountryCode(code ?: "eg")
             }
@@ -92,7 +104,6 @@ class VerifyScreen : Fragment() {
                 )
             }
         }
-        phoneNumberHintIntentResultLauncher = preparePhoneHintLauncher()
     }
 
 
@@ -102,8 +113,6 @@ class VerifyScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = ScreenVerifyBinding.inflate(layoutInflater,container,false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         val behavior = BottomSheetBehavior.from(binding.relativePhoneBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
         return binding.root
@@ -111,6 +120,8 @@ class VerifyScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         updateUi()
         binding.phoneEt.doAfterTextChanged {
             viewModel.setPhone(it?.toString() ?: "")
@@ -131,33 +142,13 @@ class VerifyScreen : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.uiState.collect {
-                        showUiError(it.error)
-                        if (it.isSuccess) {
-                            showBottomSheet()
+                    viewModel.uiState
+                        .map { it.isSuccess }
+                        .distinctUntilChanged()
+                        .collect {
+                            if (it) { showBottomSheet() }
                         }
-                    }
                 }
-                launch {
-                    viewModel.selectedCountry.collect {
-                        viewModel.filterPhone()
-                        if (lang == "ar") {
-                            binding.countriesAc.setText(it.ar_name)
-                        } else {
-                            binding.countriesAc.setText(it.en_name)
-                        }
-                    }
-                }
-                launch {
-                    viewModel.countriesName.collect {
-                        val adapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1, it
-                        )
-                        binding.countriesAc.setAdapter(adapter)
-                    }
-                }
-
                 launch {
                     viewModel.phoneToVerify.collect {
                         if (it.isNotBlank()) {
@@ -165,7 +156,6 @@ class VerifyScreen : Fragment() {
                         }
                     }
                 }
-
                 launch {
                     viewModel.verifyCode.collect {
                         if (it.isNotBlank()) {
@@ -239,7 +229,7 @@ class VerifyScreen : Fragment() {
             val p: String = binding.phoneEt.editableText.toString()
             if (p.isBlank()) {
                 if (!shouldLogin) {
-                    requestPhoneNumberHint()
+                    phoneObserver.requestPhone()
                 }
             }
         }
@@ -247,63 +237,6 @@ class VerifyScreen : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        phoneNumberHintIntentResultLauncher.unregister()
-    }
-
-    private fun preparePhoneHintLauncher(): ActivityResultLauncher<IntentSenderRequest> {
-        return registerForActivityResult(
-            ActivityResultContracts.StartIntentSenderForResult()
-        ){ result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                try {
-                    val phoneNumber = Identity.getSignInClient(requireActivity())
-                        .getPhoneNumberFromIntent(result.data)
-                    println("phoneNumber $phoneNumber")
-                    viewModel.setPhone(phoneNumber)
-                } catch (e: Exception) {
-                    println("Phone Number Hint failed")
-                    e.printStackTrace()
-                    binding.phoneIl.helperText = getString(uiResource.string.enter_phone_message)
-                }
-            }else{
-                Log.e("phone","cancelled")
-                binding.phoneIl.helperText = getString(uiResource.string.enter_phone_message)
-            }
-        }
-    }
-
-    private fun showUiError(error: VerifyUiError) = when(error){
-        VerifyUiError.INVALID_PHONE -> {
-            binding.phoneIl.error = getString(uiResource.string.wrong_phone_message)
-        }
-        VerifyUiError.INVALID_CODE -> {
-            binding.verifyCodeIl.error = getString(uiResource.string.wrong_code_message)
-        }
-        VerifyUiError.SELECT_COUNTRY -> {
-            binding.countriesIl.error = getString(uiResource.string.select_country_message)
-        }
-        VerifyUiError.NONE -> {
-            binding.verifyCodeIl.error = null
-            binding.phoneIl.error = null
-            binding.countriesIl.error = null
-        }
-    }
-    private fun requestPhoneNumberHint(){
-        val request: GetPhoneNumberHintIntentRequest =
-            GetPhoneNumberHintIntentRequest.builder().build()
-        Identity.getSignInClient(requireActivity())
-            .getPhoneNumberHintIntent(request)
-            .addOnSuccessListener {
-                try {
-                    phoneNumberHintIntentResultLauncher.launch(IntentSenderRequest.Builder(
-                        it.intentSender
-                    ).build())
-                } catch(e: Exception) {
-                    Log.e(TAG, "Launching the PendingIntent failed")
-                }
-            }.addOnFailureListener {
-                Log.e(TAG, "${it.message}")
-            }
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {

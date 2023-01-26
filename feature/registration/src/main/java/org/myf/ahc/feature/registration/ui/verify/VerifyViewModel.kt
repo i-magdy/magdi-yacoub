@@ -22,10 +22,26 @@ class VerifyViewModel @Inject constructor(
     private val _phoneToVerify = MutableStateFlow("")
     private val _verifyCode = MutableStateFlow("")
     val uiState: StateFlow<VerifyUiState> = _uiState
-    val selectedCountry: StateFlow<CountryCodeModel> = repo.selectedCountry
-    val countriesName: StateFlow<List<String>> = repo.countriesName
     val phoneToVerify: StateFlow<String> = _phoneToVerify
     val verifyCode: StateFlow<String> = _verifyCode
+
+    init {
+        viewModelScope.launch {
+            launch {
+                repo.countriesName.collect{_uiState.emit(
+                    value = _uiState.value.copy(countries = it)
+                )}
+            }
+            launch {
+                repo.selectedCountry.collect{
+                    _uiState.emit(
+                        value = _uiState.value.copy(selectedCountry = it)
+                    )
+                    filterPhone(country = it)
+                }
+            }
+        }
+    }
 
     fun shouldUpdateUiForLogIn() = viewModelScope.launch {
         _uiState.emit(
@@ -55,19 +71,21 @@ class VerifyViewModel @Inject constructor(
         val mPhone = _uiState.value.phone
         if (phone.isNotBlank() && mPhone != phone) {
             _uiState.emit(_uiState.value.copy(phone = phone))
-            filterPhone()
+            filterPhone(_uiState.value.selectedCountry)
         }
     }
 
-    fun filterPhone() = viewModelScope.launch {
-        val phone = _uiState.value.phone.replace(selectedCountry.value.code,"")
+    private fun filterPhone(
+        country: CountryCodeModel
+    ) = viewModelScope.launch {
+        val phone = _uiState.value.phone.replace(country.code,"")
         _uiState.emit(_uiState.value.copy(phone = phone))
     }
 
     fun requestCode() = viewModelScope.launch {
         val phone = _uiState.value.phone
-        if (phone.isNotBlank()) {
-                _phoneToVerify.emit(selectedCountry.value.code + phone)
+        if (phone.isNotBlank() && phone.length > 7) {
+            _phoneToVerify.emit(_uiState.value.selectedCountry.code + phone)
         }
     }
 
