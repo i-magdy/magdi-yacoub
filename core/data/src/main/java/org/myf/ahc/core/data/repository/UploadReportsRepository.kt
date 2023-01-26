@@ -23,38 +23,45 @@ class UploadReportsRepository @Inject constructor(
     val uiState = MutableStateFlow(ReportsUiState())
     private val user = Firebase.auth.currentUser
     val editDocument = MutableStateFlow<DocumentModel?>(null)
+    private var fetchJob: Job? = null
 
     suspend fun uploadFile(
         data: ByteArray,
         name: String
-    ){
+    ) {
         modifyDocumentRepo.uploadDocument(
             path = "Patient_Reports",
             data = data,
             name = name
-        ).collect{
-            if (it.isUploaded){ getReportsList() }
+        ).collect {
+            if (it.isUploaded) {
+                getReportsList()
+            }
             uiState.emit(
                 value = uiState.value.copy(
                     fileName = name,
                     isUploading = !it.isUploaded,
-                    progress = it.progress
+                    progress = it.progress,
+                    isLoading = it.progress == 0
                 )
             )
         }
     }
 
-    fun getReportsList() = coroutine.launch {
-        user ?: return@launch
-        readStorageRepo.getDocuments(user.uid).collect{ docs ->
-            uiState.emit(
-                uiState.value.copy(
-                    list = docs.documents,
-                    isLoading = false,
-                    isEmpty = docs.documents.isEmpty(),
-                    size = docs.totalSize
+    fun getReportsList() {
+        fetchJob?.cancel()
+        fetchJob = coroutine.launch{
+            user ?: return@launch
+            readStorageRepo.getDocuments(user.uid).collect { docs ->
+                uiState.emit(
+                    uiState.value.copy(
+                        list = docs.documents,
+                        isLoading = false,
+                        isEmpty = docs.documents.isEmpty(),
+                        size = docs.totalSize
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -142,7 +149,7 @@ class UploadReportsRepository @Inject constructor(
 
 
     fun cancelJob() {
-        coroutine.cancel()
+        coroutine.coroutineContext.cancelChildren()
         modifyDocumentRepo.cancelJob()
         readStorageRepo.cancelJob()
     }

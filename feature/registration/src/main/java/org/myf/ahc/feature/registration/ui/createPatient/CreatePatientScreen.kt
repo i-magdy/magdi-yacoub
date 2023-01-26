@@ -1,14 +1,10 @@
 package org.myf.ahc.feature.registration.ui.createPatient
 
-import android.app.Activity
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,25 +15,25 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenCreatePatientBinding
+import org.myf.ahc.feature.registration.util.ActivityLauncherObserver
+import org.myf.ahc.feature.registration.util.CreateLauncherListener
+
 
 
 @AndroidEntryPoint
-class CreatePatientScreen : Fragment() {
+class CreatePatientScreen : Fragment(), CreateLauncherListener {
 
     private var _binding: ScreenCreatePatientBinding? = null
     private val binding get() = _binding!!
-    private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
-    private lateinit var pickImageIntent: Intent
     private val viewModel by viewModels<CreatePatientViewModel>()
+    private lateinit var observer: ActivityLauncherObserver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        observer = ActivityLauncherObserver(requireActivity().activityResultRegistry,this)
+        lifecycle.addObserver(observer)
         viewModel.sync()
-        pickImageIntent = Intent(Intent.ACTION_PICK)
-            .apply {
-                type = "image/*"
-            }
-        pickImageLauncher()
     }
 
     override fun onCreateView(
@@ -67,31 +63,17 @@ class CreatePatientScreen : Fragment() {
             }
         }
         binding.splitCv.setOnClickListener {
-            pickImageIntentLauncher.launch(pickImageIntent)
+            observer.pickImage()
         }
     }
 
-    private fun pickImageLauncher() {
-        pickImageIntentLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                if (data != null) {
-                    val uri = data.data
-                    uri?.let {
-                        viewModel.setImageUri(it)
-                    }
-                }
-            }
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        if (this::pickImageIntentLauncher.isInitialized) {
-            pickImageIntentLauncher.unregister()
-        }
+    }
+
+    override fun onImagePicked(uri: Uri) {
+        viewModel.setImageUri(img = uri)
     }
 }

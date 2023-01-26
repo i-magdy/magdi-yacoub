@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,12 +16,11 @@ import kotlinx.coroutines.launch
 import org.myf.ahc.feature.registration.databinding.DialogDeleteReportBinding
 import org.myf.ahc.ui.R as uiResource
 
-
 class DeleteReportDialog : DialogFragment() {
 
     private var _binding: DialogDeleteReportBinding? = null
     private val binding get() = _binding!!
-    val viewModel by activityViewModels<ReportsViewModel>()
+    val viewModel by viewModels<ReportsViewModel>({requireParentFragment()})
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,14 +55,14 @@ class DeleteReportDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogDeleteReportBinding.inflate(layoutInflater)
         return AlertDialog
-            .Builder(requireContext())
+            .Builder(requireActivity())
             .setView(binding.root)
             .create()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        viewModel.clearDeleteFile()
+        viewModel.removeDeleteFileObserver()
         binding.actionDialogCheckbox.isChecked = false
     }
     override fun onDestroy() {

@@ -10,7 +10,7 @@ import org.myf.ahc.feature.registration.databinding.ReportListItemBinding
 import org.myf.ahc.feature.registration.ui.reports.UploadReportsScreen
 
 
-class DocumentsAdapter(): RecyclerView.Adapter<DocumentsViewHolder>() {
+class DocumentsAdapter: RecyclerView.Adapter<DocumentsViewHolder>() {
 
     private var list: List<DocumentModel> = emptyList()
 

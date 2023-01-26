@@ -7,18 +7,23 @@ import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.onFailure
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import org.myf.ahc.core.model.storage.UploadDocumentModel
 import javax.inject.Inject
 
-class UploadDocumentRepository @Inject constructor(
+class FirebaseUploadDocumentRepository @Inject constructor(
     ioDispatcher: CoroutineDispatcher
 ) : StorageRepository {
 
     private val coroutine: CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
     private val storageRef = Firebase.storage.reference
     private val user = Firebase.auth.currentUser
+    private var uploadJob: Job? = null
+    private var progressJob: Job? = null
+    private var modifyJob: Job? = null
 
     override fun uploadDocument(
         path: String,
@@ -28,39 +33,37 @@ class UploadDocumentRepository @Inject constructor(
         if (user == null){ send(UploadDocumentModel()) }
         val ref = storageRef.child("$path/${user?.uid}/$name")
         val task = ref.putBytes(data)
+        uploadJob?.cancel()
+        progressJob?.cancel()
         task.addOnCompleteListener { snapshot ->
             if (snapshot.isSuccessful){
-                coroutine.launch {
-                    try {
-                        send(
-                            UploadDocumentModel(
-                                isUploaded = true,
-                                progress = 0
-                            )
-                        )
-                    } catch (t: Throwable) {
-                        close()
+                uploadJob = coroutine.launch {
+                    trySendBlocking( UploadDocumentModel(
+                        isUploaded = true,
+                        progress = 0
+                    )).onFailure {
+                        close(it)
+                        Log.e("upload_document",it?.message.toString())
                     }
+                    channel.close()
                 }
             }
         }.addOnProgressListener { result ->
             var p:Double = (100.0 * result.bytesTransferred) / result.totalByteCount
-            coroutine.launch {
+            progressJob = coroutine.launch {
                 if (p.toInt() == 100){ p = 0.0 }
-                try {
-                    send(UploadDocumentModel(
-                        progress = p.toInt()
-                    ))
-                }catch (t: Throwable){
-                   close()
+                trySendBlocking(UploadDocumentModel(
+                    progress = p.toInt()
+                )).onFailure {
+                    close(it)
+                    Log.e("upload_document",it?.message.toString())
                 }
             }
         }.addOnFailureListener {
-            coroutine.launch {
-                try {
-                    send(UploadDocumentModel())
-                }catch (t: Throwable){
-                    close()
+            uploadJob = coroutine.launch {
+                trySendBlocking(UploadDocumentModel()).onFailure { t ->
+                    close(t)
+                    Log.e("upload_document",t?.message.toString())
                 }
             }
             it.printStackTrace()
@@ -77,21 +80,21 @@ class UploadDocumentRepository @Inject constructor(
             setCustomMetadata("note",note)
         }
         val task = ref.updateMetadata(meta)
+        modifyJob?.cancel()
         task.addOnSuccessListener {
-            coroutine.launch {
-                try {
-                    send(true)
-                }catch (t: Throwable){
-                    close(t)
-                }
+            modifyJob = coroutine.launch {
+                trySendBlocking(true)
+                    .onFailure { t ->
+                        close(t)
+                    }
+                channel.close()
             }
         }.addOnFailureListener {
-            coroutine.launch {
-                try {
-                    send(true)
-                }catch (t: Throwable){
-                    close(t)
-                }
+            modifyJob = coroutine.launch {
+                trySendBlocking(false)
+                    .onFailure { t ->
+                        close(t)
+                    }
             }
             Log.e("update_document_note",it.message.toString())
         }
@@ -103,27 +106,27 @@ class UploadDocumentRepository @Inject constructor(
     ): Flow<Boolean> = callbackFlow {
         val ref = storageRef.child(path)
         val task = ref.delete()
+        modifyJob?.cancel()
         task.addOnCompleteListener {
-            coroutine.launch {
-                try {
-                    send(it.isSuccessful)
-                }catch (t: Throwable){
-                    close(t)
-                }
+            modifyJob = coroutine.launch {
+                trySendBlocking(true)
+                    .onFailure { t ->
+                        close(t)
+                    }
+                channel.close()
             }
         }.addOnFailureListener {
-            coroutine.launch {
-                try {
-                    send(false)
-                }catch (t: Throwable){
-                    close(t)
-                }
+            modifyJob = coroutine.launch {
+                trySendBlocking(false)
+                    .onFailure { t ->
+                        close(t)
+                    }
             }
             Log.e("delete_document",it.message.toString())
         }
         awaitClose {  }
     }
 
-    override fun cancelJob() = coroutine.cancel()
+    override fun cancelJob() = coroutine.coroutineContext.cancelChildren()
 
 }

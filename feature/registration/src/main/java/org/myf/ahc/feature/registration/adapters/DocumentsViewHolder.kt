@@ -15,9 +15,9 @@ class DocumentsViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     private val editDialog = EditReportDialog()
     init {
-        binding.setClickListener { view ->
+        binding.setEditDocumentClickListener { _ ->
             binding.document?.let {
-                if (editDialog.isAdded) return@setClickListener
+                if (editDialog.isAdded) return@setEditDocumentClickListener
                 editDialog.arguments = Bundle().apply {
                     putString(PATH_KEY,it.path)
                 }

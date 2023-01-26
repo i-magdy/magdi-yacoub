@@ -21,6 +21,7 @@ android {
         resConfigs "en","ar"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "firebaseAppCheckDebugSecret", System.getenv("APP_CHECK_DEBUG_TOKEN_FROM_CI") ?: ''
     }
 
     buildTypes {
@@ -61,10 +62,13 @@ dependencies {
     implementation(project(":core:datastore"))
 
     //firebase
-    implementation platform('com.google.firebase:firebase-bom:31.0.3')
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
+    implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
+    androidTestImplementation 'com.google.firebase:firebase-appcheck-debug-testing:16.1.1'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"

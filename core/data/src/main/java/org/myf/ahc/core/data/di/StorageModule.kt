@@ -7,10 +7,10 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import org.myf.ahc.core.common.annotation.Dispatcher
 import org.myf.ahc.core.common.annotation.MyDispatchers.IO
-import org.myf.ahc.core.data.repository.DocumentsRepository
+import org.myf.ahc.core.data.repository.FirebaseDocumentsRepository
 import org.myf.ahc.core.data.repository.ReadStorageRepository
 import org.myf.ahc.core.data.repository.StorageRepository
-import org.myf.ahc.core.data.repository.UploadDocumentRepository
+import org.myf.ahc.core.data.repository.FirebaseUploadDocumentRepository
 import javax.inject.Singleton
 
 @Module
@@ -21,12 +21,12 @@ object StorageModule {
     @Singleton
     fun providesStorageRepository(
         @Dispatcher(IO) ioDispatcher: CoroutineDispatcher
-    ): StorageRepository = UploadDocumentRepository(ioDispatcher)
+    ): StorageRepository = FirebaseUploadDocumentRepository(ioDispatcher)
 
     @Provides
     @Singleton
     fun providesDocumentsRepository(
         @Dispatcher(IO) ioDispatcher: CoroutineDispatcher
-    ): ReadStorageRepository = DocumentsRepository(ioDispatcher)
+    ): ReadStorageRepository = FirebaseDocumentsRepository(ioDispatcher)
 
 }

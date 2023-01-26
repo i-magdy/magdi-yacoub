@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,7 +19,7 @@ class EditReportDialog : BottomSheetDialogFragment(
     R.layout.dialog_edit_report
 ) {
 
-    private val viewModel by activityViewModels<ReportsViewModel>()
+    private val viewModel by viewModels<ReportsViewModel>({requireParentFragment()})
     private var path: String = ""
 
 

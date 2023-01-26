@@ -1,7 +1,5 @@
 package org.myf.ahc.feature.registration.ui.reports
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -12,11 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.findFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -25,27 +21,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.adapters.DocumentsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding
+import org.myf.ahc.feature.registration.util.ActivityLauncherObserver
+import org.myf.ahc.feature.registration.util.ReportLauncherListener
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import org.myf.ahc.ui.R as uiResource
 
 
 @AndroidEntryPoint
-class UploadReportsScreen : Fragment(){
+class UploadReportsScreen : Fragment(), ReportLauncherListener {
 
     private var _binding: ScreenUploadReportsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
-    private lateinit var pickImageIntent: Intent
-    private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
-    private lateinit var pickFileIntent: Intent
-    private val viewModel by activityViewModels<ReportsViewModel>()
+    private lateinit var observer: ActivityLauncherObserver
+    private val viewModel by viewModels<ReportsViewModel>()
     private val coroutine = CoroutineScope(Dispatchers.Default) //TODO refactor!, remove it..
     private var size = 0L
     private val adapter = DocumentsAdapter()
@@ -53,17 +50,8 @@ class UploadReportsScreen : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pickImageIntent = Intent(Intent.ACTION_PICK)
-            .apply {
-                type = "image/*"
-            }
-        pickFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            .apply {
-                type = "application/*"
-                addCategory(Intent.CATEGORY_OPENABLE)
-            }
-        pickImageLauncher()
-        pickFileLauncher()
+        observer = ActivityLauncherObserver(requireActivity().activityResultRegistry,this)
+        lifecycle.addObserver(observer)
         viewModel.getReportsList()
     }
 
@@ -90,12 +78,17 @@ class UploadReportsScreen : Fragment(){
         }
         binding.uploadButton.setOnClickListener {
             val chooserDialog = PickupChooserDialog()
-            chooserDialog.show(parentFragmentManager, "chooser_dialog")
+            this@UploadReportsScreen.view?.findFragment<UploadReportsScreen>()?.let {
+                chooserDialog.show(it.childFragmentManager, PickupChooserDialog.TAG)
+            }
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                launch(Job()) {
-                    viewModel.uiState.collect { updateUi(it) }
+                launch {
+                    viewModel.uiState
+                        .map { it }
+                        .distinctUntilChanged()
+                        .collect { updateUi(it) }
                 }
             }
         }
@@ -106,64 +99,31 @@ class UploadReportsScreen : Fragment(){
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.removeOpenFilesObserver()
+    }
 
-    private fun updateUi(ui: ReportsUiState) {
+    private suspend fun updateUi(
+        ui: ReportsUiState
+    ) = withContext(Dispatchers.Main){
         if (ui.pickFile) {
-            pickFileIntentLauncher.launch(pickFileIntent)
+            observer.pickFile()
         }
         if (ui.pickImage) {
-            pickImageIntentLauncher.launch(pickImageIntent)
+            observer.pickImage()
         }
         size = ui.size
         adapter.setDocuments(ui.list.sortedBy { it.name })
         if (ui.deleteFile != null && !deleteDialog.isAdded) {
-            deleteDialog.show(childFragmentManager, DeleteReportDialog.TAG)
+            this@UploadReportsScreen.view?.findFragment<UploadReportsScreen>()?.let {
+                deleteDialog.show(it.childFragmentManager, DeleteReportDialog.TAG)
+            }
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
         }
     }
-
-    private fun pickImageLauncher() {
-        pickImageIntentLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data
-                if (data != null) {
-                    val uri = data.data
-                    try {
-                        uri?.let {
-                            openImage(it)
-                        }
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun pickFileLauncher() {
-        pickFileIntentLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data
-                if (data != null) {
-                    val uri = data.data
-                    try {
-                        uri?.let {
-                            openDocument(it)
-                        }
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        }
-    }
-
 
     @Throws(FileNotFoundException::class)
     fun openDocument(uri: Uri) = coroutine.launch {
@@ -323,13 +283,15 @@ class UploadReportsScreen : Fragment(){
 
     override fun onDestroy() {
         super.onDestroy()
-        if (this::pickImageIntentLauncher.isInitialized) {
-            pickImageIntentLauncher.unregister()
-        }
-        if (this::pickFileIntentLauncher.isInitialized) {
-            pickFileIntentLauncher.unregister()
-        }
         coroutine.cancel()
         _binding = null
+    }
+
+    override fun onImagePicked(uri: Uri) {
+        openImage(uri = uri)
+    }
+
+    override fun onFilePicked(uri: Uri) {
+        openDocument(uri = uri)
     }
 }
