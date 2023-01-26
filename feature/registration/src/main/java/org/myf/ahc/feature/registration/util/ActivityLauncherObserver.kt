@@ -2,7 +2,6 @@ package org.myf.ahc.feature.registration.util
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -16,15 +15,34 @@ open class ActivityLauncherObserver(
     private val listener: IntentLauncherListener
 ): DefaultLifecycleObserver {
 
-    private lateinit var pickImageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var owner: LifecycleOwner
+    private var _pickImageIntentLauncher: ActivityResultLauncher<Intent>? = null
+    private var _pickFileIntentLauncher: ActivityResultLauncher<Intent>? = null
+    private val pickImageIntentLauncher: ActivityResultLauncher<Intent>
+        get(){
+            if (_pickImageIntentLauncher == null && this::owner.isInitialized){
+                _pickImageIntentLauncher = pickImageLauncher(owner)
+            }
+            return _pickImageIntentLauncher ?: throw AssertionError("set pick image launcher null")
+        }
+    private val pickFileIntentLauncher: ActivityResultLauncher<Intent>
+        get() {
+            if (_pickFileIntentLauncher == null && this::owner.isInitialized){
+                _pickFileIntentLauncher = pickFileLauncher(owner)
+            }
+            return _pickFileIntentLauncher ?: throw AssertionError("set pick file launcher null")
+        }
     private lateinit var pickImageIntent: Intent
-    private lateinit var pickFileIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFileIntent: Intent
+
+    private var INSTANCE = 0 //!! instance
 
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
-        pickImageIntentLauncher = pickImageLauncher(owner)
-        pickFileIntentLauncher = pickFileLauncher(owner)
+        this@ActivityLauncherObserver.owner = owner
+        INSTANCE++
+        _pickImageIntentLauncher = pickImageLauncher(owner)
+        _pickFileIntentLauncher = pickFileLauncher(owner)
         pickImageIntent = Intent(Intent.ACTION_PICK)
             .apply {
                 type = "image/*"
@@ -39,7 +57,7 @@ open class ActivityLauncherObserver(
     private fun pickImageLauncher(
         owner: LifecycleOwner
     ) = registry.register(
-        CALL_IMAGE_KEY+this,
+        CALL_IMAGE_KEY+INSTANCE,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -49,7 +67,6 @@ open class ActivityLauncherObserver(
                 val uri = data.data
                 try {
                     uri?.let {
-                        Log.e("launcher",it.toString())
                        listener.onImagePicked(uri = it)
                     }
                 } catch (e: FileNotFoundException) {
@@ -62,7 +79,7 @@ open class ActivityLauncherObserver(
     private fun pickFileLauncher(
         owner: LifecycleOwner
     )  = registry.register(
-        CALL_FILE_KEY+this,
+        CALL_FILE_KEY+INSTANCE,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -84,10 +101,13 @@ open class ActivityLauncherObserver(
     fun pickImage() = pickImageIntentLauncher.launch(pickImageIntent)
     fun pickFile() = pickFileIntentLauncher.launch(pickFileIntent)
 
-    override fun onDestroy(owner: LifecycleOwner) {
+
+        override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
         pickFileIntentLauncher.unregister()
         pickImageIntentLauncher.unregister()
+        _pickImageIntentLauncher = null
+        _pickFileIntentLauncher = null
     }
 
     companion object{

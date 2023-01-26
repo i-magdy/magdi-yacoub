@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.common.util.FilesSizeUtil.REPORTS_SIZE
@@ -82,8 +84,11 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                launch(Job()) {
-                    viewModel.uiState.collect { updateUi(it) }
+                launch {
+                    viewModel.uiState
+                        .map { it }
+                        .distinctUntilChanged()
+                        .collect { updateUi(it) }
                 }
             }
         }
@@ -94,8 +99,8 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onPause() {
+        super.onPause()
         viewModel.removeOpenFilesObserver()
     }
 
@@ -283,7 +288,6 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
     }
 
     override fun onImagePicked(uri: Uri) {
-        Log.e("image","uri")
         openImage(uri = uri)
     }
 
