@@ -8,7 +8,7 @@
             name="document"
             type="org.myf.ahc.core.model.storage.DocumentModel" />
         <variable
-            name="clickListener"
+            name="editDocumentClickListener"
             type="android.view.View.OnClickListener"/>
     </data>
 
@@ -77,7 +77,7 @@
             android:clickable="true"
             android:elevation="8dp"
             android:focusable="true"
-            android:onClick="@{clickListener}"
+            android:onClick="@{editDocumentClickListener}"
             android:contentDescription="@string/edit_reports_label"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"

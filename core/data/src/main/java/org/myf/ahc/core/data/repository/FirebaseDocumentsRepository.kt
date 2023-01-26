@@ -16,11 +16,14 @@ import org.myf.ahc.core.model.storage.DocumentModel
 import org.myf.ahc.core.model.storage.Documents
 
 class FirebaseDocumentsRepository(
-    private val ioDispatcher: CoroutineDispatcher
+    ioDispatcher: CoroutineDispatcher
 ): ReadStorageRepository {
 
     private val storage = Firebase.storage
     private val coroutine = CoroutineScope(ioDispatcher + SupervisorJob())
+    private var fetchDocumentsJob: Job? = null
+    private var fetchDocumentJob: Job? = null
+
 
     override fun getDocuments(
         patientId: String
@@ -29,8 +32,8 @@ class FirebaseDocumentsRepository(
         val list = ArrayList<DocumentModel>()
         val task = listRef.listAll()
         var size = 0L
-
-        coroutine.launch {
+        fetchDocumentsJob?.cancel()
+        fetchDocumentsJob = coroutine.launch {
             task.addOnSuccessListener {  }
                 .asDeferred()
                 .await()
@@ -63,7 +66,14 @@ class FirebaseDocumentsRepository(
                 }
             channel.close()
         }
-        awaitClose {  }
+        task.addOnFailureListener {
+            trySend(Documents())
+                .onFailure {t ->
+                    close(t)
+                }
+            Log.e("documents",it.message.toString())
+        }
+        awaitClose { Log.e("docs","canceled") }
     }
 
 
@@ -72,7 +82,8 @@ class FirebaseDocumentsRepository(
     ): Flow<DocumentModel?> = callbackFlow {
         if (path.isEmpty()) return@callbackFlow
         val ref = storage.reference.child(path)
-        coroutine.launch {
+        fetchDocumentJob?.cancel()
+        fetchDocumentJob = coroutine.launch {
             val meta = getDocumentMetadata(ref)
             val uri = getDocumentUrl(ref)
             val doc = DocumentModel(
@@ -104,5 +115,6 @@ class FirebaseDocumentsRepository(
         ref: StorageReference
     ) = ref.downloadUrl.addOnSuccessListener {  }.asDeferred().await()
 
-    override fun cancelJob() = coroutine.cancel()
+    override fun cancelJob() = coroutine.coroutineContext.cancelChildren()
+
 }

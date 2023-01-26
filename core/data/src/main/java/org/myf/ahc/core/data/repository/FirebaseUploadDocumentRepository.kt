@@ -21,6 +21,9 @@ class FirebaseUploadDocumentRepository @Inject constructor(
     private val coroutine: CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
     private val storageRef = Firebase.storage.reference
     private val user = Firebase.auth.currentUser
+    private var uploadJob: Job? = null
+    private var progressJob: Job? = null
+    private var modifyJob: Job? = null
 
     override fun uploadDocument(
         path: String,
@@ -30,9 +33,11 @@ class FirebaseUploadDocumentRepository @Inject constructor(
         if (user == null){ send(UploadDocumentModel()) }
         val ref = storageRef.child("$path/${user?.uid}/$name")
         val task = ref.putBytes(data)
+        uploadJob?.cancel()
+        progressJob?.cancel()
         task.addOnCompleteListener { snapshot ->
             if (snapshot.isSuccessful){
-                coroutine.launch {
+                uploadJob = coroutine.launch {
                     trySendBlocking( UploadDocumentModel(
                         isUploaded = true,
                         progress = 0
@@ -45,7 +50,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
             }
         }.addOnProgressListener { result ->
             var p:Double = (100.0 * result.bytesTransferred) / result.totalByteCount
-            coroutine.launch {
+            progressJob = coroutine.launch {
                 if (p.toInt() == 100){ p = 0.0 }
                 trySendBlocking(UploadDocumentModel(
                     progress = p.toInt()
@@ -55,7 +60,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
                 }
             }
         }.addOnFailureListener {
-            coroutine.launch {
+            uploadJob = coroutine.launch {
                 trySendBlocking(UploadDocumentModel()).onFailure { t ->
                     close(t)
                     Log.e("upload_document",t?.message.toString())
@@ -75,8 +80,9 @@ class FirebaseUploadDocumentRepository @Inject constructor(
             setCustomMetadata("note",note)
         }
         val task = ref.updateMetadata(meta)
+        modifyJob?.cancel()
         task.addOnSuccessListener {
-            coroutine.launch {
+            modifyJob = coroutine.launch {
                 trySendBlocking(true)
                     .onFailure { t ->
                         close(t)
@@ -84,7 +90,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
                 channel.close()
             }
         }.addOnFailureListener {
-            coroutine.launch {
+            modifyJob = coroutine.launch {
                 trySendBlocking(false)
                     .onFailure { t ->
                         close(t)
@@ -100,8 +106,9 @@ class FirebaseUploadDocumentRepository @Inject constructor(
     ): Flow<Boolean> = callbackFlow {
         val ref = storageRef.child(path)
         val task = ref.delete()
+        modifyJob?.cancel()
         task.addOnCompleteListener {
-            coroutine.launch {
+            modifyJob = coroutine.launch {
                 trySendBlocking(true)
                     .onFailure { t ->
                         close(t)
@@ -109,7 +116,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
                 channel.close()
             }
         }.addOnFailureListener {
-            coroutine.launch {
+            modifyJob = coroutine.launch {
                 trySendBlocking(false)
                     .onFailure { t ->
                         close(t)
@@ -120,6 +127,6 @@ class FirebaseUploadDocumentRepository @Inject constructor(
         awaitClose {  }
     }
 
-    override fun cancelJob() = coroutine.cancel()
+    override fun cancelJob() = coroutine.coroutineContext.cancelChildren()
 
 }
