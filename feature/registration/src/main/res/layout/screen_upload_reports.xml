@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="24dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@+id/upload_button"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,13 +101,27 @@
                 tools:itemCount="7"
                 tools:listitem="@layout/report_list_item" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                tools:visibility="gone"
+                android:text="@string/empty_reports_list_message"
+                android:visibility="@{viewModel.uiState.list.empty &amp; !viewModel.uiState.loading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/upload_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reports_size_progress"/>
+
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/reports_progress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                tools:visibility="gone"
+                tools:visibility="invisible"
                 android:max="100"
                 android:progress="@{viewModel.uiState.progress}"
                 app:hideIfProgressZero="@{viewModel.uiState.progress}"
@@ -122,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                tools:visibility="gone"
+                tools:visibility="invisible"
                 app:hideIfProgressZero="@{viewModel.uiState.progress}"
                 android:textAlignment="viewStart"
                 android:text="@{viewModel.uiState.fileName}"

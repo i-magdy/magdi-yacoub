@@ -66,7 +66,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:hint="@string/patient_name"
-                app:showCreateError="@{viewModel.uiState.error}"
+                app:showNameError="@{viewModel.uiState.nameError}"
                 app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
                 app:hintTextColor="?attr/colorSecondary"
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                app:showCreateError="@{viewModel.uiState.error}"
+                app:showIdError="@{viewModel.uiState.idError}"
                 android:layout_marginEnd="32dp"
                 android:hint="@string/national_id"
                 app:boxStrokeColor="?attr/colorSecondary"
@@ -158,7 +158,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/patient_email_iv"
                 app:layout_constraintTop_toBottomOf="@+id/national_id_il"
-                app:showCreateError="@{viewModel.uiState.error}">
+                app:showEmailError="@{viewModel.uiState.emailError}">
+
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_email_et"

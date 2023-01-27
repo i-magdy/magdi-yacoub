@@ -34,10 +34,19 @@ class FirebaseDocumentsRepository(
         var size = 0L
         fetchDocumentsJob?.cancel()
         fetchDocumentsJob = coroutine.launch {
-            task.addOnSuccessListener {  }
-                .asDeferred()
-                .await()
-                .items.forEach{ storageReference ->
+            val result =task.addOnSuccessListener {  }
+                .asDeferred().await()
+
+            result.items.ifEmpty {
+                trySend(Documents())
+                    .onFailure {
+                        close(it)
+                        Log.e("documents",it?.message.toString())
+                    }
+                channel.close()
+            }
+
+            result.items.forEach{ storageReference ->
                     val meta = getDocumentMetadata(storageReference)
                     val uri = getDocumentUrl(storageReference)
                     list.add(

@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenCreatePatientBinding
 import org.myf.ahc.feature.registration.util.ActivityLauncherObserver
@@ -51,6 +53,7 @@ class CreatePatientScreen : Fragment(), CreateLauncherListener {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.patientNameEt.doAfterTextChanged { viewModel.clearError() }
         binding.nationalIdEt.doAfterTextChanged { viewModel.clearError() }
+        binding.patientEmailEt.doAfterTextChanged { viewModel.clearError() }
         binding.nextButton.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.attemptSavePatient(
@@ -58,12 +61,28 @@ class CreatePatientScreen : Fragment(), CreateLauncherListener {
                     id = binding.nationalIdEt.editableText.toString(),
                     email = binding.patientEmailEt.editableText.toString()
                 )
-                delay(200)
-                Navigation.findNavController(view).navigate(R.id.action_navigate_to_verify)
             }
         }
         binding.splitCv.setOnClickListener {
             observer.pickImage()
+        }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.uiState
+                    .shareIn(
+                        scope = this,
+                        replay = 1,
+                        started = SharingStarted.WhileSubscribed()
+                    ).map { it.isSuccess }
+                    .distinctUntilChanged()
+                    .collect {
+                        if (it) {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_navigate_to_verify)
+                            viewModel.removeSuccessObserver()
+                        }
+                    }
+            }
         }
     }
 
