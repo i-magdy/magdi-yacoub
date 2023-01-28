@@ -95,4 +95,11 @@
     <string name="email_content_label">علامة البريد الالكتروني</string>
     <string name="english_iso">en</string>
     <string name="arabic_iso">ar</string>
+    <string name="empty_reports_list_message">التقارير الخاصه بك تظهر هنا.</string>
+    <string name="empty_field_message">Field cannot be empty</string>
+    <string name="invalid_email_message">Invalid email</string>
+    <string name="invalid_name_message">Invalid email</string>
+    <string name="invalid_name_format_message">Invalid name format</string>
+    <string name="invalid_id_format_message">invalid Id format</string>
+
 </resources>

@@ -3,7 +3,7 @@ package org.myf.ahc.core.data.repository
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
@@ -11,27 +11,34 @@ import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import org.myf.ahc.core.common.annotation.Dispatcher
+import org.myf.ahc.core.common.annotation.DocumentsReference
+import org.myf.ahc.core.common.annotation.MyDispatchers.IO
+import org.myf.ahc.core.common.annotation.StorageRef
 import org.myf.ahc.core.model.storage.UploadDocumentModel
 import javax.inject.Inject
 
 class FirebaseUploadDocumentRepository @Inject constructor(
-    ioDispatcher: CoroutineDispatcher
+    @Dispatcher(IO) ioDispatcher: CoroutineDispatcher,
+    @DocumentsReference private val documentsReference: StorageReference,
+    @StorageRef private val reference: StorageReference
 ) : StorageRepository {
 
     private val coroutine: CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
-    private val storageRef = Firebase.storage.reference
     private val user = Firebase.auth.currentUser
     private var uploadJob: Job? = null
     private var progressJob: Job? = null
     private var modifyJob: Job? = null
 
     override fun uploadDocument(
-        path: String,
         data: ByteArray,
         name: String
     ): Flow<UploadDocumentModel> = callbackFlow {
-        if (user == null){ send(UploadDocumentModel()) }
-        val ref = storageRef.child("$path/${user?.uid}/$name")
+        if (user == null){
+            send(UploadDocumentModel())
+            close()
+        }
+        val ref = documentsReference.child("${user?.uid}/$name")
         val task = ref.putBytes(data)
         uploadJob?.cancel()
         progressJob?.cancel()
@@ -75,7 +82,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
         path: String,
         note: String
     ): Flow<Boolean> = callbackFlow {
-        val ref = storageRef.child(path)
+        val ref = reference.child(path)
         val meta = storageMetadata {
             setCustomMetadata("note",note)
         }
@@ -104,7 +111,7 @@ class FirebaseUploadDocumentRepository @Inject constructor(
     override fun deleteDocument(
         path: String
     ): Flow<Boolean> = callbackFlow {
-        val ref = storageRef.child(path)
+        val ref = reference.child(path)
         val task = ref.delete()
         modifyJob?.cancel()
         task.addOnCompleteListener {

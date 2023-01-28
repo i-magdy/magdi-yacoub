@@ -1,15 +1,22 @@
 package org.myf.ahc.feature.registration.ui.createPatient
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.common.uiState.CreatePatientUiState
 import org.myf.ahc.core.common.util.CreatePatientUiError
+import org.myf.ahc.core.common.util.CreatePatientUtil.isEgyptianIdValid
+import org.myf.ahc.core.common.util.CreatePatientUtil.isEmailValid
+import org.myf.ahc.core.common.util.CreatePatientUtil.isNameValid
 import org.myf.ahc.core.datastore.PatientDataRepo
+import java.util.Calendar
 
 import javax.inject.Inject
 
@@ -39,11 +46,39 @@ class CreatePatientViewModel @Inject constructor(
         id: String,
         email: String
     ) = viewModelScope.launch {
-        patientRepo.updatePatientDataOnCreateScreen(
-            name = name,
-            id = id,
-            img = _uiState.value.img,
-            email = email
+        val calendar = Calendar.getInstance()
+        val ui = _uiState.updateAndGet { createPatientUiState ->
+            createPatientUiState.copy(
+                patientName = name,
+                nationalId = id,
+                email = email,
+                nameError = isNameValid(name),
+                idError = isEgyptianIdValid(
+                    id = id,
+                    currentMonthDigit = calendar[Calendar.MONTH]++,
+                    currentYearDigit = calendar[Calendar.YEAR]
+            ),
+            emailError = isEmailValid(email)
+        )
+        }
+        Log.e("ui",_uiState.value.copy().toString())
+        delay(50)
+        val succeed = ui.nameError == CreatePatientUiError.NONE_NAME &&
+                ui.idError == CreatePatientUiError.NONE_ID &&
+                ui.emailError == CreatePatientUiError.NONE_EMAIL
+        if (succeed){
+            patientRepo.updatePatientDataOnCreateScreen(
+                name = name,
+                id = id,
+                img = ui.img,
+                email = email
+            )
+        }
+        delay(50)
+        _uiState.emit(
+            value = ui.copy(
+                isSuccess = succeed
+            )
         )
     }
 
@@ -55,16 +90,9 @@ class CreatePatientViewModel @Inject constructor(
         )
     }
 
-    fun clearError() = viewModelScope.launch {
+    fun removeSuccessObserver() = viewModelScope.launch {
         _uiState.emit(
-            value = _uiState.value.copy(error = CreatePatientUiError.NONE)
+            value = _uiState.value.copy(isSuccess = false)
         )
     }
-
-
-    fun validateInput() {
-        //TODO
-    }
-
-
 }

@@ -31,7 +31,7 @@ class CountriesRepository @Inject constructor(
                     en_name = body[0].name.common,
                     code = if (null == body[0].idd) "" else body[0].idd?.root +
                             if (body.isEmpty()) "" else
-                                body[0].idd?.suffixes?.get(0) ?: "",
+                                if (body[0].idd?.suffixes?.size!! > 1){ "" }else{body[0].idd?.suffixes?.get(0) ?: ""},
                     flag = body[0].flag
                 )
             }else{null}

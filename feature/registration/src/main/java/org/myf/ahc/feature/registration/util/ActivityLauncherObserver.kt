@@ -2,22 +2,24 @@ package org.myf.ahc.feature.registration.util
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import java.io.FileNotFoundException
 
 open class ActivityLauncherObserver(
     private val registry : ActivityResultRegistry,
     private val listener: IntentLauncherListener
-): DefaultLifecycleObserver {
+): RegistrationObserver {
 
     private lateinit var owner: LifecycleOwner
     private var _pickImageIntentLauncher: ActivityResultLauncher<Intent>? = null
     private var _pickFileIntentLauncher: ActivityResultLauncher<Intent>? = null
+
     private val pickImageIntentLauncher: ActivityResultLauncher<Intent>
         get(){
             if (_pickImageIntentLauncher == null && this::owner.isInitialized){
@@ -25,6 +27,7 @@ open class ActivityLauncherObserver(
             }
             return _pickImageIntentLauncher ?: throw AssertionError("set pick image launcher null")
         }
+
     private val pickFileIntentLauncher: ActivityResultLauncher<Intent>
         get() {
             if (_pickFileIntentLauncher == null && this::owner.isInitialized){
@@ -32,6 +35,7 @@ open class ActivityLauncherObserver(
             }
             return _pickFileIntentLauncher ?: throw AssertionError("set pick file launcher null")
         }
+
     private lateinit var pickImageIntent: Intent
     private lateinit var pickFileIntent: Intent
 
@@ -57,7 +61,7 @@ open class ActivityLauncherObserver(
     private fun pickImageLauncher(
         owner: LifecycleOwner
     ) = registry.register(
-        CALL_IMAGE_KEY+INSTANCE,
+        CALL_IMAGE_KEY+this+INSTANCE,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -67,7 +71,7 @@ open class ActivityLauncherObserver(
                 val uri = data.data
                 try {
                     uri?.let {
-                       listener.onImagePicked(uri = it)
+                       onImagePicked(uri = it)
                     }
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
@@ -79,7 +83,7 @@ open class ActivityLauncherObserver(
     private fun pickFileLauncher(
         owner: LifecycleOwner
     )  = registry.register(
-        CALL_FILE_KEY+INSTANCE,
+        CALL_FILE_KEY+this+INSTANCE,
         owner,
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -89,7 +93,7 @@ open class ActivityLauncherObserver(
                 val uri = data.data
                 try {
                     uri?.let {
-                        listener.onFilePicked(uri = it)
+                        onFilePicked(uri = it)
                     }
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
@@ -98,11 +102,13 @@ open class ActivityLauncherObserver(
         }
     }
 
-    fun pickImage() = pickImageIntentLauncher.launch(pickImageIntent)
-    fun pickFile() = pickFileIntentLauncher.launch(pickFileIntent)
+    override fun pickImage() = pickImageIntentLauncher.launch(pickImageIntent)
+    override fun pickFile() = pickFileIntentLauncher.launch(pickFileIntent)
+    override fun onFilePicked(uri: Uri) = listener.onFilePicked(uri = uri)
+    override fun onImagePicked(uri: Uri) = listener.onImagePicked(uri = uri)
 
 
-        override fun onDestroy(owner: LifecycleOwner) {
+    override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
         pickFileIntentLauncher.unregister()
         pickImageIntentLauncher.unregister()

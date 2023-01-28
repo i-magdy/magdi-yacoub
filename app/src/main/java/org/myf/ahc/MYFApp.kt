@@ -13,6 +13,7 @@ class MYFApp : Application() {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
+        //TODO Please, If you want an apk file comment the code below
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         if (BuildConfig.DEBUG){
             firebaseAppCheck.installAppCheckProviderFactory(

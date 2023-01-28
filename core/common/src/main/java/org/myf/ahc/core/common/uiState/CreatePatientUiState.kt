@@ -14,5 +14,7 @@ data class CreatePatientUiState (
     val isSuccess: Boolean = false,
     val img: Uri = Uri.parse(""),
     val email: String = "",
-    val error: CreatePatientUiError = CreatePatientUiError.NONE
+    val nameError: CreatePatientUiError = CreatePatientUiError.NONE,
+    val idError: CreatePatientUiError = CreatePatientUiError.NONE,
+    val emailError: CreatePatientUiError = CreatePatientUiError.NONE
 )

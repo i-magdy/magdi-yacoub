@@ -5,6 +5,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.myf.ahc.core.common.annotation.Dispatcher
+import org.myf.ahc.core.common.annotation.Google
 import org.myf.ahc.core.common.annotation.MyDispatchers.IO
 import org.myf.ahc.core.common.uiState.ReportsUiState
 import org.myf.ahc.core.datastore.PatientDataRepo
@@ -12,10 +13,10 @@ import org.myf.ahc.core.model.storage.DocumentModel
 import javax.inject.Inject
 
 class UploadReportsRepository @Inject constructor(
-    private val readStorageRepo: ReadStorageRepository,
-    private val patientRepo: PatientDataRepo,
-    private val modifyDocumentRepo: StorageRepository,
-    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher
+    @Google private val readStorageRepo: ReadStorageRepository,
+    @Google private val modifyDocumentRepo: StorageRepository,
+    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
+    private val patientRepo: PatientDataRepo
 ) {
 
 
@@ -30,7 +31,6 @@ class UploadReportsRepository @Inject constructor(
         name: String
     ) {
         modifyDocumentRepo.uploadDocument(
-            path = "Patient_Reports",
             data = data,
             name = name
         ).collect {

@@ -16,16 +16,44 @@ import org.myf.ahc.core.model.countries.CountryCodeModel
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-@BindingAdapter("app:showCreateError")
+@BindingAdapter("app:showNameError")
 fun setCreatePatientError(
     layout: TextInputLayout,
     error: CreatePatientUiError
 )= when(error){
+    CreatePatientUiError.EMPTY_NAME ->
+        layout.error = layout.context.getString(R.string.empty_field_message)
     CreatePatientUiError.INVALID_PATIENT_NAME ->
         layout.error = layout.context.getString(R.string.invalid_patient_name)
+    CreatePatientUiError.INVALID_NAME_FORMAT ->
+        layout.error = layout.context.getString(R.string.invalid_name_format_message)
+    CreatePatientUiError.NONE_NAME -> layout.error = null
+    else -> {}
+}
+@BindingAdapter("app:showIdError")
+fun setPatientIdError(
+    layout: TextInputLayout,
+    error: CreatePatientUiError
+) = when(error) {
+    CreatePatientUiError.EMPTY_ID ->
+        layout.error = layout.context.getString(R.string.empty_field_message)
     CreatePatientUiError.INVALID_NATIONAL_ID ->
         layout.error = layout.context.getString(R.string.invalid_national_id)
-    CreatePatientUiError.NONE -> layout.error = null
+    CreatePatientUiError.INVALID_ID_FORMAT ->
+        layout.error = layout.context.getString(R.string.invalid_id_format_message)
+    CreatePatientUiError.NONE_ID -> layout.error = null
+    else -> {}
+}
+
+@BindingAdapter("app:showEmailError")
+fun setPatientEmailError(
+    layout: TextInputLayout,
+    error: CreatePatientUiError
+) = when(error) {
+    CreatePatientUiError.INVALID_EMAIL ->
+        layout.error = layout.context.getString(R.string.invalid_email_message)
+    CreatePatientUiError.NONE_EMAIL -> layout.error = null
+    else -> {}
 }
 
 @BindingAdapter("app:showCreateInputText")

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +32,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.ahc.core.common.util.NetworkUtil.isMobileConnectedToInternet
 import org.myf.ahc.core.common.util.PhoneAuthErrorMessage
-import org.myf.ahc.core.common.util.VerifyUiError
 import org.myf.ahc.feature.registration.databinding.ScreenVerifyBinding
 import org.myf.ahc.feature.registration.util.PhoneHintListener
 import org.myf.ahc.feature.registration.util.PhoneHintObserver
@@ -202,7 +202,9 @@ class VerifyScreen : Fragment() {
             startActivity(toLaunchIntent)
             requireActivity().finish()*/
         }else {
-            dialog.show(childFragmentManager, "success_dialog")
+            requireView().findFragment<VerifyScreen>().let {
+                dialog.show(it.childFragmentManager, "success_dialog")
+            }
         }
     }
     private fun requestCode(phone: String){
