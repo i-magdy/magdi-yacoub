@@ -43,7 +43,6 @@ open class ActivityLauncherObserver(
 
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
-        Log.e("OWNER",owner.toString())
         this@ActivityLauncherObserver.owner = owner
         INSTANCE++
         _pickImageIntentLauncher = pickImageLauncher(owner)

@@ -18,7 +18,7 @@ object CountriesUtil {
                         ar_name = it.translations["ara"]?.common ?: "",
                         en_name = it.name.common,
                         flag = it.flag,
-                        code = if(it.idd == null) "" else it.idd!!.root + if (it.idd!!.suffixes.isNullOrEmpty()) "" else it.idd!!.suffixes?.get(0)
+                        code = if(it.idd == null) "" else it.idd!!.root + if (it.idd!!.suffixes.isNullOrEmpty() || it.idd!!.suffixes?.size!! > 1) "" else it.idd!!.suffixes?.get(0)
                     )
                 )
             }
