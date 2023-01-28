@@ -6,7 +6,6 @@ import org.myf.ahc.core.model.storage.UploadDocumentModel
 interface StorageRepository {
 
     fun uploadDocument(
-        path: String,
         data: ByteArray,
         name: String
     ): Flow<UploadDocumentModel>

@@ -1,9 +1,7 @@
 package org.myf.ahc.core.data.repository
 
 import android.util.Log
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.onFailure
@@ -11,15 +9,21 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.asDeferred
+import org.myf.ahc.core.common.annotation.Dispatcher
+import org.myf.ahc.core.common.annotation.DocumentsReference
+import org.myf.ahc.core.common.annotation.MyDispatchers
+import org.myf.ahc.core.common.annotation.StorageRef
 import org.myf.ahc.core.common.util.FileTypesUtil
 import org.myf.ahc.core.model.storage.DocumentModel
 import org.myf.ahc.core.model.storage.Documents
+import javax.inject.Inject
 
-class FirebaseDocumentsRepository(
-    ioDispatcher: CoroutineDispatcher
+class FirebaseDocumentsRepository @Inject constructor(
+    @Dispatcher(MyDispatchers.IO) ioDispatcher: CoroutineDispatcher,
+    @DocumentsReference private val documentsReference: StorageReference,
+    @StorageRef private val reference: StorageReference
 ): ReadStorageRepository {
 
-    private val storage = Firebase.storage
     private val coroutine = CoroutineScope(ioDispatcher + SupervisorJob())
     private var fetchDocumentsJob: Job? = null
     private var fetchDocumentJob: Job? = null
@@ -28,7 +32,7 @@ class FirebaseDocumentsRepository(
     override fun getDocuments(
         patientId: String
     ): Flow<Documents> = callbackFlow {
-        val listRef = storage.reference.child("Patient_Reports/$patientId") //TODO
+        val listRef = documentsReference.child(patientId)
         val list = ArrayList<DocumentModel>()
         val task = listRef.listAll()
         var size = 0L
@@ -90,7 +94,7 @@ class FirebaseDocumentsRepository(
         path: String
     ): Flow<DocumentModel?> = callbackFlow {
         if (path.isEmpty()) return@callbackFlow
-        val ref = storage.reference.child(path)
+        val ref = reference.child(path)
         fetchDocumentJob?.cancel()
         fetchDocumentJob = coroutine.launch {
             val meta = getDocumentMetadata(ref)

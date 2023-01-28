@@ -1,4 +1,4 @@
-package org.myf.ahc.core.data.di
+package org.myf.ahc.core.network.di
 
 import dagger.Module
 import dagger.Provides
@@ -10,7 +10,7 @@ import org.myf.ahc.core.network.countriesRetrofit.CountriesService
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class CountriesModule {
+object CountriesModule {
 
     @Provides
     @ViewModelScoped
