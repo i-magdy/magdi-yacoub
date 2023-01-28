@@ -30,7 +30,6 @@ import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.adapters.DocumentsAdapter
 import org.myf.ahc.feature.registration.databinding.ScreenUploadReportsBinding
 import org.myf.ahc.feature.registration.util.ActivityLauncherObserver
-import org.myf.ahc.feature.registration.util.ReportLauncherListener
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import org.myf.ahc.ui.R as uiResource

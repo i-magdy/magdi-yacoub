@@ -18,8 +18,6 @@ import kotlinx.coroutines.flow.*
 import org.myf.ahc.feature.registration.R
 import org.myf.ahc.feature.registration.databinding.ScreenCreatePatientBinding
 import org.myf.ahc.feature.registration.util.ActivityLauncherObserver
-import org.myf.ahc.feature.registration.util.CreateLauncherListener
-
 
 
 @AndroidEntryPoint

@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -16,7 +15,7 @@ class PhoneHintObserver(
     private val activity: Activity,
     private val registry : ActivityResultRegistry,
     private val listener: PhoneHintListener
-): DefaultLifecycleObserver {
+): RegistrationObserver {
 
     private lateinit var owner: LifecycleOwner
     private var _phoneNumberHintIntentResultLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
@@ -47,21 +46,26 @@ class PhoneHintObserver(
                     val phoneNumber = Identity.getSignInClient(activity)
                         .getPhoneNumberFromIntent(result.data)
                     println("phoneNumber $phoneNumber")
-                    listener.phoneHint(phoneNumber)
+                    onPhoneRequested(phoneNumber)
                 } catch (e: Exception) {
                     println("Phone Number Hint failed")
                     e.printStackTrace()
                 }
             }else{
                 Log.e("phone","cancelled")
-                listener.phoneHint("")
+                onPhoneRequested("")
             }
         }
     }
 
 
-    fun requestPhone(){
+    override fun requestPhone(){
         requestPhoneNumberHint()
+    }
+
+    override fun onPhoneRequested(phone: String) {
+        super.onPhoneRequested(phone)
+        listener.phoneHint(phone)
     }
 
     private fun requestPhoneNumberHint(){
