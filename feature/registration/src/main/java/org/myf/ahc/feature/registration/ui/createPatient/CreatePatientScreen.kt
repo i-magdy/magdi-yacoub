@@ -51,21 +51,15 @@ class CreatePatientScreen : Fragment(), CreateLauncherListener {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.patientNameEt.doAfterTextChanged { viewModel.clearError() }
-        binding.nationalIdEt.doAfterTextChanged { viewModel.clearError() }
-        binding.patientEmailEt.doAfterTextChanged { viewModel.clearError() }
+        updateUi()
         binding.nextButton.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.attemptSavePatient(
-                    name = binding.patientNameEt.editableText.toString(),
-                    id = binding.nationalIdEt.editableText.toString(),
-                    email = binding.patientEmailEt.editableText.toString()
-                )
-            }
+            viewModel.attemptSavePatient(
+                name = binding.patientNameEt.editableText.toString(),
+                id = binding.nationalIdEt.editableText.toString(),
+                email = binding.patientEmailEt.editableText.toString()
+            )
         }
-        binding.splitCv.setOnClickListener {
-            observer.pickImage()
-        }
+        binding.splitCv.setOnClickListener { observer.pickImage() }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.uiState
@@ -86,6 +80,11 @@ class CreatePatientScreen : Fragment(), CreateLauncherListener {
         }
     }
 
+    private fun updateUi(){
+        binding.patientNameEt.doAfterTextChanged { binding.patientNameIl.error = null }
+        binding.nationalIdEt.doAfterTextChanged { binding.nationalIdIl.error = null }
+        binding.patientEmailEt.doAfterTextChanged { binding.patientEmailIl.error = null }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

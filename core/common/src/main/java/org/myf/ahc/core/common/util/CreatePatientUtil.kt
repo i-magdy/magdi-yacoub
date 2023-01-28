@@ -12,7 +12,7 @@ object CreatePatientUtil {
         name.isBlank() -> CreatePatientUiError.EMPTY_NAME
         name.isDigitsOnly() -> CreatePatientUiError.INVALID_PATIENT_NAME
         !isNameFormatValid(name) -> CreatePatientUiError.INVALID_NAME_FORMAT
-        else -> CreatePatientUiError.NONE
+        else -> CreatePatientUiError.NONE_NAME
     }
 
     fun isEgyptianIdValid(
@@ -21,21 +21,22 @@ object CreatePatientUtil {
         currentMonthDigit: Int
     ): CreatePatientUiError = when{
         id.isBlank() -> CreatePatientUiError.EMPTY_ID
-        !id.isDigitsOnly() || id.length < 14 -> CreatePatientUiError.INVALID_NATIONAL_ID
+        id.length < 14 -> CreatePatientUiError.INVALID_NATIONAL_ID
+        !id.isDigitsOnly() -> CreatePatientUiError.INVALID_NATIONAL_ID
         !validateEgyptianId(
             id = id,
             currentYearDigit = currentYearDigit,
             currentMonthDigit = currentMonthDigit
         ) ->  CreatePatientUiError.INVALID_ID_FORMAT
-        else -> CreatePatientUiError.NONE
+        else -> CreatePatientUiError.NONE_ID
     }
 
     fun isEmailValid(
         email: String
     ): CreatePatientUiError = when{
-        email.isBlank() -> CreatePatientUiError.NONE
+        email.isBlank() -> CreatePatientUiError.NONE_EMAIL
         !email.matches(emailRegex)  -> CreatePatientUiError.INVALID_EMAIL
-        else -> CreatePatientUiError.NONE
+        else -> CreatePatientUiError.NONE_EMAIL
     }
     private fun isNameFormatValid(
         name: String

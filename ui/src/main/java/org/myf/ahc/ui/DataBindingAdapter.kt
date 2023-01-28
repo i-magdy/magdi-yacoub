@@ -27,7 +27,8 @@ fun setCreatePatientError(
         layout.error = layout.context.getString(R.string.invalid_patient_name)
     CreatePatientUiError.INVALID_NAME_FORMAT ->
         layout.error = layout.context.getString(R.string.invalid_name_format_message)
-    else -> layout.error = null
+    CreatePatientUiError.NONE_NAME -> layout.error = null
+    else -> {}
 }
 @BindingAdapter("app:showIdError")
 fun setPatientIdError(
@@ -40,7 +41,8 @@ fun setPatientIdError(
         layout.error = layout.context.getString(R.string.invalid_national_id)
     CreatePatientUiError.INVALID_ID_FORMAT ->
         layout.error = layout.context.getString(R.string.invalid_id_format_message)
-    else -> layout.error = null
+    CreatePatientUiError.NONE_ID -> layout.error = null
+    else -> {}
 }
 
 @BindingAdapter("app:showEmailError")
@@ -50,7 +52,8 @@ fun setPatientEmailError(
 ) = when(error) {
     CreatePatientUiError.INVALID_EMAIL ->
         layout.error = layout.context.getString(R.string.invalid_email_message)
-    else -> layout.error = null
+    CreatePatientUiError.NONE_EMAIL -> layout.error = null
+    else -> {}
 }
 
 @BindingAdapter("app:showCreateInputText")
