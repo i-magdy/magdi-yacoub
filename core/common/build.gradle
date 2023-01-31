@@ -33,11 +33,11 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation libs.androidx.core
     implementation project(path: ':core:model')
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test
+    androidTestImplementation libs.androidx.espresso
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
 }

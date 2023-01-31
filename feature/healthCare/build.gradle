@@ -40,26 +40,25 @@ android {
 
 dependencies {
     implementation project(path: ':ui')
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation libs.androidx.core
+    implementation libs.androidx.appcompat
+    implementation libs.google.material
+    implementation libs.layout.constraint
+    implementation libs.layout.swiperefresh
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test
+    androidTestImplementation libs.androidx.espresso
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation libs.androidx.viewmodel
+    implementation libs.androidx.livedata
+    implementation libs.kotlin.coroutines
 
-    //hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
+    kapt libs.androidx.lifecycle.compiler
 }
 
 kapt {
