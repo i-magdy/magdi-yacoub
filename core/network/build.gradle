@@ -40,29 +40,24 @@ secrets{
 dependencies {
     implementation implementation(project(':core:model',))
     implementation project(path: ':core:common')
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation libs.androidx.core
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test
+    androidTestImplementation libs.androidx.espresso
 
-    //firebase
-    implementation platform('com.google.firebase:firebase-bom:31.0.3')
-    implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation platform(libs.firebase.platform)
+    implementation libs.firebase.storage
+    implementation libs.firebase.auth
+    implementation libs.retrofit
+    implementation libs.retrofit.converter
+    implementation(platform(libs.okhttp.bom))
+    implementation libs.okhttp
+    implementation libs.okhttp.logging
+    implementation libs.google.gson
 
-    //HTTPS dependency
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
-    implementation "com.google.code.gson:gson:$retrofit_version"
-
-
-    //hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
 }
 kapt {
     correctErrorTypes true

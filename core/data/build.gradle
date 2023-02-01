@@ -33,27 +33,22 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation libs.androidx.core
     implementation project(path: ':core:network')
     implementation project(path: ':core:model')
     implementation project(path: ':core:datastore')
     implementation project(path: ':core:common')
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test
+    androidTestImplementation libs.androidx.espresso
 
-    //firebase
-    implementation platform('com.google.firebase:firebase-bom:31.0.3')
-    implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-auth-ktx'
-
-    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
-
-    //hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    //HTTPS dependency
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation platform(libs.firebase.platform)
+    implementation libs.firebase.storage
+    implementation libs.firebase.auth
+    implementation libs.datastore.preferences
+    implementation libs.retrofit
+    implementation libs.retrofit.converter
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
 }

@@ -5,7 +5,6 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
-    id "com.google.protobuf" version "0.8.17"
 }
 
 android {
@@ -46,60 +45,42 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation project(path: ':ui')
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-
     implementation(project(":feature:registration"))
     implementation project(path: ':feature:home')
     implementation project(path: ':feature:healthCare')
     implementation(project(":core:datastore"))
 
-    //firebase
-    implementation platform('com.google.firebase:firebase-bom:31.2.0')
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.android.gms:play-services-auth:20.4.1'
-    implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
-    implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
-    androidTestImplementation 'com.google.firebase:firebase-appcheck-debug-testing:16.1.1'
+    implementation libs.androidx.core
+    implementation libs.androidx.appcompat
+    implementation libs.google.material
+    implementation libs.layout.constraint
+    implementation libs.layout.swiperefresh
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation platform(libs.firebase.platform)
+    implementation libs.firebase.auth
+    implementation libs.play.services
+    implementation libs.appcheck.integrity
+    implementation libs.appcheck.debug
+    androidTestImplementation libs.appcheck.test
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation libs.androidx.viewmodel
+    implementation libs.androidx.livedata
+    implementation libs.kotlin.coroutines
+    implementation libs.datastore.preferences
 
-    //room
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    //datastore
-    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
-    implementation("androidx.datastore:datastore-core:1.0.0")
-    implementation  "com.google.protobuf:protobuf-javalite:3.21.12"
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test
+    androidTestImplementation libs.androidx.espresso
 
-    //HTTPS dependency
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
-    implementation "com.google.code.gson:gson:$retrofit_version"
-
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-
-    //hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
+    kapt libs.androidx.lifecycle.compiler
 }
 
 kapt {
