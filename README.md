@@ -54,7 +54,7 @@ Please Install the latest version of Android Studio [Electric Eel](https://devel
     6- Submit Screen
     7- Profile Screen
 
-<img src="registration.png" height="400" alt="Home"/>
+<img src="registration.png" height="600" alt="Home"/>
 
 
-Full Project On [Figma](https://www.figma.com/file/nq14l5HxMpmyyB3RxYipml/Aswan-Heart-Center---MYF?node-id=0%3A1&t=IexS0Cuqj9iGI7Kx-0), [Prototype](https://www.figma.com/proto/nq14l5HxMpmyyB3RxYipml/Aswan-Heart-Center---MYF?node-id=10%3A201&scaling=scale-down&page-id=0%3A1&starting-point-node-id=24%3A96) enjoy the experience.
+Full Project On [Figma](https://www.figma.com/file/alBLJjvLJK5gSl1RKs8CdK/Aswan-Heart-Center-Flow--MYF?node-id=414%3A523&t=Q8kesgu70uRr7x12-1), [Prototype](https://www.figma.com/proto/nq14l5HxMpmyyB3RxYipml/Aswan-Heart-Center---MYF?node-id=10%3A201&scaling=scale-down&page-id=0%3A1&starting-point-node-id=24%3A96) enjoy the experience.
