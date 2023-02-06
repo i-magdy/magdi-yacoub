@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="org.myf.ahc.feature.registration.ui.verify.VerifyViewModel" />
+            type="org.myf.demo.feature.registration.ui.verify.VerifyViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

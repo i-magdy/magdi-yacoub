@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="org.myf.ahc.feature.registration.ui.submit.SubmitViewModel" />
+            type="org.myf.demo.feature.registration.ui.submit.SubmitViewModel" />
     </data>
 
 

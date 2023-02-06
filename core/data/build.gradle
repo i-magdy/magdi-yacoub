@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc.core.data'
+    namespace 'org.myf.demo.core.data'
     compileSdk 33
 
     defaultConfig {

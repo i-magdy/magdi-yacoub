@@ -1,0 +1,171 @@
+package org.myf.demo.feature.registration.ui.verify
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import org.myf.demo.core.common.uiState.VerifyUiState
+import org.myf.demo.core.common.util.VerifyUiError
+import org.myf.demo.core.data.repository.VerificationRepository
+import org.myf.demo.core.model.countries.CountryCodeModel
+import javax.inject.Inject
+
+@HiltViewModel
+class VerifyViewModel @Inject constructor(
+    private val repo: VerificationRepository
+): ViewModel() {
+
+    private val _uiState = MutableStateFlow(VerifyUiState())
+    private val _phoneToVerify = MutableStateFlow("")
+    private val _verifyCode = MutableStateFlow("")
+    val uiState: StateFlow<VerifyUiState> = _uiState
+    val phoneToVerify: StateFlow<String> = _phoneToVerify
+    val verifyCode: StateFlow<String> = _verifyCode
+
+    init {
+        viewModelScope.launch {
+            launch {
+                repo.countriesName.collect{_uiState.emit(
+                    value = _uiState.value.copy(countries = it)
+                )}
+            }
+            launch {
+                repo.selectedCountry.collect{
+                    _uiState.emit(
+                        value = _uiState.value.copy(selectedCountry = it)
+                    )
+                    filterPhone(country = it)
+                }
+            }
+        }
+    }
+
+    fun shouldUpdateUiForLogIn() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                shouldLogin = true
+            )
+        )
+    }
+
+    fun getCountries() = viewModelScope.launch {
+        repo.getCountries()
+    }
+
+    fun getCountryCode(
+        country: String
+    ) = viewModelScope.launch {
+        repo.getCountryByCode(country)
+    }
+
+    fun setCountry(
+        name: String
+    ) = repo.setSelectedCountryByName(name)
+
+    fun setPhone(
+        phone: String
+    ) = viewModelScope.launch {
+        val mPhone = _uiState.value.phone
+        if (phone.isNotBlank() && mPhone != phone) {
+            _uiState.emit(_uiState.value.copy(phone = phone))
+            filterPhone(_uiState.value.selectedCountry)
+        }
+    }
+
+    private fun filterPhone(
+        country: CountryCodeModel
+    ) = viewModelScope.launch {
+        val phone = _uiState.value.phone.replace(country.code,"")
+        _uiState.emit(_uiState.value.copy(phone = phone))
+    }
+
+    fun requestCode() = viewModelScope.launch {
+        val phone = _uiState.value.phone
+        if (phone.isNotBlank() && phone.length > 7) {
+            _phoneToVerify.emit(_uiState.value.selectedCountry.code + phone)
+        }
+    }
+
+    fun savePatient(
+        phone: String,
+        verified: Boolean
+    ) = viewModelScope.launch {
+        repo.savePatientData(
+            primaryPhone = phone,
+            verified = verified
+        )
+    }
+
+    fun verify(
+        code: String?
+    ) = viewModelScope.launch {
+        if (code != null){
+            if (code.isNotBlank() && code.length == 6){
+                _verifyCode.emit(code)
+                _uiState.emit(_uiState.value.copy(isVerifying = true))
+            }
+        }
+    }
+
+    fun codeRequested() = viewModelScope.launch {
+        _uiState.emit(_uiState.value.copy(
+            isCodeRequested = true,
+            error = VerifyUiError.NONE
+        ))
+    }
+
+    fun codeSent(b: Boolean) = viewModelScope.launch {
+        _uiState.emit(_uiState.value.copy(isCodeSent = b))
+        _phoneToVerify.emit("")
+    }
+
+    fun setAppLang(lang: String) = repo.setAppLang(lang)
+
+    fun wrongPhone() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                isCodeRequested = false,
+                error = VerifyUiError.INVALID_PHONE
+            )
+        )
+        _phoneToVerify.emit("")
+    }
+
+    fun wrongCode() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(
+                isVerifying = false,
+                error = VerifyUiError.INVALID_CODE
+            )
+        )
+        _phoneToVerify.emit("")
+    }
+
+    fun clearError() = viewModelScope.launch {
+        _uiState.emit(
+            value = _uiState.value.copy(error = VerifyUiError.NONE)
+        )
+    }
+
+    fun succeed(
+        isSucceed: Boolean,
+        forLogin: Boolean
+    ) = viewModelScope.launch {
+        if (isSucceed && forLogin){
+            repo.updateStateForLogin()
+        }
+        delay(200)
+        _uiState.emit(
+            value = _uiState.value.copy(isSuccess = isSucceed, isCodeSent = true, isCodeRequested = true)
+        )
+        _phoneToVerify.emit("")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repo.cancelJobs()
+    }
+}

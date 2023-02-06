@@ -6,7 +6,7 @@
     <data>
         <variable
             name="document"
-            type="org.myf.ahc.core.model.storage.DocumentModel" />
+            type="org.myf.demo.core.model.storage.DocumentModel" />
         <variable
             name="editDocumentClickListener"
             type="android.view.View.OnClickListener"/>

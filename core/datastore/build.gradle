@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc.core.datastore'
+    namespace 'org.myf.demo.core.datastore'
     compileSdk 33
 
     defaultConfig {

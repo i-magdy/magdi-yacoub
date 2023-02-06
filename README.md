@@ -15,13 +15,6 @@
 Please Install the latest version of Android Studio [Electric Eel](https://developer.android.com/studio)
 
 
-#### Developer Note
-    Currently i'm working on refactor the Modules to make a clean architecture.
-    I'm using Firebase Storage to upload files and Phone Auth to verify patient's phone number,
-    considering to implement Twilio SMS service and  DigitalOceans Spaces S3 AWS as Alternative
-    services.
-    Some screens need refactoring "i'll add comments on code", next stage is to test The
-    application. Thank you! 
 
 ### Modularization
     We have here the base code in app module, 

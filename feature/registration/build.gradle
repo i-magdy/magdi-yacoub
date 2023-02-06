@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc.feature.registration'
+    namespace 'org.myf.demo.feature.registration'
     compileSdk 33
 
     defaultConfig {

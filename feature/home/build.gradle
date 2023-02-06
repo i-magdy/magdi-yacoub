@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc.feature.home'
+    namespace 'org.myf.demo.feature.home'
     compileSdk 33
 
     defaultConfig {

@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc'
+    namespace 'org.myf.demo'
     compileSdk 33
 
     defaultConfig {
-        applicationId "org.myf.ahc"
+        applicationId "org.myf.demo"
         minSdk 22
         targetSdk 33
         versionCode 2

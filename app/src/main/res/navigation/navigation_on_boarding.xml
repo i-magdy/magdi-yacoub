@@ -9,7 +9,7 @@
         android:id="@+id/launch_screen"
         android:label="launch_screen"
         tools:layout="@layout/screen_launch"
-        android:name="org.myf.ahc.ui.onBoarding.LaunchScreen">
+        android:name="org.myf.demo.ui.onBoarding.LaunchScreen">
         <action android:id="@+id/action_navigate_to_welcome_screen"
             app:destination="@id/welcome_screen"
             app:popEnterAnim="@anim/slide_in_left"
@@ -21,6 +21,6 @@
     <fragment
         android:id="@+id/welcome_screen"
         android:label="welcome_screen"
-        android:name="org.myf.ahc.ui.onBoarding.WelcomeScreen"
+        android:name="org.myf.demo.ui.onBoarding.WelcomeScreen"
         tools:layout="@layout/screen_welcome"/>
 </navigation>

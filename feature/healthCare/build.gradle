@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'org.myf.ahc.feature.healthcare'
+    namespace 'org.myf.demo.feature.healthcare'
     compileSdk 33
 
     defaultConfig {
