@@ -14,7 +14,7 @@ class MYFApp : Application() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
         //TODO Please, If you want an apk file comment the code below
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
+        /*val firebaseAppCheck = FirebaseAppCheck.getInstance()
         if (BuildConfig.DEBUG){
             firebaseAppCheck.installAppCheckProviderFactory(
                 DebugAppCheckProviderFactory.getInstance()
@@ -23,6 +23,6 @@ class MYFApp : Application() {
             firebaseAppCheck.installAppCheckProviderFactory(
                 PlayIntegrityAppCheckProviderFactory.getInstance()
             )
-        }
+        }*/
     }
 }

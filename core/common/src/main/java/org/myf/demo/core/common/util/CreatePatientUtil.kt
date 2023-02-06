@@ -11,7 +11,7 @@ object CreatePatientUtil {
     ): CreatePatientUiError = when{
         name.isBlank() -> CreatePatientUiError.EMPTY_NAME
         name.isDigitsOnly() -> CreatePatientUiError.INVALID_PATIENT_NAME
-        !isNameFormatValid(name) -> CreatePatientUiError.INVALID_NAME_FORMAT
+        //!isNameFormatValid(name) -> CreatePatientUiError.INVALID_NAME_FORMAT
         else -> CreatePatientUiError.NONE_NAME
     }
 
@@ -23,11 +23,11 @@ object CreatePatientUtil {
         id.isBlank() -> CreatePatientUiError.EMPTY_ID
         id.length < 14 -> CreatePatientUiError.INVALID_NATIONAL_ID
         !id.isDigitsOnly() -> CreatePatientUiError.INVALID_NATIONAL_ID
-        !validateEgyptianId(
+       /* !validateEgyptianId(
             id = id,
             currentYearDigit = currentYearDigit,
             currentMonthDigit = currentMonthDigit
-        ) ->  CreatePatientUiError.INVALID_ID_FORMAT
+        ) ->  CreatePatientUiError.INVALID_ID_FORMAT*/
         else -> CreatePatientUiError.NONE_ID
     }
 

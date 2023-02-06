@@ -39,6 +39,7 @@
             android:textAllCaps="false"
             android:textColor="?attr/colorSecondaryVariant"
             app:cornerRadius="@dimen/button_normal_rad"
+            android:visibility="gone"
             app:elevation="@dimen/button_normal_elevation"
             android:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/register_button"

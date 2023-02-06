@@ -52,7 +52,7 @@
     <string name="national_id">الرقم القومي</string>
     <string name="upload_national_id_title">ارفع صورة الرقم القومي</string>
     <string name="invalid_patient_name">اسم المريض غير صالح</string>
-    <string name="invalid_national_id">الرقم القومي خطأ</string>
+    <string name="invalid_national_id">الرقم القومي خطأ 14 رقم</string>
     <string name="upload_files_title">رفع ملفات</string>
     <string name="upload_image_title">حمل صوره</string>
     <string name="upload_file_title">حمل ملف</string>

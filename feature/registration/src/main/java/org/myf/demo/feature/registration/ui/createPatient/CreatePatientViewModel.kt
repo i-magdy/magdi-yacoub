@@ -90,9 +90,10 @@ class CreatePatientViewModel @Inject constructor(
         )
     }
 
-    fun removeSuccessObserver() = viewModelScope.launch {
-        _uiState.emit(
-            value = _uiState.value.copy(isSuccess = false)
-        )
-    }
+    fun removeSuccessObserver() =
+        viewModelScope.launch {
+            _uiState.emit(
+                value = _uiState.value.copy(isSuccess = false)
+            )
+        }
 }
