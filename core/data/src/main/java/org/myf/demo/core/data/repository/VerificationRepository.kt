@@ -1,101 +1,24 @@
 package org.myf.demo.core.data.repository
 
-
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
+import com.google.firebase.auth.PhoneAuthOptions
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import org.myf.demo.core.datastore.DatastoreImpl
-import org.myf.demo.core.datastore.PatientDataRepo
-import org.myf.demo.core.model.countries.CountryCodeModel
-import javax.inject.Inject
+import org.myf.demo.core.common.uiState.VerifyUiState
 
-class VerificationRepository @Inject constructor(
-    private val countriesRepo : CountriesRepository,
-    private val datastore: DatastoreImpl,
-    private val patientRepo: PatientDataRepo
-) {
+interface VerificationRepository {
 
-    private var _appLang = ""
-    private var _selectedCountry: CountryCodeModel? = null
-    private var countries: List<CountryCodeModel> = emptyList()
-    private val coroutine = CoroutineScope(Dispatchers.Default)
-    val selectedCountry = MutableStateFlow(CountryCodeModel())
-    val countriesName = MutableStateFlow<List<String>>(emptyList())
-
-    suspend fun getCountryByCode(code: String) {
-        val country = countriesRepo.getCountryByCode(code)
-        if (country != null) {
-            _selectedCountry = country
-            selectedCountry.emit(_selectedCountry!!)
-        }
-    }
-
-
-    fun setSelectedCountryByName(
-        name: String
-    ) = coroutine.launch {
-        if(_selectedCountry != null) {
-            if (_appLang == "ar") {
-                if (_selectedCountry!!.ar_name == name) {
-                    return@launch
-                }
-            } else {
-                if (_selectedCountry!!.en_name == name) {
-                    return@launch
-                }
-            }
-            countries.forEach {
-                if (_appLang == "ar") {
-                    if (it.ar_name == name) {
-                        setSelectedCountry(it)
-                    }
-                } else {
-                    if (it.en_name == name) {
-                        setSelectedCountry(it)
-                    }
-                }
-            }
-            selectedCountry.emit(_selectedCountry!!)
-        }
-    }
-
-    suspend fun getCountries() {
-        countries = countriesRepo.getCountries()
-        val list = ArrayList<String>()
-        if (_appLang == "ar"){
-            countries = countries.sortedBy { it.ar_name }
-            countries.forEach { list.add(it.ar_name) }
-        }else{
-            countries = countries.sortedBy { it.en_name }
-            countries.forEach { list.add(it.en_name) }
-        }
-        countriesName.emit(list)
-    }
-
-    suspend fun savePatientData(
-        primaryPhone: String,
-        verified: Boolean
-    ) = patientRepo.updatePatientDataOnVerifyScreen(
-        primaryPhone = primaryPhone,
-        verified = verified
-    )
-
-    private fun setSelectedCountry(
-        country: CountryCodeModel
-    ) {
-        _selectedCountry = country
-    }
-
-    fun setAppLang(lang: String) {
-        _appLang = lang
-    }
-
-
-    fun updateStateForLogin() = coroutine.launch {
-        datastore.updateState(2)
-    }
-
-    fun cancelJobs() = coroutine.cancel()
+    var appLanguage: String
+    val uiState: MutableStateFlow<VerifyUiState>
+    suspend fun init(lang: String,builder: PhoneAuthOptions.Builder)
+    suspend fun getCountryByCode(countryCode: String)
+    suspend fun getCountries()
+    suspend fun setPhoneNumber(phone: String)
+    suspend fun selectCountryByName(countryName: String)
+    suspend fun requestVerificationCode()
+    suspend fun verifyPhoneNumber(verificationCode: String)
+    suspend fun succeed(isSucceed: Boolean, forLogin: Boolean)
+    suspend fun clearError()
+    suspend fun updateUiForLogin()
+    suspend fun updateUiStateForLogin()
+    suspend fun savePatientData(primaryPhone: String, verified: Boolean)
+    fun cancelJob()
 }

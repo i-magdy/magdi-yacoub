@@ -1,12 +1,10 @@
 package org.myf.demo.feature.registration.ui.verify
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,12 +27,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.demo.core.common.util.NetworkUtil.isMobileConnectedToInternet
-import org.myf.demo.core.common.util.PhoneAuthErrorMessage
 import org.myf.demo.feature.registration.databinding.ScreenVerifyBinding
 import org.myf.demo.feature.registration.util.PhoneHintListener
 import org.myf.demo.feature.registration.util.PhoneHintObserver
 
-import java.util.concurrent.TimeUnit
 import org.myf.demo.ui.R as uiResource
 
 @AndroidEntryPoint
@@ -45,8 +39,6 @@ class VerifyScreen : Fragment() {
     private var _binding: ScreenVerifyBinding? = null
     private val binding get() = _binding!!
     private val auth = Firebase.auth
-    private lateinit var options: PhoneAuthOptions.Builder
-    private var storedVerificationId: String = ""
     private lateinit var phoneObserver: PhoneHintObserver
     private val viewModel by viewModels<VerifyViewModel>()
     private lateinit var lang: String
@@ -90,13 +82,14 @@ class VerifyScreen : Fragment() {
             resources.configuration.locale.language
         }
         auth.setLanguageCode(lang)
-        viewModel.setAppLang(lang)
-        options = PhoneAuthOptions.newBuilder(auth)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(requireActivity())
+        viewModel.init(
+            lang = lang,
+            builder = PhoneAuthOptions.newBuilder(auth).setActivity(requireActivity())
+        )
         if (shouldLogin){
             if (auth.currentUser == null) {
-                requestCode(args.phone)
+                viewModel.setPhone(args.phone)
+                viewModel.requestCode()
             }else{
                 viewModel.succeed(
                     isSucceed = auth.currentUser != null,
@@ -149,20 +142,6 @@ class VerifyScreen : Fragment() {
                             if (it) { showBottomSheet() }
                         }
                 }
-                launch {
-                    viewModel.phoneToVerify.collect {
-                        if (it.isNotBlank()) {
-                            requestCode(phone = it)
-                        }
-                    }
-                }
-                launch {
-                    viewModel.verifyCode.collect {
-                        if (it.isNotBlank()) {
-                            signInWithPhoneAuthCredential(getCredential(it))
-                        }
-                    }
-                }
             }
         }
 
@@ -207,13 +186,6 @@ class VerifyScreen : Fragment() {
             }
         }
     }
-    private fun requestCode(phone: String){
-        options.setPhoneNumber(phone)
-        options.setCallbacks(callbacks)
-        PhoneAuthProvider.verifyPhoneNumber(options.build())
-        viewModel.codeRequested()
-    }
-
 
     override fun onStart() {
         super.onStart()
@@ -240,85 +212,5 @@ class VerifyScreen : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        if (auth.currentUser != null) return
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = task.result?.user
-                    viewModel.succeed(
-                        isSucceed = user != null,
-                        forLogin = shouldLogin
-                    )
-                    viewModel.savePatient(
-                        verified = user != null,
-                        phone = user?.phoneNumber ?: ""
-                    )
-                } else {
-                    // Sign in failed, display a message and update the UI
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
-                        viewModel.wrongCode()
-                    }
-                    // Update UI
-                }
-            }
-    }
-
-    private val callbacks get() = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            // This callback will be invoked in two situations:
-            // 1 - Instant verification. In some cases the phone number can be instantly
-            //     verified without needing to send or enter a verification code.
-            // 2 - Auto-retrieval. On some devices Google Play services can automatically
-            //     detect the incoming verification SMS and perform verification without
-            //     user action.
-            Log.d(TAG, "onVerificationCompleted:$credential")
-            signInWithPhoneAuthCredential(credential)
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-            // This callback is invoked in an invalid request for verification is made,
-            // for instance if the the phone number format is not valid.
-            Log.w("onVerificationFailed", "*${e.localizedMessage}*")
-            if (e.localizedMessage == PhoneAuthErrorMessage.invalid_phone){ viewModel.wrongPhone() }
-            if (e is FirebaseAuthInvalidCredentialsException) {
-                // Invalid request
-            } else if (e is FirebaseTooManyRequestsException) {
-                // The SMS quota for the project has been exceeded
-            }
-
-            // Show a message and update the UI
-        }
-
-        override fun onCodeAutoRetrievalTimeOut(p0: String) {
-            super.onCodeAutoRetrievalTimeOut(p0)
-            Log.e("time_out",p0)
-        }
-
-
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
-            // The SMS verification code has been sent to the provided phone number, we
-            // now need to ask the user to enter the code and then construct a credential
-            // by combining the code with a verification ID.
-            Log.d(TAG, "onCodeSent:$verificationId")
-            viewModel.codeSent(true)
-            // Save verification ID and resending token so we can use them later
-            storedVerificationId = verificationId
-            //resendToken = token
-        }
-    }
-
-    private fun getCredential(
-        code: String
-    ): PhoneAuthCredential  = PhoneAuthProvider.getCredential(storedVerificationId, code)
 
 }

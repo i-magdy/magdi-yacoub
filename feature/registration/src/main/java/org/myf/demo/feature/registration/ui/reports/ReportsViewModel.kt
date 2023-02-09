@@ -21,13 +21,15 @@ class ReportsViewModel @Inject constructor(
     val uiState: StateFlow<ReportsUiState> = repo.uiState
     val editDocument: StateFlow<DocumentModel?> = repo.editDocument
 
-    fun getReportsList() = repo.getReportsList()
+    fun getReportsList() = viewModelScope.launch { repo.getDocumentsList() }
 
     fun getDocumentByPath(
         path: String
-    ) = repo.getReportByPath(
-        path = path
-    )
+    ) = viewModelScope.launch {
+        repo.getDocumentByPath(
+            path = path
+        )
+    }
 
     fun uploadFile(
         data: ByteArray,
@@ -42,16 +44,20 @@ class ReportsViewModel @Inject constructor(
     fun updateDocumentNote(
         path: String,
         note: String
-    ) = repo.updateDocumentNote(
-        path = path,
-        note = note
-    )
+    ) = viewModelScope.launch {
+        repo.updateDocumentNote(
+            path = path,
+            note = note
+        )
+    }
 
     fun onAttemptToDeleteFile(
         path: String
-    ) = repo.attemptToDeleteFile(
-        path = path
-    )
+    ) = viewModelScope.launch {
+        repo.attemptToDeleteFile(
+            path = path
+        )
+    }
 
     suspend fun isFileExist(
         name: String
@@ -69,15 +75,21 @@ class ReportsViewModel @Inject constructor(
         repo.saveFilesCount()
     }
 
-    fun removeDeleteFileObserver() = repo.clearDeleteFile()
+    fun removeDeleteFileObserver() = viewModelScope.launch {
+        repo.clearDeleteFile()
+    }
 
-    fun deleteFile() = repo.deleteFile()
+    fun deleteFile() = viewModelScope.launch {
+        repo.deleteFile()
+    }
 
-    fun openFiles() = repo.openFiles()
+    fun openFiles() = viewModelScope.launch {
+        repo.openFiles()
+    }
 
-    fun openImage() = repo.openImage()
+    fun openImage() = viewModelScope.launch { repo.openImage() }
 
-    fun removeOpenFilesObserver() = repo.clearOpenFiles()
+    fun removeOpenFilesObserver() = viewModelScope.launch { repo.clearOpenFiles() }
 
     override fun onCleared() {
         super.onCleared()

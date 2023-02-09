@@ -5,14 +5,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.myf.demo.core.common.annotation.Google
-import org.myf.demo.core.data.repository.FirebaseDocumentsRepository
-import org.myf.demo.core.data.repository.ReadStorageRepository
-import org.myf.demo.core.data.repository.StorageRepository
-import org.myf.demo.core.data.repository.FirebaseUploadDocumentRepository
+import org.myf.demo.core.data.repository.*
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface StorageModule {
+interface DataModule {
 
     @Google
     @Binds
@@ -23,7 +20,15 @@ interface StorageModule {
     @Google
     @Binds
     fun bindsDocumentsRepository(
-         readStorageRepo: FirebaseDocumentsRepository
+        readStorageRepo: FirebaseDocumentsRepository
     ): ReadStorageRepository
+
+    @Binds
+    fun bindsUploadReportsRepository(
+        reportsRepositoryImpl: UploadReportsRepositoryImpl
+    ): UploadReportsRepository
+
+
+
 
 }
