@@ -23,6 +23,7 @@ open class BaseActivity : AppCompatActivity {
     @Inject
     lateinit var datastoreImpl: DatastoreImpl
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this::datastoreImpl.isInitialized) {

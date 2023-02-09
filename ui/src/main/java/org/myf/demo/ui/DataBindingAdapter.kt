@@ -134,6 +134,7 @@ fun setVerifyScreenPhoneError(
     else -> { layout.error = null }
 }
 
+@Suppress("DEPRECATION")
 @BindingAdapter("app:countryName")
 fun setCountryName(
     ac: AutoCompleteTextView,

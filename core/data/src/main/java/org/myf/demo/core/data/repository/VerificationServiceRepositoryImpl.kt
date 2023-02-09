@@ -114,7 +114,7 @@ class VerificationServiceRepositoryImpl @Inject constructor(
                     updateJob?.cancel()
                     updateJob = coroutine.launch {
                         state.getAndUpdate {
-                            it.copy(isSucceed = true)
+                            it.copy(isSucceed = user != null)
                         }
                     }
                 } else {

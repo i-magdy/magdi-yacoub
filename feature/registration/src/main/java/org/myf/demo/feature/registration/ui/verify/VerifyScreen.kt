@@ -46,6 +46,7 @@ class VerifyScreen : Fragment() {
     private val args by navArgs<VerifyScreenArgs>()
     private var shouldLogin = false
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shouldLogin = args.isShouldLogin && args.phone.isNotBlank()
