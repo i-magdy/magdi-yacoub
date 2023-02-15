@@ -10,7 +10,7 @@
             type="org.myf.demo.feature.registration.ui.createPatient.CreatePatientViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -59,7 +59,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/patient_name_il"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -67,9 +67,7 @@
                 android:layout_marginEnd="32dp"
                 android:hint="@string/patient_name"
                 app:showNameError="@{viewModel.uiState.nameError}"
-                app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
-                app:hintTextColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/person_name_iv"
                 app:layout_constraintTop_toBottomOf="@+id/create_logo_iv">
@@ -77,13 +75,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/edittext_min_height"
                     android:inputType="text"
                     android:maxLength="@integer/patient_name_max_length"
                     android:maxLines="@integer/single_line"
                     app:showCreateInputText="@{viewModel.uiState.patientName}"
                     android:textAlignment="viewStart"
-                    tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -102,7 +100,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/national_id_il"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -110,9 +108,7 @@
                 app:showIdError="@{viewModel.uiState.idError}"
                 android:layout_marginEnd="32dp"
                 android:hint="@string/national_id"
-                app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
-                app:hintTextColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/patient_id_iv"
                 app:layout_constraintTop_toBottomOf="@+id/patient_name_il">
@@ -120,13 +116,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/national_id_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/edittext_min_height"
                     android:inputType="number"
                     android:maxLength="@integer/id_max_length"
                     android:maxLines="@integer/single_line"
                     app:showCreateInputText="@{viewModel.uiState.nationalId}"
                     android:textAlignment="viewStart"
-                    tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/id" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -145,16 +141,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/patient_email_il"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="16dp"
                 android:hint="@string/email_optional_title"
-                app:boxStrokeColor="?attr/colorSecondary"
                 app:errorEnabled="true"
-                app:hintTextColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/patient_email_iv"
                 app:layout_constraintTop_toBottomOf="@+id/national_id_il"
@@ -164,13 +158,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_email_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/edittext_min_height"
                     android:inputType="textEmailAddress"
                     android:maxLength="@integer/max_email_length"
                     android:maxLines="@integer/single_line"
                     app:showCreateInputText="@{viewModel.uiState.email}"
                     android:textAlignment="viewStart"
-                    tools:ignore="TextContrastCheck"
                     tools:text="@sample/data.json/patient/email" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -192,11 +186,9 @@
                 android:layout_height="160dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="32dp"
-                android:backgroundTint="@null"
                 android:clickable="true"
-                android:elevation="@dimen/button_normal_elevation"
                 android:focusable="true"
-                app:cardCornerRadius="@dimen/button_normal_rad"
+                style="@style/Widget.Material3.CardView.Filled"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/create_upload_id_title">
@@ -225,14 +217,12 @@
                 android:minHeight="@dimen/button_min_height"
                 android:text="@string/next_title"
                 android:textAllCaps="false"
-                android:textColor="@color/black_light"
-                app:backgroundTint="?attr/colorSecondary"
-                app:cornerRadius="@dimen/button_normal_rad"
+                style="@style/Widget.Material3.Button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/split_cv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

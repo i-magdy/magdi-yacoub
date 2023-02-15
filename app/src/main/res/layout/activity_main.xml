@@ -8,11 +8,14 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
-        <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_bar"
+        app:liftOnScroll="true"
+        app:liftOnScrollColor="?attr/colorPrimaryContainer">
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_tool_bar"
+            android:elevation="@dimen/button_normal_elevation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,11 +34,9 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
-            app:itemTextColor="@drawable/bottom_nav_selector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemIconTint="@drawable/bottom_nav_selector"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
+            style="@style/Widget.Material3.BottomNavigationView"
             app:menu="@menu/bottom_nav"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

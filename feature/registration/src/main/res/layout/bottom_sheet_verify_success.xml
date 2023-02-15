@@ -59,10 +59,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:boxStrokeColor="?attr/colorSecondary"
             android:hint="@string/other_phone_title"
-            app:hintTextColor="?attr/colorSecondary"
-            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/success_phone_label"
             app:layout_constraintTop_toBottomOf="@+id/other_phone_message">
@@ -72,30 +70,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="number"
+                android:minHeight="@dimen/edittext_min_height"
                 android:maxLines="@integer/single_line"
                 android:maxLength="@integer/phone_max_length"
                 android:textAlignment="viewStart" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:layout_marginStart="48dp"
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="32dp"
-            android:elevation="@dimen/button_normal_elevation"
             android:minHeight="@dimen/button_min_height"
             app:layout_constraintVertical_bias="0"
             android:text="@string/next_title"
+            style="@style/Widget.Material3.Button"
             android:textAllCaps="false"
-            android:textColor="@color/black_light"
-            app:cornerRadius="@dimen/button_normal_rad"
             android:id="@+id/next_to_upload_button"
-            style="@style/Widget.MaterialComponents.Button"
-            android:backgroundTint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/other_phone_il" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
