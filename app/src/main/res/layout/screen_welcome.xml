@@ -67,7 +67,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/arabic_button"
-                style="@style/Widget.Material3.Button.UnelevatedButton"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
@@ -82,13 +82,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/english_button"
-                style="@style/Widget.Material3.Button.UnelevatedButton"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:maxWidth="300dp"
                 android:minHeight="@dimen/button_min_height"
                 android:text="@string/english_title"
                 android:textAllCaps="false"

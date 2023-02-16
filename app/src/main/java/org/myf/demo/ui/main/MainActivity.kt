@@ -7,9 +7,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import org.myf.demo.R
+import org.myf.demo.databinding.ActivityMainBinding
 import org.myf.demo.feature.registration.R as registrationResource
 import org.myf.demo.feature.home.R as homeResource
 import org.myf.demo.feature.healthcare.R as healthResource
@@ -23,15 +22,15 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.main_tool_bar))
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.mainToolBar)
         val navHostFragment = supportFragmentManager.findFragmentById(
-            R.id.nav_main_host_container
+            binding.navMainHostContainer.id
         ) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNav.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(

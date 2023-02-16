@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_create_patient"
+        app:actionViewClass="com.google.android.material.button.MaterialButton"
+        android:title="@string/next_title"
+        app:showAsAction="always"
+        android:actionLayout="@layout/create_menu_action_view"/>
+</menu>

@@ -266,8 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                style="@style/Widget.Material3.CardView.Elevated"
-                app:cardCornerRadius="@dimen/button_normal_rad">
+                style="@style/Widget.Material3.CardView.Elevated">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -351,8 +350,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                         app:layout_constraintStart_toStartOf="@+id/uploaded_files_label"
-                        app:layout_constraintTop_toBottomOf="@+id/textView"
-                        tools:ignore="TextContrastCheck" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -368,6 +366,7 @@
                 android:minHeight="@dimen/button_min_height"
                 android:text="@string/submit_title"
                 android:textAllCaps="false"
+                android:visibility="gone"
                 style="@style/Widget.Material3.Button" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

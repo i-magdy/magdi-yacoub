@@ -15,14 +15,24 @@ fun setSelectedLanguageIsArabic(
 ) = when (lang == "ar"){
     true -> when{
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.purple_100,null))
-            button.setTextColor(button.context.resources.getColor(R.color.purple_700,null))
-            button.strokeWidth = 3
+            when (button.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_dark_tertiaryContainer,null))
+                    button.setTextColor(button.context.resources.getColor(R.color.md_theme_dark_onTertiaryContainer,null))
+                    button.strokeWidth = 2
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_tertiaryContainer,null))
+                    button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onTertiaryContainer,null))
+                    button.strokeWidth = 2
+                }
+                else -> {}
+            }
         }
         else -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.purple_100))
-            button.setTextColor(button.context.resources.getColor(R.color.purple_700))
-            button.strokeWidth = 3
+            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_tertiary))
+            button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onTertiary))
+            button.strokeWidth = 2
         }
     }
     else -> when {
@@ -31,13 +41,13 @@ fun setSelectedLanguageIsArabic(
                 Configuration.UI_MODE_NIGHT_YES -> {
                     button.backgroundTintList = ColorStateList.valueOf(
                         button.context.resources.getColor(
-                            R.color.black_light,
+                            R.color.md_theme_dark_surface,
                             button.context.theme
                         )
                     )
                     button.setTextColor(
                         button.context.resources.getColor(
-                            R.color.white,
+                            R.color.md_theme_dark_onSurface,
                             button.context.theme
                         )
                     )
@@ -45,13 +55,13 @@ fun setSelectedLanguageIsArabic(
                 Configuration.UI_MODE_NIGHT_NO -> {
                     button.backgroundTintList = ColorStateList.valueOf(
                         button.context.resources.getColor(
-                            android.R.color.white,
+                            R.color.md_theme_light_surface,
                             button.context.theme
                         )
                     )
                     button.setTextColor(
                         button.context.resources.getColor(
-                            R.color.black_light,
+                            R.color.md_theme_light_onSurface,
                             button.context.theme
                         )
                     )
@@ -60,8 +70,8 @@ fun setSelectedLanguageIsArabic(
             button.strokeWidth = 0
         }
         else -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.white))
-            button.setTextColor(button.context.resources.getColor(R.color.black_light))
+            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_surface))
+            button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onSurface))
             button.strokeWidth = 0
         }
     }
@@ -75,14 +85,24 @@ fun setSelectedLanguageIsEnglish(
 ) = when (lang == "en"){
     true -> when{
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.purple_100,null))
-            button.setTextColor(button.context.resources.getColor(R.color.purple_700,null))
-            button.strokeWidth = 3
+            when (button.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_dark_tertiaryContainer,null))
+                    button.setTextColor(button.context.resources.getColor(R.color.md_theme_dark_onTertiaryContainer,null))
+                    button.strokeWidth = 2
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_tertiaryContainer,null))
+                    button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onTertiaryContainer,null))
+                    button.strokeWidth = 2
+                }
+                else -> {}
+            }
         }
         else -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.purple_100))
-            button.setTextColor(button.context.resources.getColor(R.color.purple_700))
-            button.strokeWidth = 3
+            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_tertiary))
+            button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onTertiary))
+            button.strokeWidth = 2
         }
     }
     else -> when {
@@ -91,13 +111,13 @@ fun setSelectedLanguageIsEnglish(
                 Configuration.UI_MODE_NIGHT_YES -> {
                     button.backgroundTintList = ColorStateList.valueOf(
                         button.context.resources.getColor(
-                            R.color.black_light,
+                            R.color.md_theme_dark_surface,
                             button.context.theme
                         )
                     )
                     button.setTextColor(
                         button.context.resources.getColor(
-                            R.color.white,
+                            R.color.md_theme_dark_onSurface,
                             button.context.theme
                         )
                     )
@@ -105,13 +125,13 @@ fun setSelectedLanguageIsEnglish(
                 Configuration.UI_MODE_NIGHT_NO -> {
                     button.backgroundTintList = ColorStateList.valueOf(
                         button.context.resources.getColor(
-                            android.R.color.white,
+                            R.color.md_theme_light_surface,
                             button.context.theme
                         )
                     )
                     button.setTextColor(
                         button.context.resources.getColor(
-                            R.color.black_light,
+                            R.color.md_theme_light_onSurface,
                             button.context.theme
                         )
                     )
@@ -120,8 +140,8 @@ fun setSelectedLanguageIsEnglish(
             button.strokeWidth = 0
         }
         else -> {
-            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.white))
-            button.setTextColor(button.context.resources.getColor(R.color.black_light))
+            button.backgroundTintList = ColorStateList.valueOf(button.context.resources.getColor(R.color.md_theme_light_surface))
+            button.setTextColor(button.context.resources.getColor(R.color.md_theme_light_onSurface))
             button.strokeWidth = 0
         }
     }

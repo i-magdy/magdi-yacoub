@@ -46,6 +46,7 @@
     <string name="care_main_screen_title">رعايه شخصيه</string>
     <string name="ok_title">تم</string>
 
+    <string name="review_title">مراجعه</string>
 
     <string name="register_patient_details">تسجيل بيانات الحالة</string>
     <string name="patient_name">اسم الحالة</string>
