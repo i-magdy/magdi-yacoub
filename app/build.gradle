@@ -15,8 +15,8 @@ android {
         applicationId "org.myf.demo"
         minSdk 22
         targetSdk 33
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 4
+        versionName "0.0.3.1"
         resConfigs "en","ar"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -66,6 +66,7 @@ dependencies {
     implementation libs.firebase.auth
     implementation libs.play.services
     implementation libs.appcheck.integrity
+    implementation libs.app.integrity
     implementation libs.appcheck.debug
     androidTestImplementation libs.appcheck.test
 

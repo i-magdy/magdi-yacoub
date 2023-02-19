@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MYFApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.MYFApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!--
         <item name="colorPrimary">@color/black_light</item>
         <item name="colorPrimaryVariant">@color/black</item>
@@ -16,8 +16,9 @@
         <item name="android:textColor">@color/white</item>
          <item name="android:statusBarColor">@color/md_theme_dark_background</item>
         -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
-        <item name="android:statusBarColor">@color/md_theme_dark_primaryContainer</item>
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
@@ -45,4 +46,5 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
     </style>
+    <style name="Theme.MYFApp" parent="Base.Theme.MYFApp"/>
 </resources>

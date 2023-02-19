@@ -3,7 +3,7 @@
     <string name="home_title">Home</string>
     <string name="health_care_title">Health Care</string>
     <string name="app_name">Magdi Yacoub</string>
-    <string name="name">MYF - Aswan Heart Center</string>
+    <string name="name">Magdi Yacoub Heart Foundation</string>
     <string name="verify_content_message">Verify it\'s you</string>
     <string name="phone_title">Phone Number</string>
     <string name="verify_title">Verify</string>
@@ -25,7 +25,7 @@
     <string name="select_language_title">Select Language - إختر لغه</string>
     <string name="arabic_title">العربيه</string>
     <string name="english_title">English</string>
-    <string name="welcome_title">Welcome to MYF App</string>i
+    <string name="welcome_title">Welcome to Magdi Yacoub App</string>i
     <string name="welcome_message">An application to make the communication with patients easier.</string>
     <string name="home_main_screen_title">Home</string>
     <string name="home_settings_title">Settings</string>

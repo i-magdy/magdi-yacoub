@@ -1,5 +1,7 @@
 package org.myf.demo.ui.main
 
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -7,6 +9,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.color.MaterialColors
+import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.android.AndroidEntryPoint
 import org.myf.demo.databinding.ActivityMainBinding
 import org.myf.demo.feature.registration.R as registrationResource
@@ -28,10 +32,17 @@ class MainActivity : BaseActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(
             binding.navMainHostContainer.id
         ) as NavHostFragment
+        when(resources.configuration.orientation){
+            Configuration.ORIENTATION_PORTRAIT -> window.navigationBarColor = SurfaceColors.SURFACE_2.getColor(this)
+            Configuration.ORIENTATION_LANDSCAPE -> window.navigationBarColor = SurfaceColors.SURFACE_0.getColor(this)
+            Configuration.ORIENTATION_UNDEFINED -> {}
+        }
         navController = navHostFragment.navController
-
-        binding.bottomNav.setupWithNavController(navController)
-
+        binding.bottomNav?.setupWithNavController(navController)
+        binding.navRail?.setupWithNavController(navController)
+        binding.mainBar.addLiftOnScrollListener { _, backgroundColor ->
+            window.statusBarColor = backgroundColor
+        }
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 homeResource.id.home_start_screen,

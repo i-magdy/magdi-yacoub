@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -23,20 +24,21 @@ import org.myf.demo.ui.main.MainActivity
 class WelcomeScreen: Fragment(){
 
     private lateinit var binding: ScreenWelcomeBinding
+    private val onBackPressedCallback = object : OnBackPressedCallback(true){
+        override fun handleOnBackPressed() { requireActivity().finish() }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() { requireActivity().finish() }
-        })
+        requireActivity().window.navigationBarColor = SurfaceColors.SURFACE_0.getColor(requireContext())
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = ScreenWelcomeBinding.inflate(layoutInflater,container,false)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,onBackPressedCallback)
         return binding.root
     }
 
@@ -45,21 +47,20 @@ class WelcomeScreen: Fragment(){
         val viewModel by viewModels<OnBoardingViewModel>()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.state
                     .map { it == 1 }
                     .distinctUntilChanged()
                     .collect {
-                    if (it){
-                        val toMainActivity = Intent(requireActivity(),
-                            MainActivity::class.java)
-                        startActivity(toMainActivity)
-                        requireActivity().finish()
+                        if (it){
+                            val toMainActivity = Intent(requireActivity(),
+                                MainActivity::class.java)
+                            startActivity(toMainActivity)
+                            requireActivity().finish()
+                        }
+                        viewModel.state.cancellable()
                     }
-                    viewModel.state.cancellable()
-                }
             }
         }
     }
