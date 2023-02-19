@@ -1,5 +1,7 @@
 package org.myf.demo.ui.main
 
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -7,9 +9,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.color.MaterialColors
+import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.android.AndroidEntryPoint
-import org.myf.demo.R
+import org.myf.demo.databinding.ActivityMainBinding
 import org.myf.demo.feature.registration.R as registrationResource
 import org.myf.demo.feature.home.R as homeResource
 import org.myf.demo.feature.healthcare.R as healthResource
@@ -23,16 +26,23 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.main_tool_bar))
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.mainToolBar)
         val navHostFragment = supportFragmentManager.findFragmentById(
-            R.id.nav_main_host_container
+            binding.navMainHostContainer.id
         ) as NavHostFragment
+        when(resources.configuration.orientation){
+            Configuration.ORIENTATION_PORTRAIT -> window.navigationBarColor = SurfaceColors.SURFACE_2.getColor(this)
+            Configuration.ORIENTATION_LANDSCAPE -> window.navigationBarColor = SurfaceColors.SURFACE_0.getColor(this)
+            Configuration.ORIENTATION_UNDEFINED -> {}
+        }
         navController = navHostFragment.navController
-
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNavigationView.setupWithNavController(navController)
-
+        binding.bottomNav?.setupWithNavController(navController)
+        binding.navRail?.setupWithNavController(navController)
+        binding.mainBar.addLiftOnScrollListener { _, backgroundColor ->
+            window.statusBarColor = backgroundColor
+        }
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 homeResource.id.home_start_screen,

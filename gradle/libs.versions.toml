@@ -26,6 +26,7 @@ retrofit='2.9.0'
 okhttp='4.10.0'
 junit='4.13.2'
 androidxtest='1.1.5'
+integrity='1.1.0'
 
 
 [libraries]
@@ -47,6 +48,7 @@ kotlin-coroutines = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-coroutine
 play-services = { group = 'com.google.android.gms', name = 'play-services-auth', version.ref = 'playservice' }
 appcheck-debug = { group = 'com.google.firebase', name = 'firebase-appcheck-debug', version.ref = 'appcheck' }
 appcheck-integrity = { group = 'com.google.firebase', name = 'firebase-appcheck-playintegrity' }
+app-integrity = { group = 'com.google.android.play',name = 'integrity' , version.ref = 'integrity'}
 appcheck-test = { group = 'com.google.firebase', name = 'firebase-appcheck-debug-testing', version.ref = 'appcheck' }
 firebase-platform = { group = 'com.google.firebase', name = 'firebase-bom', version.ref = 'firebase'}
 firebase-auth = { group = 'com.google.firebase', name = 'firebase-auth-ktx' }

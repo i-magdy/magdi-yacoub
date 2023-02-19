@@ -6,10 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
@@ -19,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -67,6 +67,7 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        attachMenu()
         val bottomSheetBehavior = BottomSheetBehavior.from(
             view.findViewById(R.id.pick_up_chooser_bottom_sheet)
         )
@@ -91,16 +92,29 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
                 }
             }
         }
-        binding.reviewButton.setOnClickListener {
-            viewModel.saveFilesCount()
-            Navigation.findNavController(view)
-                .navigate(R.id.action_navigate_from_upload_to_submit)
-        }
     }
 
     override fun onPause() {
         super.onPause()
         viewModel.removeOpenFilesObserver()
+    }
+
+    private fun attachMenu(){
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_upload_repoerts,menu)
+                val item = menu.findItem(R.id.action_review_application)
+                val menuView = item.setActionView(R.layout.reports_menu_action_view)
+                val review: MaterialButton = menuView.actionView as MaterialButton
+                review.setOnClickListener {
+                    viewModel.saveFilesCount()
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_navigate_from_upload_to_submit)
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private suspend fun updateUi(

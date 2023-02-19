@@ -29,26 +29,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_in_button"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:elevation="@dimen/button_normal_elevation"
             android:minHeight="@dimen/button_min_height"
             android:text="@string/log_in_title"
             android:textAllCaps="false"
-            android:textColor="?attr/colorSecondaryVariant"
-            app:cornerRadius="@dimen/button_normal_rad"
-            android:visibility="gone"
-            app:elevation="@dimen/button_normal_elevation"
-            android:backgroundTint="@null"
+            android:visibility="visible"
+            android:backgroundTint="?attr/colorTertiary"
             app:layout_constraintBottom_toTopOf="@+id/register_button"
             app:layout_constraintEnd_toEndOf="@+id/register_button"
-            app:layout_constraintStart_toStartOf="@+id/register_button"
-            app:rippleColor="?attr/colorControlNormal"
-            app:strokeColor="@color/purple_200"
-            app:strokeWidth="2dp"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintStart_toStartOf="@+id/register_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_button"
@@ -59,11 +51,8 @@
             android:layout_marginBottom="32dp"
             android:minHeight="@dimen/button_min_height"
             android:text="@string/register_title"
-            android:elevation="@dimen/button_normal_elevation"
             android:textAllCaps="false"
-            app:cornerRadius="@dimen/button_normal_rad"
-            android:textColor="@color/black_light"
-            app:backgroundTint="?attr/colorSecondary"
+            style="@style/Widget.Material3.Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

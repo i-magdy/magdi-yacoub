@@ -28,7 +28,4 @@ interface DataModule {
         reportsRepositoryImpl: UploadReportsRepositoryImpl
     ): UploadReportsRepository
 
-
-
-
 }

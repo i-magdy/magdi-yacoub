@@ -23,7 +23,7 @@ class SettingsDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_view)
+        //dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_view)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

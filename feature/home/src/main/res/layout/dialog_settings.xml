@@ -29,7 +29,6 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_marginTop="16dp"
-            app:dividerColor="?attr/colorControlNormal"
             app:layout_constraintEnd_toEndOf="@+id/settings_title_textView"
             app:layout_constraintStart_toStartOf="@+id/settings_title_textView"
             app:layout_constraintTop_toBottomOf="@+id/settings_title_textView" />
@@ -64,47 +63,39 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/arabic_button"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                style="@style/Widget.Material3.Button.UnelevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:elevation="@dimen/button_normal_elevation"
                 android:minHeight="@dimen/button_min_height"
                 android:text="@string/arabic_title"
                 android:textAllCaps="false"
-                android:textColor="?android:textColor"
                 app:selectedLanguageIsArabic="@{viewModel.appLanguage}"
                 android:onClick="@{() -> viewModel.updateAppLanguage(@string/arabic_iso)}"
-                app:cornerRadius="@dimen/button_normal_rad"
-                app:strokeColor="@color/purple_500"/>
+                app:strokeColor="?attr/colorTertiary"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/english_button"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                style="@style/Widget.Material3.Button.UnelevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:elevation="@dimen/button_normal_elevation"
-                android:maxWidth="300dp"
                 android:minHeight="@dimen/button_min_height"
                 android:text="@string/english_title"
                 android:textAllCaps="false"
-                android:textColor="?android:textColor"
                 app:selectedLanguageIsEnglish="@{viewModel.appLanguage}"
                 android:onClick="@{() -> viewModel.updateAppLanguage(@string/english_iso)}"
-                app:cornerRadius="@dimen/button_normal_rad"
-                app:strokeColor="@color/purple_500" />
+                app:strokeColor="?attr/colorTertiary"/>
         </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/settings_lang_materialDivider"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            app:dividerColor="?attr/colorControlNormal"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="@+id/linearLayout"
@@ -119,7 +110,6 @@
             android:layout_marginBottom="16dp"
             android:text="@string/ok_title"
             android:textStyle="bold"
-            android:textColor="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_lang_materialDivider"

@@ -3,6 +3,7 @@
     <dimen name="button_normal_elevation">4dp</dimen>
     <dimen name="button_normal_rad">8dp</dimen>
     <dimen name="button_min_height">56dp</dimen>
+    <dimen name="edittext_min_height">48dp</dimen>
     <integer name="max_progress_storage_size">20000000</integer>
     <integer name="storage_progress">10000000</integer>
     <integer name="country_max_length">32</integer>

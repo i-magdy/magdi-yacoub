@@ -3,15 +3,16 @@ package org.myf.demo.feature.registration.ui.submit
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -40,6 +41,7 @@ class SubmitScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        attachMenu()
         viewModel.syncPatientData()
         binding.editNameIv.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_create)
@@ -65,6 +67,22 @@ class SubmitScreen : Fragment() {
                 }
             }
         }
+    }
+
+    private fun attachMenu(){
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_submit,menu)
+                val item = menu.findItem(R.id.action_submit_application)
+                val menuView = item.setActionView(R.layout.submit_menu_action_view)
+                val review: MaterialButton = menuView.actionView as MaterialButton
+                review.setOnClickListener {
+                   Toast.makeText(context,"api call!",Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDestroy() {
