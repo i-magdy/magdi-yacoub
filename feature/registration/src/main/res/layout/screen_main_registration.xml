@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
-            android:visibility="gone"
             android:src="@drawable/ic_myf_logo"
             app:layout_constraintBottom_toTopOf="@+id/log_in_button"
             app:layout_constraintEnd_toEndOf="parent"

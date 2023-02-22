@@ -1,7 +1,6 @@
 package org.myf.demo.ui.main
 
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -9,7 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.android.AndroidEntryPoint
 import org.myf.demo.databinding.ActivityMainBinding

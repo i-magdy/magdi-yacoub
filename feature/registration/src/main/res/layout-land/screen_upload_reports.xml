@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="org.myf.demo.feature.registration.ui.reports.ReportsViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.reports.UploadReportsScreen">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:baselineAligned="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/reports_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="7"
+                        tools:listitem="@layout/report_list_item" />
+
+                    <ProgressBar
+                        android:id="@+id/reports_loading_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="4dp"
+                        android:visibility="@{viewModel.uiState.loading ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/reports_list_message_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reports_view_message"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="@{viewModel.uiState.list.empty &amp; !viewModel.uiState.loading ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintVertical_bias="0"
+                        tools:visibility="invisible"
+                        app:layout_constraintTop_toBottomOf="@+id/reports_loading_progress" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/reports_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/send_reports_title"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/reports_message_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/send_reports_message"
+                    android:textColor="?attr/colorControlNormal"
+                    app:layout_constraintEnd_toEndOf="@+id/reports_title_tv"
+                    app:layout_constraintStart_toStartOf="@+id/reports_title_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/reports_title_tv" />
+                <TextView
+                    android:id="@+id/reports_size_percentage_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceOverline"
+                    app:layout_constraintBottom_toBottomOf="@+id/reports_total_size_title"
+                    app:layout_constraintEnd_toStartOf="@+id/reports_total_size_title"
+                    app:calculateSize="@{viewModel.uiState.size}"
+                    tools:text="50%" />
+
+                <TextView
+                    android:id="@+id/reports_total_size_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_size_value"
+                    android:textAppearance="?attr/textAppearanceOverline"
+                    app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+                    app:layout_constraintEnd_toEndOf="@+id/reports_size_progress"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toStartOf="@+id/reports_size_progress" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/used_storage"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@+id/reports_size_progress"
+                    app:layout_constraintStart_toStartOf="@+id/reports_size_progress" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/reports_size_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:max="@integer/max_progress_storage_size"
+                    android:progress="@{Math.toIntExact(viewModel.uiState.size)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reports_message_tv"
+                    tools:progress="@integer/storage_progress" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/reports_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="@{viewModel.uiState.progress}"
+                    app:hideIfProgressZero="@{viewModel.uiState.progress}"
+                    app:indicatorColor="?attr/colorSecondary"
+                    app:layout_constraintBottom_toTopOf="@+id/reports_file_in_progress_tv"
+                    app:layout_constraintEnd_toEndOf="@+id/reports_file_in_progress_tv"
+                    app:layout_constraintStart_toStartOf="@+id/reports_file_in_progress_tv"
+                    tools:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/reports_file_in_progress_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    app:layout_constraintVertical_bias="1"
+                    android:text="@{viewModel.uiState.fileName}"
+                    android:textAlignment="viewStart"
+                    android:textSize="11sp"
+                    android:visibility="visible"
+                    app:hideIfProgressZero="@{viewModel.uiState.progress}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_button"
+                    tools:text="File Name"
+                    tools:visibility="invisible" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/upload_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:backgroundTint="?attr/colorTertiary"
+                    android:contentDescription="@string/upload_files_title"
+                    android:elevation="@dimen/button_normal_elevation"
+                    android:enabled="@{viewModel.uiState.size &lt; Long.valueOf(20000000) &amp; !viewModel.uiState.loading}"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:rippleColor="?attr/colorTertiaryContainer"
+                    app:tint="?attr/colorOnTertiary" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/pick_up_chooser_bottom_sheet"
+            style="@style/Widget.MaterialComponents.BottomSheet.Modal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_dialog_view"
+            app:behavior_draggable="false"
+            app:behavior_fitToContents="true"
+            app:behavior_hideable="true"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.registration.createPatient.CreatePatientScreen">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="org.myf.demo.feature.registration.ui.createPatient.CreatePatientViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/register_patient_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/register_patient_details"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/create_logo_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_myf_logo"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/register_patient_title" />
+
+                <ImageView
+                    android:id="@+id/person_name_iv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_person"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/name_content_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/patient_name_il"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/patient_name_il" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/patient_name_il"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:hint="@string/patient_name"
+                    app:showNameError="@{viewModel.uiState.nameError}"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/person_name_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/create_logo_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/patient_name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/edittext_min_height"
+                        android:inputType="text"
+                        android:maxLength="@integer/patient_name_max_length"
+                        android:maxLines="@integer/single_line"
+                        app:showCreateInputText="@{viewModel.uiState.patientName}"
+                        android:textAlignment="viewStart"
+                        tools:text="@sample/data.json/patient/name" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/patient_id_iv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_id"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/id_content_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/national_id_il"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/national_id_il" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/national_id_il"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:showIdError="@{viewModel.uiState.idError}"
+                    android:layout_marginEnd="32dp"
+                    android:hint="@string/national_id"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/patient_id_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/patient_name_il">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/national_id_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/edittext_min_height"
+                        android:inputType="number"
+                        android:maxLength="@integer/id_max_length"
+                        android:maxLines="@integer/single_line"
+                        app:showCreateInputText="@{viewModel.uiState.nationalId}"
+                        android:textAlignment="viewStart"
+                        tools:text="@sample/data.json/patient/id" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/patient_email_iv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_email"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@string/email_content_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/patient_email_il"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/patient_email_il" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/patient_email_il"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:hint="@string/email_optional_title"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/patient_email_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/national_id_il"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:showEmailError="@{viewModel.uiState.emailError}">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/patient_email_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/edittext_min_height"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="@integer/max_email_length"
+                        android:maxLines="@integer/single_line"
+                        app:showCreateInputText="@{viewModel.uiState.email}"
+                        android:textAlignment="viewStart"
+                        tools:text="@sample/data.json/patient/email" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/create_upload_id_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/upload_id_photo_title"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/split_cv"
+                app:layout_constraintTop_toBottomOf="@+id/patient_email_il" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/split_cv"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.CardView.Filled"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_upload_id_title">
+
+                <ImageView
+                    android:id="@+id/national_id_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/upload_id_photo_title"
+                    android:scaleType="fitCenter"
+                    app:showImageUri="@{viewModel.uiState.img}"
+                    android:src="@drawable/ic_add_circle" />
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

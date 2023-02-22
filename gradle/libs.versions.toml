@@ -2,9 +2,9 @@
 androidxcore='1.9.0'
 kotlin='1.8.0'
 jvm='1.7.21'
-material='1.8.0'
+material='1.9.0-alpha02'
 appcompat='1.7.0-alpha01'
-androidGradlePlugin = "7.4.0"
+androidGradlePlugin = "7.4.1"
 hilt = "2.44.2"
 constraint = '2.1.4'
 swipe='1.1.0'
