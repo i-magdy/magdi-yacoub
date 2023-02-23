@@ -31,16 +31,25 @@
     <string name="home_settings_title">Settings</string>
     <string name="ok_title">OK</string>
 
+    <string name="one_title">1</string>
+    <string name="two_title">2</string>
+    <string name="three_title">3</string>
+    <string name="steps_title">Patient Admission Requirements</string>
+    <string name="step_one_message">Name and a copy of ID or Children birth certificate.</string>
+    <string name="step_two_message">Verify your Phone Number.</string>
+    <string name="step_three_message">A copy of a recent ultrasound report and characterization report if found.</string>
+
     <string name="main_screen_title">Profile</string>
     <string name="log_in_screen_title">Log In</string>
     <string name="create_screen_title">Name &amp; Id</string>
+    <string name="name_contact_info_title">Name,Id &amp; Contact Info</string>
     <string name="verify_phone_screen_title">Verification</string>
     <string name="upload_reports_screen_title">Upload reports</string>
     <string name="submit_screen_title">Submit</string>
     <string name="profile_screen_title">Profile</string>
     <string name="care_main_screen_title">Health Care</string>
 
-    <string name="register_patient_details">Register patient details</string>
+    <string name="register_patient_details">Register patient info</string>
     <string name="patient_name">Patient name</string>
     <string name="national_id">National id</string>
     <string name="upload_national_id_title">Upload national id image</string>

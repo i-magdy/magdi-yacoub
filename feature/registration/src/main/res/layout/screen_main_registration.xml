@@ -14,17 +14,129 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/app_logo_iv"
+        <TextView
+            android:id="@+id/steps_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_myf_logo"
-            app:layout_constraintBottom_toTopOf="@+id/log_in_button"
+            android:text="@string/steps_title"
+            android:layout_margin="16dp"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/heart_step_one"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/steps_title_tv"
             app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/step_one_title"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:text="@string/one_title"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_one"
+            app:layout_constraintEnd_toEndOf="@+id/heart_step_one"
+            app:layout_constraintStart_toStartOf="@+id/heart_step_one"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_one" />
+
+        <TextView
+            android:id="@+id/step_one_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/step_one_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_one"
+            app:layout_constraintStart_toEndOf="@+id/heart_step_one"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_one" />
+
+        <ImageView
+            android:id="@+id/heart_step_two"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heart_step_one"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/step_two_title"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:text="@string/two_title"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_two"
+            app:layout_constraintEnd_toEndOf="@+id/heart_step_two"
+            app:layout_constraintStart_toStartOf="@+id/heart_step_two"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_two" />
+
+        <TextView
+            android:id="@+id/step_two_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/step_two_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_two"
+            app:layout_constraintStart_toEndOf="@+id/heart_step_two"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_two" />
+
+        <ImageView
+            android:id="@+id/heart_step_three"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heart_step_two"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/step_three_title"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:text="@string/three_title"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_three"
+            app:layout_constraintEnd_toEndOf="@+id/heart_step_three"
+            app:layout_constraintStart_toStartOf="@+id/heart_step_three"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_three" />
+
+        <TextView
+            android:id="@+id/step_three_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/step_three_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/heart_step_three"
+            app:layout_constraintStart_toEndOf="@+id/heart_step_three"
+            app:layout_constraintTop_toTopOf="@+id/heart_step_three" />
+
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_in_button"

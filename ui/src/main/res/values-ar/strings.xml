@@ -45,8 +45,15 @@
     <string name="home_main_screen_title">الرئيسيه</string>
     <string name="care_main_screen_title">رعاية شخصية</string>
     <string name="ok_title">تم</string>
-
     <string name="review_title">مراجعه</string>
+
+    <string name="one_title">١</string>
+    <string name="two_title">٢</string>
+    <string name="three_title">٣</string>
+    <string name="steps_title">خطوات قبول المرضى</string>
+    <string name="step_one_message">الاسم و صوره من البطاقه او شهادة ميلاد الطفل.</string>
+    <string name="step_two_message">تأكيد رقم هاتفك.</string>
+    <string name="step_three_message">نسخة من تقرير الموجات فوق الصوتية الأخير وتقرير القسطرة إذا وجدت.</string>
 
     <string name="register_patient_details">تسجيل بيانات الحالة</string>
     <string name="patient_name">اسم المريض</string>
@@ -77,6 +84,7 @@
     <string name="files_title">ملفات</string>
     <string name="submit_request_title">إرسل الطلب</string>
     <string name="name_id_info_title">الاسم و الرقم القومي</string>
+    <string name="name_contact_info_title">الاسم و بيانات التواصل</string>
     <string name="contact_info_title">بيانات التواصل</string>
     <string name="reports_diagnosis_info_title">التقارير و التشخيص</string>
     <string name="diagnosis_description_title">شرح التشخيص</string>
