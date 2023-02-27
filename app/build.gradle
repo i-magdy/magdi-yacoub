@@ -15,8 +15,8 @@ android {
         applicationId "org.myf.demo"
         minSdk 22
         targetSdk 33
-        versionCode 7
-        versionName "0.0.6"
+        versionCode 8
+        versionName "0.0.8"
         resConfigs "en","ar"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
