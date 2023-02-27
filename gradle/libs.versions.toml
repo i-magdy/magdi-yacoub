@@ -27,6 +27,8 @@ okhttp='4.10.0'
 junit='4.13.2'
 androidxtest='1.1.5'
 integrity='1.1.0'
+kotlinxSerialization='1.4.1'
+retrofitKotlinxSerializationJson = "0.8.0"
 
 
 [libraries]
@@ -67,6 +69,8 @@ okhttp-logging = { group = 'com.squareup.okhttp3', name = 'logging-interceptor' 
 google-gson = { group = 'com.google.code.gson', name = 'gson', version.ref = 'retrofit' }
 junit= { group = 'junit', name = 'junit', version.ref = 'junit' }
 androidx-test = { group = 'androidx.test.ext', name = 'junit', version.ref = 'androidxtest' }
+kotlinx-serialization = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-serialization-json', version.ref = 'kotlinxSerialization' }
+retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
 
 
 
@@ -80,3 +84,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation-safeargs = { id = 'androidx.navigation.safeargs', version.ref = 'navigation' }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
