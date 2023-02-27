@@ -55,7 +55,7 @@
     <string name="step_two_message">تأكيد رقم هاتفك.</string>
     <string name="step_three_message">نسخة من تقرير الموجات فوق الصوتية الأخير وتقرير القسطرة إذا وجدت.</string>
 
-    <string name="register_patient_details">تسجيل بيانات الحالة</string>
+    <string name="register_patient_details">تسجيل بيانات المريض</string>
     <string name="patient_name">اسم المريض</string>
     <string name="national_id">الرقم القومي</string>
     <string name="upload_national_id_title">ارفع صورة الرقم القومي</string>
