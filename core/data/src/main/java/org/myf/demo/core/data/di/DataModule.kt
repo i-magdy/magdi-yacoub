@@ -28,4 +28,14 @@ interface DataModule {
         reportsRepositoryImpl: UploadReportsRepositoryImpl
     ): UploadReportsRepository
 
+    @Binds
+    fun bindsSubmitPatientRepository(
+        submitRepositoryImpl: SubmitRepositoryImpl
+    ): SubmitRepository
+
+    @Binds
+    fun bindsCurrentPatient(
+        currentPatientRepositoryImpl: CurrentPatientRepositoryImpl
+    ): CurrentPatientRepository
+
 }

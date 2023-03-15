@@ -4,7 +4,6 @@ package org.myf.demo.feature.registration.ui.submit
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,7 +41,6 @@ class SubmitScreen : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         attachMenu()
-        viewModel.syncPatientData()
         binding.editNameIv.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigate_from_submit_to_create)
         }
@@ -77,7 +75,12 @@ class SubmitScreen : Fragment() {
                 val menuView = item.setActionView(R.layout.submit_menu_action_view)
                 val review: MaterialButton = menuView.actionView as MaterialButton
                 review.setOnClickListener {
-                   Toast.makeText(context,"api call!",Toast.LENGTH_LONG).show()
+                    lifecycleScope.launch {
+                        if (viewModel.createPatent()){
+                            val nav = Navigation.findNavController(requireView())
+                            nav.navigate(R.id.action_navigate_from_submit_to_profile)
+                        }
+                    }
                 }
             }
 

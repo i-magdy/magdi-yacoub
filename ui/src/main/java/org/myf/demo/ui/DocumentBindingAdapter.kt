@@ -21,7 +21,7 @@ fun setImageDrawable(view: ImageView,documentType: String){
 
 
 @BindingAdapter("app:documentSize")
-fun setDocumentSizeTitle(
+fun setDocumentSizeValue(
     view: TextView,
     size: Long
 ){

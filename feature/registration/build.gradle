@@ -63,6 +63,7 @@ dependencies {
     implementation platform(libs.firebase.platform)
     implementation libs.firebase.auth
     implementation libs.play.services
+    implementation libs.firebase.firestore
 
     implementation libs.datastore.preferences
     implementation libs.datastore.core
