@@ -25,6 +25,7 @@
         <action
             android:id="@+id/action_navigate_from_main_to_profile"
             app:destination="@id/profile_screen"
+            app:popUpTo="@id/navigation_registration"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -101,6 +102,16 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+
+        <action
+            android:id="@+id/action_navigate_from_verify_to_profile"
+            app:destination="@id/profile_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@id/navigation_registration"
+            app:exitAnim="@anim/slide_out_left"/>
+
     </fragment>
 
     <fragment
@@ -144,6 +155,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@id/navigation_registration"
             app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 

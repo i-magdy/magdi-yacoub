@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.auth.*
@@ -32,6 +33,7 @@ import org.myf.demo.feature.registration.util.PhoneHintListener
 import org.myf.demo.feature.registration.util.PhoneHintObserver
 
 import org.myf.demo.ui.R as uiResource
+import org.myf.demo.feature.registration.R as resource
 
 @AndroidEntryPoint
 class VerifyScreen : Fragment() {
@@ -177,10 +179,7 @@ class VerifyScreen : Fragment() {
     private fun showBottomSheet(){
         if (dialog.isAdded) return
         if (shouldLogin){
-            //TODO navigate when success log in
-           /* val toLaunchIntent = Intent(requireActivity(),OnBoardingActivity::class.java)
-            startActivity(toLaunchIntent)
-            requireActivity().finish()*/
+           Navigation.findNavController(requireView()).navigate(resource.id.action_navigate_from_verify_to_profile)
         }else {
             requireView().findFragment<VerifyScreen>().let {
                 dialog.show(it.childFragmentManager, "success_dialog")

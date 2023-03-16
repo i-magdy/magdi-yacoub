@@ -46,3 +46,5 @@
 
 # @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+
+-keepclassmembers class org.myf.demo.core.common.model.CurrentPatientModel { *;}

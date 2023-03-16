@@ -52,6 +52,7 @@ class VerifySuccessBottomSheet : BottomSheetDialogFragment(
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        parentFragment?.findNavController()?.navigate(R.id.action_pop_up_from_verification_to_create_screen)
+        val nav = parentFragment?.findNavController()
+        nav?.navigate(R.id.action_pop_up_from_verification_to_create_screen)
     }
 }

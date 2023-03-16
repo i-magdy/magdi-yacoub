@@ -2,9 +2,7 @@ package org.myf.demo.feature.registration.ui.createPatient
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -20,7 +18,6 @@ import kotlinx.coroutines.flow.*
 import org.myf.demo.feature.registration.R
 import org.myf.demo.feature.registration.databinding.ScreenCreatePatientBinding
 import org.myf.demo.feature.registration.util.ActivityLauncherObserver
-import kotlin.math.atan
 
 
 @AndroidEntryPoint
@@ -66,8 +63,8 @@ class CreatePatientScreen : Fragment(), CreateLauncherListener {
                     .distinctUntilChanged()
                     .collect {
                         if (it) {
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_navigate_to_verify)
+                            val nav = Navigation.findNavController(requireView())
+                            nav.navigate(R.id.action_navigate_to_verify)
                             viewModel.removeSuccessObserver()
                         }
                     }
