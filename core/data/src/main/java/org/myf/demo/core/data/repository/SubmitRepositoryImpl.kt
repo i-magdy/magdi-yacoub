@@ -46,8 +46,7 @@ class SubmitRepositoryImpl @Inject constructor(
             secondaryPhone = p.secondaryPhone
         )).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                task.result.update("timestamp", Timestamp.now())
-                    .addOnCompleteListener { deferred.complete(it.isSuccessful) }
+                deferred.complete(task.isSuccessful)
             }else{
                 deferred.complete(false)
             }

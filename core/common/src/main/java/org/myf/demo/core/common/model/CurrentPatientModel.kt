@@ -1,8 +1,8 @@
 package org.myf.demo.core.common.model
 
-import java.util.Date
+import androidx.annotation.Keep
 
-
+@Keep
 class CurrentPatientModel {
     constructor()
     constructor(
@@ -27,7 +27,6 @@ class CurrentPatientModel {
     var email: String = ""
     var primaryPhone: String = ""
     var secondaryPhone: String = ""
-    var timestamp: Date? = null
 
 
 }

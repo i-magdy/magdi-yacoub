@@ -2,6 +2,7 @@ package org.myf.demo.feature.registration.ui.login
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +10,7 @@ import androidx.navigation.Navigation
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.demo.feature.registration.R as resource
@@ -31,18 +33,23 @@ class LogInScreen : Fragment(
                             id = id
                         )){
                             viewModel.patient.map {
-                                it.primaryPhone
-                            }.collect {
-                                if (it.isNotEmpty()) {
-                                    val action = LogInScreenDirections
-                                        .actionNavigateFromLogInToVerifyScreen()
+                                it
+                            }.distinctUntilChanged()
+                                .collect {
+                                    Toast.makeText(context,"True",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,it.primaryPhone,Toast.LENGTH_SHORT).show()
+                                    if (it.primaryPhone.isNotEmpty()) {
+                                        val action = LogInScreenDirections
+                                            .actionNavigateFromLogInToVerifyScreen()
                                             .apply {
-                                                phone = it
+                                                phone = it.primaryPhone
                                                 isShouldLogin = true
                                             }
-                                    Navigation.findNavController(view).navigate(action)
+                                        Navigation.findNavController(view).navigate(action)
+                                    }
                                 }
-                            }
+                        }else{
+                            Toast.makeText(context,"false",Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

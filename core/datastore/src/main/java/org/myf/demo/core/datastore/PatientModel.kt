@@ -12,4 +12,4 @@ data class PatientModel(
     val isVerified: Boolean = false,
     val deviceToken: String = "",
     val fileCount: Int = 0
-    )
+)
