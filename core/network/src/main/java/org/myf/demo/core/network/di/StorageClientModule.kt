@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.myf.demo.core.common.annotation.Articles
 import org.myf.demo.core.common.annotation.DocumentsReference
 import org.myf.demo.core.common.annotation.PatientDatabaseRef
 import org.myf.demo.core.common.annotation.StorageRef
@@ -30,5 +31,9 @@ object StorageClientModule {
     @Provides
     @PatientDatabaseRef
     fun providesPatientFireStoreReference(): CollectionReference = Firebase.firestore.collection(BuildConfig.PATIENT_DB_REF)
+
+    @Provides
+    @Articles
+    fun providesHealthCareArticlesReference(): CollectionReference = Firebase.firestore.collection(BuildConfig.ARTICLES)
 
 }

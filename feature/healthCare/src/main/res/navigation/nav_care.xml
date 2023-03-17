@@ -8,5 +8,25 @@
         android:id="@+id/health_care_start_screen"
         tools:layout="@layout/screen_care_list"
         android:label="@string/care_main_screen_title"
-        android:name="org.myf.demo.feature.healthcare.HealthCareListScreen"/>
+        android:name="org.myf.demo.feature.healthcare.HealthCareListScreen">
+        <action android:id="@+id/action_read_article"
+            app:destination="@id/article_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
+            <argument android:name="url"
+                android:defaultValue=""
+                app:argType="string"/>
+        </action>
+    </fragment>
+
+    <fragment android:id="@+id/article_screen"
+        android:label="@string/article_title"
+        tools:layout="@layout/screen_health_care_article"
+        android:name="org.myf.demo.feature.healthcare.HealthCareArticleScreen">
+        <argument android:name="url"
+            android:defaultValue=""
+            app:argType="string"/>
+    </fragment>
 </navigation>

@@ -107,5 +107,6 @@
     <string name="invalid_name_message">Invalid email</string>
     <string name="invalid_name_format_message">Invalid name format</string>
     <string name="invalid_id_format_message">invalid Id format</string>
+    <string name="article_title">Article</string>
 
 </resources>

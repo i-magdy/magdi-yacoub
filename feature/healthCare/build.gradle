@@ -47,6 +47,8 @@ dependencies {
     implementation libs.layout.swiperefresh
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation project(path: ':core:common')
+    implementation project(path: ':core:data')
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test

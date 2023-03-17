@@ -27,7 +27,12 @@ class CurrentPatientRepositoryImpl @Inject constructor(
 
     override suspend fun getPatientAsync(): Deferred<Boolean> {
         val deferred = CompletableDeferred<Boolean>()
-        val query = db.whereEqualTo("uid",Firebase.auth.uid)
+        val auth = Firebase.auth
+        if(auth.currentUser == null){
+            deferred.complete(false)
+            return object : Deferred<Boolean> by deferred{}
+        }
+        val query = db.whereEqualTo("uid",auth.uid)
         query.get(Source.SERVER)
             .addOnCompleteListener {
                 if (it.isSuccessful){

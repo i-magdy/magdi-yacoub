@@ -13,10 +13,11 @@ class CountriesRepositoryImpl @Inject constructor(
     @Dispatcher(IO) val ioDispatcher: CoroutineDispatcher
 ): CountriesRepository {
 
-
     override suspend fun getCountryByCode(
         code: String
-    ): CountryCodeModel  = withContext(ioDispatcher + SupervisorJob()){
+    ): CountryCodeModel  = withContext(
+        context = ioDispatcher + SupervisorJob()
+    ){
         try {
             val data = countriesService.getCountryByCode(code).body()!!
             return@withContext data[0].let {
@@ -39,7 +40,9 @@ class CountriesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCountries(): List<CountryCodeModel>  = withContext(ioDispatcher + SupervisorJob()) {
+    override suspend fun getCountries(): List<CountryCodeModel>  = withContext(
+        context = ioDispatcher + SupervisorJob()
+    ) {
         try {
             val data = countriesService.getAllCountriesData().body()!!
             return@withContext CountriesUtil.getCountries(data)
@@ -47,5 +50,4 @@ class CountriesRepositoryImpl @Inject constructor(
             return@withContext emptyList()
         }
     }
-
 }

@@ -110,5 +110,6 @@
     <string name="invalid_name_message">اسم خطأ</string>
     <string name="invalid_name_format_message">Invalid name format</string>
     <string name="invalid_id_format_message">رقم بطاقه خطأ</string>
+    <string name="article_title">مقال</string>
 
 </resources>

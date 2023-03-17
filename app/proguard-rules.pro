@@ -48,3 +48,4 @@
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
 
 -keepclassmembers class org.myf.demo.core.common.model.CurrentPatientModel { *;}
+-keepclassmembers class org.myf.demo.core.common.model.ArticleModel { *; }

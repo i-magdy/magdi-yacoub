@@ -2,7 +2,6 @@ package org.myf.demo.feature.registration.ui.login
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,23 +32,19 @@ class LogInScreen : Fragment(
                             id = id
                         )){
                             viewModel.patient.map {
-                                it
+                                it.primaryPhone
                             }.distinctUntilChanged()
                                 .collect {
-                                    Toast.makeText(context,"True",Toast.LENGTH_SHORT).show()
-                                    Toast.makeText(context,it.primaryPhone,Toast.LENGTH_SHORT).show()
-                                    if (it.primaryPhone.isNotEmpty()) {
+                                    if (it.isNotEmpty()) {
                                         val action = LogInScreenDirections
                                             .actionNavigateFromLogInToVerifyScreen()
                                             .apply {
-                                                phone = it.primaryPhone
+                                                phone = it
                                                 isShouldLogin = true
                                             }
                                         Navigation.findNavController(view).navigate(action)
                                     }
                                 }
-                        }else{
-                            Toast.makeText(context,"false",Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

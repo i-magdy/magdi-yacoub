@@ -38,4 +38,9 @@ interface DataModule {
         currentPatientRepositoryImpl: CurrentPatientRepositoryImpl
     ): CurrentPatientRepository
 
+    @Binds
+    fun bindsArticlesRepository(
+        articlesRepositoryImpl: ArticlesRepositoryImpl
+    ): ArticlesRepository
+
 }

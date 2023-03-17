@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.myf.demo.core.common.util.CreatePatientUiError
@@ -150,4 +151,14 @@ fun setCountryName(
     }else{
         ac.setText(country.en_name)
     }
+}
+
+@BindingAdapter("app:setImageUrl")
+fun setImageUrl(
+    imageView: ImageView,
+    url: String
+){
+    Glide.with(imageView)
+        .load(url)
+        .into(imageView)
 }
