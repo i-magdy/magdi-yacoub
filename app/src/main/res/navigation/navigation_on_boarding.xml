@@ -12,6 +12,15 @@
         android:name="org.myf.demo.ui.onBoarding.LaunchScreen">
         <action android:id="@+id/action_navigate_to_welcome_screen"
             app:destination="@id/welcome_screen"
+            app:popUpTo="@id/navigation_on_boarding"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+
+        <action android:id="@+id/action_navigate_to_usability_screen_from_launch"
+            app:destination="@id/usability_screen"
+            app:popUpTo="@id/navigation_on_boarding"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -22,5 +31,56 @@
         android:id="@+id/welcome_screen"
         android:label="welcome_screen"
         android:name="org.myf.demo.ui.onBoarding.WelcomeScreen"
-        tools:layout="@layout/screen_welcome"/>
+        tools:layout="@layout/screen_welcome">
+        <action android:id="@+id/action_navigate_to_usability_screen"
+            app:destination="@id/usability_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+
+    <fragment android:id="@+id/usability_screen"
+        android:label="@string/usability_title"
+        tools:layout="@layout/screen_usability"
+        android:name="org.myf.demo.ui.onBoarding.UsabilityScreen">
+        <action android:id="@+id/action_navigate_to_tracking_screen"
+            app:destination="@id/tracking_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/tracking_screen"
+        android:label="@string/tracking_title"
+        tools:layout="@layout/screen_tracking"
+        android:name="org.myf.demo.ui.onBoarding.TrackingScreen">
+        <action android:id="@+id/action_navigate_to_security_screen"
+            app:destination="@id/security_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/security_screen"
+        android:label="@string/security_title"
+        tools:layout="@layout/screen_security"
+        android:name="org.myf.demo.ui.onBoarding.SecurityScreen">
+        <action android:id="@+id/action_navigate_to_notify_screen"
+            app:destination="@id/notify_screen"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/notify_screen"
+        android:label="@string/notify_title"
+        tools:layout="@layout/screen_notify"
+        android:name="org.myf.demo.ui.onBoarding.NotifyScreen"/>
+
+
 </navigation>
