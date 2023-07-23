@@ -23,17 +23,31 @@
     <string name="success_label">علامة النجاح</string>
     <string name="next_title">التالي</string>
     <string name="start_title">لنبداء</string>
+    <string name="choose_fav_lang_title">إختر لغتك المفضلة</string>
+    <string name="please_choose_lang">من فضلك إختر لغه!</string>
+    <string name="continue_title">استمرار</string>
     <string name="select_language_title">Select Language - إختر لغه</string>
-    <string name="arabic_title">العربيه</string>
-    <string name="english_title">English</string>
+    <string name="arabic_title">اللغة العربية (مصر)</string>
+    <string name="english_title">English (USA)</string>
     <string name="welcome_title">مرحبا بك في تطبيق مجدي يعقوب</string>
     <string name="welcome_message">تطبيق لجعل التواصل بين المرضى و المستشفى اسهل.</string>
+    <string name="usability_title">سهولة الاستخدام</string>
+    <string name="usability_message">دلوقتي تقدر ترفع تقاريرك الطبيه من خلال التطبيق بكل اريحيه!</string>
+    <string name="tracking_title">تتبع الحاله</string>
+    <string name="tracking_message">من المهم جدا معرفة حالة تقاريرك الطبيه خطوة بخطوه!</string>
+    <string name="notify_title">اشعارات</string>
+    <string name="notify_message">عشان تقدر تتابع حالتك خطوه بخطوه, هيجيلك اشعار بالحاله!</string>
+    <string name="security_title">أمن المعلومات</string>
+    <string name="security_message">لأن بياناتك مهمه جدا وفرنالك خدمه عالية من الأمان</string>
+    <string name="skip_title">تخطي</string>
+    <string name="am_in_title">موافق</string>
     <string name="send_reports_title">إرسل نسخه من التقارير الطبيه</string>
     <string name="send_reports_message">تشمل نسخة من الموجات فوق الصوتيه
 و تقرير القسطره إذا وجد
 تحاليل سيوله إذا وجد</string>
     <string name="submit_title">إرسل</string>
     <string name="home_settings_title">ضبط</string>
+    <string name="pervious_title">السابق</string>
 
     <string name="main_screen_title">صفحة شخصية</string>
     <string name="log_in_screen_title">تسجيل دخول</string>

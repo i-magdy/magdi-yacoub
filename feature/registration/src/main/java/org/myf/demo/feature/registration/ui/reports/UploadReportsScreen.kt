@@ -68,10 +68,11 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         attachMenu()
-        val bottomSheetBehavior = BottomSheetBehavior.from(
+        BottomSheetBehavior.from(
             view.findViewById(R.id.pick_up_chooser_bottom_sheet)
-        )
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        ).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        }
         binding.reportsRv.apply {
             adapter = this@UploadReportsScreen.adapter
             layoutManager = LinearLayoutManager(context)

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/articles_rv"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:listitem="@layout/article_list_item"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/articles_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/articles_rv"
+        tools:listitem="@layout/article_list_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</FrameLayout>

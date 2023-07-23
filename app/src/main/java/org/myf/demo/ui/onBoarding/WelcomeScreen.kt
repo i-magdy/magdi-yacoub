@@ -11,12 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.myf.demo.R
 import org.myf.demo.databinding.ScreenWelcomeBinding
 import org.myf.demo.ui.main.MainActivity
 
@@ -54,10 +56,7 @@ class WelcomeScreen: Fragment(){
                     .distinctUntilChanged()
                     .collect {
                         if (it){
-                            val toMainActivity = Intent(requireActivity(),
-                                MainActivity::class.java)
-                            startActivity(toMainActivity)
-                            requireActivity().finish()
+                            findNavController().navigate(R.id.action_navigate_to_usability_screen)
                         }
                         viewModel.state.cancellable()
                     }

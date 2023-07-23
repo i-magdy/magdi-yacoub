@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -18,13 +19,17 @@ class HealthCareListScreen : Fragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel by viewModels<ArticlesViewModel>()
+        val progress = view.findViewById<CircularProgressIndicator>(R.id.articles_progress_bar)
         val adapter = ArticlesAdapter()
         view.findViewById<RecyclerView>(R.id.articles_rv).apply {
             this.adapter = adapter
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.articles.collect(adapter::setArticles)
+                viewModel.articles.collect {
+                    progress.hide()
+                    adapter.setArticles(it)
+                }
             }
         }
     }

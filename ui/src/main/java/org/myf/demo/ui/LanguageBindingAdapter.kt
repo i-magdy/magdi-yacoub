@@ -7,6 +7,8 @@ import android.content.res.Configuration
 import android.os.Build
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.radiobutton.MaterialRadioButton
 
 @BindingAdapter("app:selectedLanguageIsArabic")
 fun setSelectedLanguageIsArabic(
@@ -77,6 +79,96 @@ fun setSelectedLanguageIsArabic(
     }
 }
 
+
+@BindingAdapter("app:checkedLanguageArabic")
+fun setSelectedLanguageRadioButtonArabic(
+    radio: MaterialRadioButton,
+    lang: String
+) { radio.isChecked = lang == "ar" }
+
+@BindingAdapter("app:checkedLanguageEnglish")
+fun setSelectedLanguageRadioButtonEnglish(
+    radio: MaterialRadioButton,
+    lang: String
+) { radio.isChecked = lang == "en" }
+
+@BindingAdapter("app:changeOutlineColorArabic")
+fun setSelectedOutlineColorArabicCard(
+    card: MaterialCardView,
+    lang: String
+) = when(lang == "ar"){
+    true -> when{
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            when (card.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_dark_secondary)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_light_secondary)
+
+                }
+                else -> {}
+            }
+        } else -> {
+            card.strokeColor = card.context.resources.getColor(R.color.md_theme_light_secondary)
+        }
+    }
+    false -> when{
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            when (card.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_dark_outlineVariant)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_light_outlineVariant)
+
+                }
+                else -> {}
+            }
+        } else -> {
+            card.strokeColor = card.context.resources.getColor(R.color.md_theme_light_outlineVariant)
+        }
+    }
+}
+
+@BindingAdapter("app:changeOutlineColorEnglish")
+fun setSelectedOutlineColorEnglishCard(
+    card: MaterialCardView,
+    lang: String
+) = when(lang == "en"){
+    true -> when{
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            when (card.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_dark_secondary)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_light_secondary)
+
+                }
+                else -> {}
+            }
+        } else -> {
+            card.strokeColor = card.context.resources.getColor(R.color.md_theme_light_secondary)
+        }
+    }
+    false -> when{
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            when (card.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_dark_outlineVariant)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    card.strokeColor = card.context.getColor(R.color.md_theme_light_outlineVariant)
+
+                }
+                else -> {}
+            }
+        } else -> {
+            card.strokeColor = card.context.resources.getColor(R.color.md_theme_light_outlineVariant)
+        }
+    }
+}
 
 @BindingAdapter("app:selectedLanguageIsEnglish")
 fun setSelectedLanguageIsEnglish(

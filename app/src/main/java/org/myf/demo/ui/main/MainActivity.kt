@@ -2,9 +2,7 @@ package org.myf.demo.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -50,6 +48,13 @@ class MainActivity : BaseActivity() {
                 healthResource.id.health_care_start_screen
             )
         )
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id){
+                healthResource.id.health_care_start_screen -> binding.mainBar.liftOnScrollTargetViewId = healthResource.id.articles_rv
+                homeResource.id.home_start_screen -> binding.mainBar.liftOnScrollTargetViewId = homeResource.id.main_home_layout
+                registrationResource.id.registration_start_fragment -> binding.mainBar.liftOnScrollTargetViewId = registrationResource.id.main_registration_layout
+            }
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
