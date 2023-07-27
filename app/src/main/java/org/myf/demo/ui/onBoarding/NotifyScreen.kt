@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,7 +27,7 @@ import org.myf.demo.ui.main.MainActivity
 class NotifyScreen: Fragment(
     R.layout.screen_notify
 ) {
-    val viewModel by viewModels<OnBoardingViewModel>()
+    private val viewModel by viewModels<OnBoardingViewModel>()
     private val requestPermissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.RequestPermission()){
         viewModel.updateState(2)
@@ -42,6 +41,8 @@ class NotifyScreen: Fragment(
                     if (checkSelfPermission(requireActivity(),Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED){
                         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                     }
+                }else{
+                    viewModel.updateState(2)
                 }
             }
 
