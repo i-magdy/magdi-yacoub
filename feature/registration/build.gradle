@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace 'org.myf.demo.feature.registration'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 22
-        targetSdk 33
+        targetSdk 34
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

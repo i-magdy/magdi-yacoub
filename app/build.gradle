@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'org.myf.demo'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "org.myf.demo"
         minSdk 22
-        targetSdk 33
+        targetSdk 34
         versionCode 15
         versionName "0.0.11"
         resConfigs "en","ar"

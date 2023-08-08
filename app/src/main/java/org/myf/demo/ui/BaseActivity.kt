@@ -4,6 +4,7 @@ import android.app.LocaleManager
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -18,7 +19,9 @@ import javax.inject.Inject
 open class BaseActivity : AppCompatActivity {
 
     constructor(): super()
-    constructor(contentLayoutId: Int): super(contentLayoutId)
+    constructor(
+        @LayoutRes contentLayoutId: Int
+    ): super(contentLayoutId)
 
     @Inject
     lateinit var datastoreImpl: DatastoreImpl
