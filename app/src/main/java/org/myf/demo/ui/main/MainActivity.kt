@@ -53,7 +53,7 @@ class MainActivity : BaseActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 healthResource.id.health_care_start_screen -> binding.mainBar.liftOnScrollTargetViewId = healthResource.id.articles_rv
-                homeResource.id.home_start_screen -> binding.mainBar.liftOnScrollTargetViewId = homeResource.id.main_home_layout
+                homeResource.id.home_start_screen -> binding.mainBar.liftOnScrollTargetViewId = homeResource.id.home_root
                 registrationResource.id.registration_start_fragment -> binding.mainBar.liftOnScrollTargetViewId = registrationResource.id.main_registration_layout
             }
         }

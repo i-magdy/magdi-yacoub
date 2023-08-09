@@ -127,5 +127,6 @@
     <string name="invalid_name_format_message">Invalid name format</string>
     <string name="invalid_id_format_message">رقم بطاقه خطأ</string>
     <string name="article_title">مقال</string>
+    <string name="stories_title">قصص النجاح</string>
 
 </resources>

@@ -43,4 +43,9 @@ interface DataModule {
         articlesRepositoryImpl: ArticlesRepositoryImpl
     ): ArticlesRepository
 
+    @Binds
+    fun bindsHomeRepository(
+        homeRepositoryImpl: HomeRepositoryImpl
+    ): HomeRepository
+
 }

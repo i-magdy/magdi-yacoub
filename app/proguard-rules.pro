@@ -49,3 +49,5 @@
 
 -keepclassmembers class org.myf.demo.core.common.model.CurrentPatientModel { *;}
 -keepclassmembers class org.myf.demo.core.common.model.ArticleModel { *; }
+-keepclassmembers class org.myf.demo.core.common.model.HomeModel { *; }
+-keepclassmembers class org.myf.demo.core.common.model.StoryModel { *; }

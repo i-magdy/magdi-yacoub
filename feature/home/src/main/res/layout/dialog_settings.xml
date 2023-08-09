@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.myf.demo.feature.home.SettingsViewModel" />
+            type="org.myf.demo.feature.home.ui.settings.SettingsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
