@@ -1,4 +1,4 @@
-package org.myf.demo.feature.home
+package org.myf.demo.feature.home.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

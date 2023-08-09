@@ -4,6 +4,10 @@
     <string name="health_care_title">Health Care</string>
     <string name="app_name">Magdi Yacoub</string>
     <string name="name">Magdi Yacoub Heart Foundation</string>
+    <string name="home_message">Our objective is to meet the increasing demand for cardiovascular care by expanding the size of our facility to be able to:
+• Accommodate up to 120,000 outpatients annually
+• Treat up to 12,000 patients annually</string>
+    <string name="know_more_title">know more</string>
     <string name="verify_content_message">Verify it\'s you</string>
     <string name="phone_title">Phone Number</string>
     <string name="verify_title">Verify</string>
@@ -123,5 +127,6 @@
     <string name="invalid_name_format_message">Invalid name format</string>
     <string name="invalid_id_format_message">invalid Id format</string>
     <string name="article_title">Article</string>
+    <string name="stories_title">Success Stories</string>
 
 </resources>

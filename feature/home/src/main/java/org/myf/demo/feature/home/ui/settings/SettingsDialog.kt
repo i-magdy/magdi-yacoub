@@ -1,4 +1,4 @@
-package org.myf.demo.feature.home
+package org.myf.demo.feature.home.ui.settings
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.myf.demo.feature.home.databinding.DialogSettingsBinding
-import org.myf.demo.ui.R
 
 @AndroidEntryPoint
 class SettingsDialog : DialogFragment() {
