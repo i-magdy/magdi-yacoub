@@ -11,13 +11,14 @@
             name="articleClickListener"
             type="android.view.View.OnClickListener"/>
     </data>
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{articleClickListener}"
         android:focusable="true"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         style="@style/Widget.Material3.CardView.Elevated">
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,22 +26,31 @@
             android:layout_marginBottom="4dp"
             android:orientation="vertical"
             tools:ignore="UseCompoundDrawables">
-            <ImageView
-                android:id="@+id/article_cover_item"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                app:setImageUrl="@{article.cover}"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/article_title" />
+                app:cardCornerRadius="12dp"
+                android:elevation="0dp"
+                android:backgroundTint="@null"
+                android:background="@null"
+                app:cardBackgroundColor="@null">
+                <ImageView
+                    android:id="@+id/article_cover_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    app:setImageUrl="@{article.cover}"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/article_title" />
+            </androidx.cardview.widget.CardView>
             <TextView
                 android:id="@+id/article_title_item"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:textAlignment="viewStart"
+                android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:text="@{article.title}"/>
         </LinearLayout>

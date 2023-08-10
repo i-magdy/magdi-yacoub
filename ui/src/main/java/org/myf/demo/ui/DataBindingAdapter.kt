@@ -1,5 +1,6 @@
 package org.myf.demo.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -7,8 +8,10 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.myf.demo.core.common.util.CreatePatientUiError
@@ -161,4 +164,23 @@ fun setImageUrl(
     Glide.with(imageView)
         .load(url)
         .into(imageView)
+}
+
+@BindingAdapter("app:openWebUrl")
+fun openWebUrl(button: MaterialButton,url: String){
+    button.setOnClickListener {
+        if (url.isEmpty()){
+            Toast.makeText(
+                button.context,
+                "Something went wrong!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }else {
+            try {
+                button.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 }

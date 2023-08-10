@@ -61,6 +61,7 @@
                 android:id="@+id/story_item_message"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:textAlignment="viewStart"
                 android:text="@{story.supportText}"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
