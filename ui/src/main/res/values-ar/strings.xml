@@ -3,9 +3,9 @@
     <string name="profile_title">صفحة شخصية</string>
     <string name="home_title">الرئيسيه</string>
     <string name="health_care_title">العناية الصحيه</string>
-    <string name="app_name">حالة المريض</string>
-    <string name="name">تطبيق حالة المريض</string>
-    <string name="home_message">مهمتها انقاذ قلوب أطفال حيث اننا نطمح ونعمل على توسيع نطاق عملياتنا لتلبية الطلب الكبير والمتزايد على علاج القلب والأوعية الدموية للذين هم في أمس الحاجة إليه، وذلك إلى جانب تطوير العلاج والبحث واستثمار المواهب، بطريقة غير مسبوقة في المنطقة.</string>
+    <string name="app_name">مجدي يعقوب</string>
+    <string name="name">مؤسسة مجدي يعقوب لأمراض القلب</string>
+    <string name="home_message">تعتمد مؤسسة مجدى يعقوب للقلب على التبرع والدعم المالي للقيام بمهمتها وانقاذ قلوب أطفال حيث اننا نطمح ونعمل على توسيع نطاق عملياتنا لتلبية الطلب الكبير والمتزايد على علاج القلب والأوعية الدموية للذين هم في أمس الحاجة إليه، وذلك إلى جانب تطوير العلاج والبحث واستثمار المواهب، بطريقة غير مسبوقة في المنطقة.</string>
     <string name="know_more_title">اعرف المزيد</string>
     <string name="verify_content_message">تحقق من شخصيتك</string>
     <string name="phone_title">رقم الهاتف</string>
