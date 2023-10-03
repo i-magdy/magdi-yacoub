@@ -32,7 +32,12 @@ android {
         jvmTarget = '1.8'
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = '1.5.0'
+    }
+
     buildFeatures {
+        compose true
         dataBinding true
         viewBinding true
     }
@@ -50,7 +55,13 @@ dependencies {
     implementation libs.layout.swiperefresh
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
-    implementation 'androidx.window:window:1.1.0'
+    implementation libs.androidx.window
+    //compose
+    implementation platform(libs.compose.platform)
+    androidTestImplementation platform(libs.compose.platform)
+    implementation libs.compose.material3
+    implementation libs.compose.preview
+    debugImplementation libs.compose.debug.ui
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test

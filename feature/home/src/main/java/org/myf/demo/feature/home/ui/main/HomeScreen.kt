@@ -8,16 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.window.Dialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.demo.feature.home.R
 import org.myf.demo.feature.home.adapter.StoriesAdapter
 import org.myf.demo.feature.home.databinding.ScreenHomeBinding
 import org.myf.demo.feature.home.ui.settings.SettingsDialog
+import org.myf.demo.ui.theme.AppTheme
 
 @AndroidEntryPoint
 class HomeScreen : Fragment() {
@@ -37,6 +46,7 @@ class HomeScreen : Fragment() {
         binding = ScreenHomeBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel by viewModels<HomeViewModel>()
@@ -44,6 +54,21 @@ class HomeScreen : Fragment() {
         binding.lifecycleOwner = this
         viewModel.getData()
         val adapter = StoriesAdapter()
+        binding.homeDialog.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppTheme {
+                    AlertDialog(
+                        modifier = Modifier,
+                        onDismissRequest = { },
+                        confirmButton = {},
+                        title = { Text(text = "Settings")},
+                        text = { Text(text = "change language")}
+                    )
+                }
+            }
+        }
+
         binding.homeRoot.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener{
                 override fun onGlobalLayout() {
@@ -58,9 +83,9 @@ class HomeScreen : Fragment() {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         }
         lifecycleScope.launch {
-            viewModel.uiState.collect{
-                adapter.setStories(it.stories)
-            }
+            viewModel.uiState.map {
+                it.stories
+            }.collect(adapter::setStories)
         }
     }
 
@@ -79,3 +104,4 @@ class HomeScreen : Fragment() {
         }
     }
 }
+

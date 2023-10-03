@@ -26,23 +26,38 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = '1.5.0'
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
 
+    buildFeatures {
+        compose true
+    }
     dataBinding {
         enabled true
     }
 }
 
 dependencies {
+
+    implementation project(path: ':core:common')
+    implementation project(path: ':core:model')
     implementation libs.androidx.core
     implementation libs.androidx.appcompat
     implementation libs.google.material
-    implementation project(path: ':core:common')
-    implementation project(path: ':core:model')
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test
     androidTestImplementation libs.androidx.espresso
-    implementation 'com.github.bumptech.glide:glide:4.15.0'
+    implementation libs.glide
+
+    implementation platform(libs.compose.platform)
+    androidTestImplementation platform(libs.compose.platform)
+    implementation libs.compose.material3
+    implementation libs.compose.preview
+    debugImplementation libs.compose.debug.ui
 }
