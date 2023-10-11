@@ -1,5 +1,6 @@
 package org.myf.demo.core.datastore
 
+import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
@@ -23,14 +24,14 @@ object DatastoreModule {
     @Provides
     @Singleton
     fun providesPatientPreferencesDatastore(
-        @ApplicationContext context: Context,
+         appContext: Application,
         @Dispatcher(IO) ioDispatcher: CoroutineDispatcher,
         patientSerializer: PatientSerializer
     ): DataStore<PatientData> = DataStoreFactory.create(
         serializer = patientSerializer,
         scope = CoroutineScope(ioDispatcher + SupervisorJob())
     ){
-        context.dataStoreFile("patient_data.pb")
+        appContext.dataStoreFile("patient_data.pb")
     }
 
 

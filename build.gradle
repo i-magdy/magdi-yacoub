@@ -8,4 +8,5 @@ plugins {
     alias libs.plugins.google.services apply  false
     alias libs.plugins.secrets apply false
     alias libs.plugins.kotlin.serialization apply false
+    //id("org.gradle.toolchains.foojay-resolver-convention") version("0.5.0") apply false
 }

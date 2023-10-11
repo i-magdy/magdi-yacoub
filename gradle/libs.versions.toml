@@ -1,34 +1,40 @@
 [versions]
-androidxcore='1.9.0'
+androidxcore='1.12.0'
+glide="4.15.0"
 kotlin='1.8.0'
 jvm='1.7.21'
-material='1.9.0-alpha02'
+material='1.11.0-alpha03'
 appcompat='1.7.0-alpha03'
-androidGradlePlugin = "8.0.2"
-hilt = "2.44.2"
+composeBom="2023.09.02"
+composeCompiler = "1.4.0"
+androidGradlePlugin = "8.1.1"
+androidWindow="1.1.0"
+hilt = "2.47"
+jetpackHilt = "1.0.0"
 constraint = '2.1.4'
 swipe='1.1.0'
-navigation='2.5.3'
-lifecycle='2.6.0-alpha05'
-coroutine='1.6.4'
-firebase='32.2.2'
+navigation='2.7.3'
+lifecycle='2.7.0-alpha02'
+coroutine='1.7.1'
+firebase='32.3.1'
 googleservice='4.3.15'
-playservice='20.6.0'
-appcheck='17.0.0'
-protobuf = "3.21.12"
-protobufPlugin = "0.9.0"
+playservice='20.7.0'
+appcheck='17.0.1'
+protobuf = "3.24.3"
+protobufPlugin = "0.9.4"
 secrets = "2.0.1"
-preferences = '1.1.0-alpha01'
+preferences = '1.1.0-alpha05'
 datastore = '1.0.0'
-room='2.5.0'
+room='2.5.2'
 espresso='3.5.1'
+retrofitGson="2.9.1"
 retrofit='2.9.0'
 okhttp='4.10.0'
 junit='4.13.2'
 androidxtest='1.1.5'
-integrity='1.1.0'
-kotlinxSerialization='1.4.1'
-retrofitKotlinxSerializationJson = "0.8.0"
+integrity='1.2.0'
+kotlinxSerialization='1.5.1'
+retrofitKotlinxSerializationJson = "1.0.0"
 
 
 [libraries]
@@ -41,8 +47,10 @@ androidx-room = { group = 'androidx.room', name = 'room-runtime', version.ref = 
 androidx-room-annotation = { group = 'androidx.room', name = 'room-compiler', version.ref = 'room' }
 androidx-room-compiler = { group = 'androidx.room', name = 'room-compiler', version.ref = 'room' }
 androidx-espresso = { group = 'androidx.test.espresso', name = 'espresso-core', version.ref = 'espresso' }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 layout-constraint = { group = 'androidx.constraintlayout', name = 'constraintlayout', version.ref = 'constraint' }
 layout-swiperefresh = { group = 'androidx.swiperefreshlayout', name = 'swiperefreshlayout', version.ref = 'swipe' }
+androidx-window = { group = 'androidx.window', name = 'window', version.ref = 'androidWindow'}
 google-material = { group = 'com.google.android.material' , name = 'material' , version.ref = 'material' }
 navigation-fragment = { group = 'androidx.navigation', name = 'navigation-fragment-ktx', version.ref = 'navigation' }
 navigation-ui = { group = 'androidx.navigation', name = 'navigation-ui-ktx', version.ref = 'navigation' }
@@ -58,6 +66,7 @@ firebase-firestore = { group = 'com.google.firebase', name = 'firebase-firestore
 firebase-storage = { group = 'com.google.firebase', name = 'firebase-storage-ktx' }
 dagger-hilt = { group = 'com.google.dagger', name = 'hilt-android', version.ref = 'hilt' }
 dagger-hilt-compiler = { group = 'com.google.dagger', name = 'hilt-compiler', version.ref = 'hilt' }
+hilt-navigation = { group = 'androidx.hilt' ,name = 'hilt-navigation-fragment' , version.ref = 'jetpackHilt'}
 datastore-preferences = { group = 'androidx.datastore', name = 'datastore-preferences', version.ref = 'preferences' }
 datastore-core = { group = 'androidx.datastore', name= 'datastore-core', version.ref = 'datastore' }
 protobuf-lite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
@@ -67,12 +76,15 @@ retrofit-converter = { group = 'com.squareup.retrofit2', name = 'converter-gson'
 okhttp-bom = { group = 'com.squareup.okhttp3', name = 'okhttp-bom', version.ref = 'okhttp' }
 okhttp = { group = 'com.squareup.okhttp3', name = 'okhttp' }
 okhttp-logging = { group = 'com.squareup.okhttp3', name = 'logging-interceptor' }
-google-gson = { group = 'com.google.code.gson', name = 'gson', version.ref = 'retrofit' }
+google-gson = { group = 'com.google.code.gson', name = 'gson', version.ref = 'retrofitGson' }
 junit= { group = 'junit', name = 'junit', version.ref = 'junit' }
 androidx-test = { group = 'androidx.test.ext', name = 'junit', version.ref = 'androidxtest' }
 kotlinx-serialization = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-serialization-json', version.ref = 'kotlinxSerialization' }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
-
+compose-platform = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom"}
+compose-material3 = { group = "androidx.compose.material3", name = "material3"}
+compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview"}
+compose-debug-ui = { group = "androidx.compose.ui" , name = "ui-tooling"}
 
 
 [plugins]

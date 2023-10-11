@@ -14,7 +14,6 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_tool_bar"
             android:elevation="@dimen/button_normal_elevation"
-            android:paddingEnd="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="RtlSymmetry" />

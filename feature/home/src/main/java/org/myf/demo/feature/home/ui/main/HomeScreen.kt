@@ -1,6 +1,7 @@
 package org.myf.demo.feature.home.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,26 +9,26 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.myf.demo.feature.home.R
 import org.myf.demo.feature.home.adapter.StoriesAdapter
 import org.myf.demo.feature.home.databinding.ScreenHomeBinding
-import org.myf.demo.feature.home.ui.settings.SettingsDialog
+import org.myf.demo.feature.home.ui.settings.HomeSettingDialog
+import org.myf.demo.ui.theme.AppTheme
 
 @AndroidEntryPoint
 class HomeScreen : Fragment() {
 
     private lateinit var binding: ScreenHomeBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,13 +38,31 @@ class HomeScreen : Fragment() {
         binding = ScreenHomeBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel by viewModels<HomeViewModel>()
+        attachMenu(
+            viewModel = viewModel
+        )
+        binding.apply {
+            this.viewModel = viewModel
+            this.lifecycleOwner = this@HomeScreen.viewLifecycleOwner
+        }
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getData()
         val adapter = StoriesAdapter()
+        binding.homeDialog.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppTheme {
+                    HomeSettingDialog(
+                        viewModel = viewModel
+                    )
+                }
+            }
+        }
         binding.homeRoot.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener{
                 override fun onGlobalLayout() {
@@ -58,24 +77,26 @@ class HomeScreen : Fragment() {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         }
         lifecycleScope.launch {
-            viewModel.uiState.collect{
-                adapter.setStories(it.stories)
+            viewModel.uiState.map {
+                it.model.stories
+            }.collect(adapter::setStories)
+        }
+    }
+
+    private fun attachMenu(
+        viewModel: HomeViewModel
+    ){
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_home,menu)
+                menu.findItem(R.id.action_home_settings)
+                    .setOnMenuItemClickListener {
+                        viewModel.openHomeSettingDialog()
+                        true
+                    }
             }
-        }
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_home,menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.action_home_settings) {
-            val dialog = SettingsDialog()
-            dialog.show(childFragmentManager,"")
-            dialog.isAdded
-        }else{
-            super.onOptionsItemSelected(item)
-        }
-    }
 }
