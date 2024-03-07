@@ -13,5 +13,6 @@ data class ReportsUiState(
     val fileName: String = "",
     val progress: Int = 0,
     val deleteFile: DocumentModel? = null,
-    val isUploading: Boolean = false
+    val isUploading: Boolean = false,
+    val isDeleteFileConfirmed: Boolean = false
 )

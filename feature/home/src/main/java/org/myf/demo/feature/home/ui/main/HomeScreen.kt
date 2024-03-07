@@ -1,7 +1,6 @@
 package org.myf.demo.feature.home.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -49,8 +48,6 @@ class HomeScreen : Fragment() {
             this.viewModel = viewModel
             this.lifecycleOwner = this@HomeScreen.viewLifecycleOwner
         }
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
         viewModel.getData()
         val adapter = StoriesAdapter()
         binding.homeDialog.apply {

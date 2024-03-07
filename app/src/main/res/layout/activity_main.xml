@@ -13,9 +13,9 @@
         app:liftOnScrollColor="?attr/colorPrimaryContainer">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_tool_bar"
-            android:elevation="@dimen/button_normal_elevation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingEnd="8dp"
             tools:ignore="RtlSymmetry" />
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout

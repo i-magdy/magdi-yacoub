@@ -29,7 +29,6 @@ import androidx.compose.ui.window.DialogProperties
 import org.myf.demo.feature.home.ui.main.HomeViewModel
 import org.myf.demo.ui.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeSettingDialog(
     modifier: Modifier = Modifier,
@@ -37,7 +36,7 @@ fun HomeSettingDialog(
 ){
     val isOpen = viewModel.uiState.collectAsState()
     if (isOpen.value.isDialogOpen && !isOpen.value.isDialogClosed){
-        AlertDialog(
+        Dialog(
             onDismissRequest = { viewModel.closeHomeSettingDialog() },
             properties = DialogProperties(
                 dismissOnBackPress = true,

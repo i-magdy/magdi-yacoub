@@ -8,6 +8,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
@@ -30,6 +31,7 @@ import org.myf.demo.feature.registration.R
 import org.myf.demo.feature.registration.adapters.DocumentsAdapter
 import org.myf.demo.feature.registration.databinding.ScreenUploadReportsBinding
 import org.myf.demo.feature.registration.util.ActivityLauncherObserver
+import org.myf.demo.ui.theme.AppTheme
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import org.myf.demo.ui.R as uiResource
@@ -45,7 +47,7 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
     private val coroutine = CoroutineScope(Dispatchers.Default) //TODO refactor!, remove it..
     private var size = 0L
     private val adapter = DocumentsAdapter()
-    private val deleteDialog = DeleteReportDialog()
+    //private val deleteDialog = DeleteReportDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +83,16 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
             val chooserDialog = PickupChooserDialog()
             this@UploadReportsScreen.view?.findFragment<UploadReportsScreen>()?.let {
                 chooserDialog.show(it.childFragmentManager, PickupChooserDialog.TAG)
+            }
+        }
+        binding.reportsCompose?.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppTheme {
+                    ReportsDeleteDialog(
+                        viewModel = viewModel
+                    )
+                }
             }
         }
         lifecycleScope.launch {
@@ -129,14 +141,14 @@ class UploadReportsScreen : Fragment(), ReportLauncherListener {
         }
         size = ui.size
         adapter.setDocuments(ui.list.sortedBy { it.name })
-        if (ui.deleteFile != null && !deleteDialog.isAdded) {
+       /* if (ui.deleteFile != null && !deleteDialog.isAdded) {
             this@UploadReportsScreen.view?.findFragment<UploadReportsScreen>()?.let {
                 deleteDialog.show(it.childFragmentManager, DeleteReportDialog.TAG)
             }
         }
         if (ui.deleteFile == null && deleteDialog.isAdded) {
             deleteDialog.dismiss()
-        }
+        }*/
     }
 
     @Throws(FileNotFoundException::class)

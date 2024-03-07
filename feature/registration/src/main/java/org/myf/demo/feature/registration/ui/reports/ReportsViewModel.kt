@@ -89,6 +89,8 @@ class ReportsViewModel @Inject constructor(
 
     fun openImage() = viewModelScope.launch { repo.openImage() }
 
+    fun confirmDeleteFile() = viewModelScope.launch { repo.confirmDeleteFile() }
+
     fun removeOpenFilesObserver() = viewModelScope.launch { repo.clearOpenFiles() }
 
     override fun onCleared() {

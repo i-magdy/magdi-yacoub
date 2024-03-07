@@ -19,6 +19,7 @@ interface UploadReportsRepository {
     suspend fun saveFilesCount()
     suspend fun openFiles()
     suspend fun openImage()
+    suspend fun confirmDeleteFile()
     suspend fun clearOpenFiles()
     fun cancelJob()
 }

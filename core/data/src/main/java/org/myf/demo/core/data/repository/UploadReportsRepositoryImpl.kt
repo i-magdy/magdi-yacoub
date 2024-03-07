@@ -4,6 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.getAndUpdate
 import org.myf.demo.core.common.annotation.Dispatcher
 import org.myf.demo.core.common.annotation.Google
 import org.myf.demo.core.common.annotation.MyDispatchers.IO
@@ -101,11 +102,12 @@ class UploadReportsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun clearDeleteFile() {
-        uiState.emit(
-            value = uiState.value.copy(
-                deleteFile = null
+        uiState.getAndUpdate {
+            it.copy(
+                deleteFile = null,
+                isDeleteFileConfirmed = false
             )
-        )
+        }
     }
 
     override suspend fun deleteFile() {
@@ -139,6 +141,14 @@ class UploadReportsRepositoryImpl @Inject constructor(
         uiState.emit(
             value = uiState.value.copy(pickImage = true)
         )
+    }
+
+    override suspend fun confirmDeleteFile() {
+        uiState.getAndUpdate {
+            it.copy(
+                isDeleteFileConfirmed = !it.isDeleteFileConfirmed
+            )
+        }
     }
 
     override suspend fun clearOpenFiles() {
